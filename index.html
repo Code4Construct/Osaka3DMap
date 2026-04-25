@@ -1,78 +1,684 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sample Web Page</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            line-height: 1.6;
-        }
-        header {
-            background: #333;
-            color: #fff;
-            padding: 15px 20px;
-            text-align: center;
-        }
-        nav {
-            background: #444;
-            padding: 10px;
-            text-align: center;
-        }
-        nav a {
-            color: #fff;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        main {
-            padding: 20px;
-        }
-        .image-box {
-            text-align: center;
-            margin: 20px 0;
-        }
-        footer {
-            background: #333;
-            color: #fff;
-            text-align: center;
-            padding: 15px;
-            margin-top: 30px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KojiPDF</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=DM+Mono:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1510;
+    --paper: #f5f0e8;
+    --aged: #e8dfc8;
+    --red: #c0392b;
+    --red-light: #e74c3c;
+    --gold: #b8860b;
+    --mid: #7a6e5f;
+    --light-mid: #c4b99a;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.6;
+  }
+
+  header {
+    position: relative;
+    padding: 0;
+    border-bottom: 2px solid var(--ink);
+    background: var(--ink);
+    overflow: hidden;
+  }
+
+  .header-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 520px;
+  }
+
+  .header-left {
+    padding: 60px 50px 60px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid #3a3028;
+    position: relative;
+  }
+
+  .header-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .header-right::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(255,255,255,0.03) 28px, rgba(255,255,255,0.03) 29px),
+      repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(255,255,255,0.02) 28px, rgba(255,255,255,0.02) 29px);
+  }
+
+  .pdf-illustration {
+    position: relative;
+    width: 200px;
+    animation: float 4s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(-2deg); }
+    50% { transform: translateY(-12px) rotate(1deg); }
+  }
+
+  .pdf-stack {
+    position: relative;
+    width: 160px;
+    height: 210px;
+    margin: 0 auto;
+  }
+
+  .pdf-page {
+    position: absolute;
+    width: 140px;
+    height: 190px;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 14px;
+  }
+
+  .pdf-page:nth-child(3) { background: #2a2420; top: 16px; left: 16px; box-shadow: 2px 2px 8px rgba(0,0,0,0.5); }
+  .pdf-page:nth-child(2) { background: #332e28; top: 8px; left: 8px; box-shadow: 2px 2px 8px rgba(0,0,0,0.4); }
+  .pdf-page:nth-child(1) { background: #f5f0e8; top: 0; left: 0; box-shadow: 4px 4px 16px rgba(0,0,0,0.6); }
+
+  .page-line { height: 2px; background: var(--light-mid); margin-bottom: 6px; border-radius: 1px; opacity: 0.5; }
+  .page-line:nth-child(1) { width: 80%; }
+  .page-line:nth-child(2) { width: 60%; }
+  .page-line:nth-child(3) { width: 70%; opacity: 0.3; }
+  .page-line:nth-child(4) { width: 50%; opacity: 0.3; }
+
+  .page-bookmark {
+    position: absolute;
+    top: 0; right: 16px;
+    width: 14px; height: 28px;
+    background: var(--red);
+    clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%);
+  }
+
+  .pdf-badge {
+    position: absolute;
+    bottom: -10px; right: -10px;
+    width: 52px; height: 52px;
+    background: var(--red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: white;
+    letter-spacing: -0.5px;
+    box-shadow: 0 2px 12px rgba(192,57,43,0.5);
+  }
+
+  .logo-area { display: flex; flex-direction: column; gap: 8px; }
+
+  .logo-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #7a6e5f;
+  }
+
+  .logo-main {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 72px;
+    font-weight: 800;
+    line-height: 0.9;
+    color: var(--paper);
+    letter-spacing: -2px;
+  }
+
+  .logo-main span { color: var(--red); }
+
+  .logo-jp {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: #7a6e5f;
+    letter-spacing: 4px;
+    margin-top: 4px;
+  }
+
+  .header-desc {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #c4b99a;
+    max-width: 380px;
+    font-weight: 300;
+  }
+
+  .version-bar { display: flex; align-items: center; gap: 16px; padding-top: 8px; }
+
+  .version-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--mid);
+    border: 1px solid #3a3028;
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+
+  .download-strip {
+    background: var(--red);
+    padding: 24px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .download-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .download-info { display: flex; flex-direction: column; gap: 4px; }
+
+  .download-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: white;
+  }
+
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    color: var(--red);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    padding: 14px 28px;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+
+  .download-btn:hover {
+    background: var(--ink);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+
+  .dl-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 1px;
+  }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 80px 60px; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--light-mid);
+    opacity: 0.5;
+  }
+
+  .overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1.5px solid var(--ink);
+    margin-bottom: 80px;
+  }
+
+  .overview-cell { padding: 40px; position: relative; }
+  .overview-cell:first-child { border-right: 1.5px solid var(--ink); }
+
+  .cell-lang {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cell-lang::before {
+    content: '';
+    width: 20px;
+    height: 1.5px;
+    background: var(--red);
+    display: inline-block;
+  }
+
+  .overview-text { font-size: 15px; line-height: 2; color: #3a3028; font-weight: 300; }
+
+  .features-section { margin-bottom: 80px; }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: var(--ink);
+    border: 1.5px solid var(--ink);
+  }
+
+  .feature-card {
+    background: var(--paper);
+    padding: 32px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.25s ease;
+  }
+
+  .feature-card:hover { background: var(--aged); }
+
+  .feature-card::before {
+    content: attr(data-num);
+    position: absolute;
+    top: 20px; right: 20px;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--light-mid);
+    opacity: 0.3;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .feature-icon { width: 36px; height: 36px; margin-bottom: 16px; color: var(--red); }
+
+  .feature-title-jp {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+
+  .feature-title-en {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--mid);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .feature-desc { font-size: 12.5px; line-height: 1.9; color: #5a5048; font-weight: 300; }
+
+  .license-section { margin-bottom: 80px; }
+
+  .license-box {
+    border: 1.5px solid var(--gold);
+    padding: 40px;
+    position: relative;
+    background: linear-gradient(135deg, rgba(184,134,11,0.04), transparent);
+  }
+
+  .license-box::before {
+    content: 'AGPL-3.0';
+    position: absolute;
+    top: -12px; left: 30px;
+    background: var(--paper);
+    padding: 0 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .license-text { font-size: 13.5px; line-height: 2; color: #4a4038; font-weight: 300; }
+
+  .license-modules {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .module-card {
+    border: 1px solid var(--light-mid);
+    padding: 16px 20px;
+    border-radius: 2px;
+    transition: border-color 0.2s;
+  }
+
+  .module-card:hover { border-color: var(--gold); }
+
+  .module-name { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+  .module-version { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--mid); margin-bottom: 8px; }
+  .module-license { font-size: 11px; color: var(--gold); font-weight: 400; }
+
+  .github-strip {
+    border: 1.5px solid var(--ink);
+    padding: 32px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--ink);
+    margin-bottom: 80px;
+  }
+
+  .github-left { display: flex; flex-direction: column; gap: 6px; }
+
+  .github-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #7a6e5f;
+    text-transform: uppercase;
+  }
+
+  .github-title { font-family: 'Shippori Mincho', serif; font-size: 20px; color: var(--paper); font-weight: 400; }
+
+  .github-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #3a3028;
+    color: var(--paper);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 12px 22px;
+    text-decoration: none;
+    transition: all 0.2s;
+    border-radius: 2px;
+  }
+
+  .github-link:hover { border-color: var(--paper); background: rgba(255,255,255,0.06); }
+
+  footer {
+    border-top: 1.5px solid var(--ink);
+    padding: 32px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--aged);
+  }
+
+  .footer-logo { font-family: 'Shippori Mincho', serif; font-size: 20px; font-weight: 800; color: var(--ink); letter-spacing: -1px; }
+  .footer-logo span { color: var(--red); }
+  .footer-copy { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--mid); letter-spacing: 1px; }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .logo-area { animation: slideIn 0.7s ease both; }
+  .header-desc { animation: slideIn 0.7s 0.15s ease both; }
+  .version-bar { animation: slideIn 0.7s 0.25s ease both; }
+  .pdf-illustration { animation: slideIn 0.7s 0.3s ease both, float 4s 1s ease-in-out infinite; }
+
+  @media (max-width: 768px) {
+    .header-inner { grid-template-columns: 1fr; }
+    .header-right { height: 260px; }
+    .header-left { padding: 40px 32px; }
+    .logo-main { font-size: 52px; }
+    main { padding: 50px 24px; }
+    .overview-grid { grid-template-columns: 1fr; }
+    .overview-cell:first-child { border-right: none; border-bottom: 1.5px solid var(--ink); }
+    .features-grid { grid-template-columns: 1fr; }
+    .license-modules { grid-template-columns: 1fr; }
+    .download-strip { flex-direction: column; align-items: flex-start; padding: 24px 32px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; padding: 24px; }
+    .github-strip { flex-direction: column; gap: 20px; padding: 24px; }
+  }
+</style>
 </head>
 <body>
 
-    <header>
-        <h1>Welcome to My Sample Page</h1>
-    </header>
-
-    <nav>
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
-    </nav>
-
-    <main>
-        <h2>About This Page</h2>
-        <p>This is a sample HTML page demonstrating a basic structure including a header, navigation bar, content section, image, and footer. You can use this template to build your own website layout.</p>
-
-        <div class="image-box">
-            <img src="https://via.placeholder.com/500x250" alt="Sample Image">
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="logo-area">
+        <div class="logo-tag">工事検査 PDF ツール</div>
+        <div class="logo-main">Koji<span>PDF</span></div>
+        <div class="logo-jp">工事PDF</div>
+      </div>
+      <div class="header-desc">
+        複数のPDFファイルを一つの文書に統合し、フォルダ・ファイル名から構造化されたしおりを自動生成。工事検査に必要な書類へ即座にアクセス。
+        <br><br>
+        Merge all PDFs in a folder into one structured document — with hierarchical bookmarks built from your folder and file names.
+      </div>
+      <div class="version-bar">
+        <div class="version-chip">v1.5.0</div>
+        <div class="version-chip">Windows .exe</div>
+        <div class="version-chip">AGPL-3.0</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="pdf-illustration">
+        <div class="pdf-stack">
+          <div class="pdf-page">
+            <div class="page-line"></div>
+            <div class="page-line"></div>
+            <div class="page-line"></div>
+            <div class="page-line"></div>
+          </div>
+          <div class="pdf-page">
+            <div class="page-line"></div>
+            <div class="page-line"></div>
+          </div>
+          <div class="pdf-page">
+            <div class="page-bookmark"></div>
+            <div class="page-line"></div>
+            <div class="page-line"></div>
+            <div class="page-line"></div>
+            <div class="page-line"></div>
+          </div>
+          <div class="pdf-badge">PDF</div>
         </div>
+      </div>
+    </div>
+  </div>
+</header>
 
-        <h3>Section Title</h3>
-        <p>You can add more text or elements here. Modify freely to practice HTML and CSS.</p>
-    </main>
+<div class="download-strip">
+  <div class="download-info">
+    <div class="download-label">最新バージョン / Latest Release</div>
+    <div class="download-title">KojiPDF v1.5.0 — Windows Installer</div>
+    <div class="dl-meta">kojiPDFv150setup.exe &nbsp;·&nbsp; Windows 10/11 &nbsp;·&nbsp; Free & Open Source</div>
+  </div>
+  <a href="https://github.com/Code4Construct/kojiPDFv150/releases/download/v1.5.0/kojiPDFv150setup.exe" class="download-btn">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+      <polyline points="7 10 12 15 17 10"/>
+      <line x1="12" y1="15" x2="12" y2="3"/>
+    </svg>
+    ダウンロード / Download
+  </a>
+</div>
 
-    <footer>
-        <p>&copy; 2025 My Sample Website</p>
-    </footer>
+<main>
+
+  <div class="section-label">概要 / Overview</div>
+  <div class="overview-grid">
+    <div class="overview-cell">
+      <div class="cell-lang">日本語</div>
+      <p class="overview-text">
+        KojiPDFは、工事検査用のPDFファイル作成アプリです。選択したフォルダ内のすべてのPDFファイルを結合し、ファイル名をしおり、フォルダ名を親しおりとして追加した上で、一つのPDFファイルとして保存します。<br><br>
+        膨大なPDFファイルを開き直す手間を削減し、構造化されたしおりを持つ一つのPDFに統合することで、目的の資料に迅速にアクセスできるようにします。
+      </p>
+    </div>
+    <div class="overview-cell">
+      <div class="cell-lang">English</div>
+      <p class="overview-text">
+        KojiPDF is an application for creating PDF files for construction inspection. It merges all PDF files in a selected folder into a single PDF file, adding file names as bookmarks and folder names as parent bookmarks.<br><br>
+        By providing a structured PDF with bookmarks, it eliminates the time and effort spent repeatedly opening multiple PDF files, ensuring easy access to the required documents.
+      </p>
+    </div>
+  </div>
+
+  <div class="features-section">
+    <div class="section-label">機能 / Features</div>
+    <div class="features-grid">
+      <div class="feature-card" data-num="01">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="12" y1="18" x2="12" y2="12"/>
+          <line x1="9" y1="15" x2="15" y2="15"/>
+        </svg>
+        <div class="feature-title-jp">PDF結合</div>
+        <div class="feature-title-en">PDF Merging</div>
+        <div class="feature-desc">複数のPDFファイルを一つの文書に統合します。<br>Combine multiple PDF files into a single document.</div>
+      </div>
+      <div class="feature-card" data-num="02">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 3h6l2 3H3zM3 3v18h18V9l-3-2H11L9 3H3z"/>
+          <path d="M7 13h10M7 17h6"/>
+        </svg>
+        <div class="feature-title-jp">階層的しおり</div>
+        <div class="feature-title-en">Hierarchical Bookmarks</div>
+        <div class="feature-desc">フォルダ名とファイル名を活用した構造化されたしおりシステム。<br>Create a structured bookmark system using folder and file names.</div>
+      </div>
+      <div class="feature-card" data-num="03">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="16 3 21 3 21 8"/>
+          <line x1="4" y1="20" x2="21" y2="3"/>
+          <polyline points="21 16 21 21 16 21"/>
+          <line x1="15" y1="15" x2="21" y2="21"/>
+        </svg>
+        <div class="feature-title-jp">バッチ処理</div>
+        <div class="feature-title-en">Batch Processing</div>
+        <div class="feature-desc">複数のPDFファイルを効率的に処理します。<br>Efficiently handle multiple PDF documents at once.</div>
+      </div>
+      <div class="feature-card" data-num="04">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <div class="feature-title-jp">時間節約</div>
+        <div class="feature-title-en">Time-Saving</div>
+        <div class="feature-desc">個別のファイルを繰り返し開く手間を排除します。<br>Eliminate the need to open individual files repeatedly.</div>
+      </div>
+      <div class="feature-card" data-num="05">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <div class="feature-title-jp">ナビゲーション改善</div>
+        <div class="feature-title-en">Improved Navigation</div>
+        <div class="feature-desc">整理されたしおり構造による迅速なアクセスを実現。<br>Quickly access specific documents via organized bookmarks.</div>
+      </div>
+      <div class="feature-card" data-num="06">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2"/>
+          <line x1="8" y1="21" x2="16" y2="21"/>
+          <line x1="12" y1="17" x2="12" y2="21"/>
+        </svg>
+        <div class="feature-title-jp">Microsoft Office対応</div>
+        <div class="feature-title-en">Office Support</div>
+        <div class="feature-desc">Word、Excel、PowerPointファイルを自動でPDFに変換。<br>Automatically convert Word, Excel, and PowerPoint files to PDF.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="license-section">
+    <div class="section-label">ライセンス / License</div>
+    <div class="license-box">
+      <p class="license-text">
+        本アプリは、使用しているPythonモジュールによりAGPL-3.0 Licenseが適用されており、オープンソースソフトウェアとして商用利用も可能です。ただし、アプリを改変、再配布、またはネットワーク経由で提供する場合、AGPL-3.0の規約に従い、ソースコードを公開する必要があります。<br><br>
+        This application is subject to the AGPL-3.0 License, making it open-source software available for commercial use. However, if the application is modified, redistributed, or provided over a network, the source code must be made publicly available in accordance with AGPL-3.0 regulations.
+      </p>
+      <div class="license-modules">
+        <div class="module-card">
+          <div class="module-name">PyMuPDF</div>
+          <div class="module-version">v1.22.5</div>
+          <div class="module-license">GNU AGPL v3.0 / Commercial</div>
+        </div>
+        <div class="module-card">
+          <div class="module-name">pywin32</div>
+          <div class="module-version">v308</div>
+          <div class="module-license">PSF License</div>
+        </div>
+        <div class="module-card">
+          <div class="module-name">pandas</div>
+          <div class="module-version">v2.2.3</div>
+          <div class="module-license">BSD 3-Clause License</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="github-strip">
+    <div class="github-left">
+      <div class="github-label">オープンソース / Open Source</div>
+      <div class="github-title">Code4Construct / kojiPDFv150</div>
+    </div>
+    <a href="https://github.com/Code4Construct/kojiPDFv150" class="github-link" target="_blank">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+      </svg>
+      GitHub でソースを見る / View on GitHub
+    </a>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-logo">Koji<span>PDF</span></div>
+  <div class="footer-copy">© Code4Construct · AGPL-3.0 Open Source · v1.5.0</div>
+</footer>
 
 </body>
 </html>
