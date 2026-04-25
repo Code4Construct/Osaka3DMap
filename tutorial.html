@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KojiPDF — チュートリアル / Tutorial</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=DM+Mono:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1510;
+    --paper: #f5f0e8;
+    --aged: #e8dfc8;
+    --red: #c0392b;
+    --gold: #b8860b;
+    --mid: #7a6e5f;
+    --light-mid: #c4b99a;
+    --step-line: #d4c9b0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.6;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    background: var(--ink);
+    border-bottom: 1px solid #2e2820;
+    padding: 0 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 58px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-logo {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--paper);
+    letter-spacing: -1px;
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--red); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #7a6e5f;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover, .nav-links a.active { color: var(--paper); }
+  .nav-links a.active { color: var(--red); }
+
+  /* ─── PAGE HEADER ─── */
+  .page-header {
+    background: var(--ink);
+    padding: 56px 60px 48px;
+    border-bottom: 2px solid var(--red);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::after {
+    content: 'TUTORIAL';
+    position: absolute;
+    right: 40px;
+    bottom: -20px;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 120px;
+    font-weight: 800;
+    color: rgba(255,255,255,0.03);
+    letter-spacing: -4px;
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  .page-header-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .page-header-tag::before {
+    content: '';
+    width: 24px;
+    height: 1.5px;
+    background: var(--red);
+  }
+
+  .page-header h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--paper);
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+  }
+
+  .page-header-sub {
+    font-size: 14px;
+    color: #7a6e5f;
+    font-weight: 300;
+    max-width: 500px;
+    line-height: 1.8;
+  }
+
+  /* ─── MAIN ─── */
+  main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 72px 60px 100px;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--light-mid);
+    opacity: 0.4;
+  }
+
+  /* ─── VIDEO SECTION ─── */
+  .video-section {
+    margin-bottom: 88px;
+  }
+
+  .video-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 */
+    background: var(--ink);
+    border: 1.5px solid var(--ink);
+    overflow: hidden;
+    box-shadow: 0 12px 48px rgba(26,21,16,0.18);
+  }
+
+  /* 
+    ============================================================
+    YOUTUBE EMBED — REPLACE VIDEO ID
+    Change "YOUR_VIDEO_ID_HERE" to your actual YouTube video ID.
+    Example: for https://www.youtube.com/watch?v=dQw4w9WgXcQ
+             use id="dQw4w9WgXcQ"
+    ============================================================
+  */
+  .video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  /* Placeholder shown before real video is set */
+  .video-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    background: #0f0c09;
+    cursor: pointer;
+  }
+
+  .video-placeholder .play-ring {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid rgba(192,57,43,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    animation: pulse-ring 2.4s ease-in-out infinite;
+  }
+
+  @keyframes pulse-ring {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(192,57,43,0.3); }
+    50% { box-shadow: 0 0 0 16px rgba(192,57,43,0); }
+  }
+
+  .video-placeholder .play-ring svg {
+    width: 28px;
+    height: 28px;
+    fill: var(--red);
+    margin-left: 4px;
+  }
+
+  .video-placeholder-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #4a4038;
+  }
+
+  .video-placeholder-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #3a3028;
+    letter-spacing: 1px;
+  }
+
+  .video-caption {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .video-caption-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--mid);
+    letter-spacing: 1px;
+  }
+
+  .video-caption-duration {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--light-mid);
+    border: 1px solid var(--light-mid);
+    padding: 3px 10px;
+    border-radius: 2px;
+    opacity: 0.6;
+  }
+
+  /* ─── STEPS GUIDE ─── */
+  .guide-section {}
+
+  .steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 0;
+    position: relative;
+  }
+
+  /* Vertical connector line */
+  .step:not(:last-child) .step-num-col::after {
+    content: '';
+    position: absolute;
+    left: 35px;
+    top: 72px;
+    bottom: 0;
+    width: 1.5px;
+    background: var(--step-line);
+  }
+
+  .step-num-col {
+    position: relative;
+    padding-top: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .step-num {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--paper);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-num.red {
+    background: var(--red);
+  }
+
+  .step-body {
+    padding: 0 0 64px 28px;
+  }
+
+  .step-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 6px;
+  }
+
+  .step-title-jp {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+    line-height: 1.4;
+  }
+
+  .step-title-en {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--mid);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .step-desc {
+    font-size: 14px;
+    line-height: 2;
+    color: #4a4038;
+    font-weight: 300;
+    margin-bottom: 24px;
+    max-width: 580px;
+  }
+
+  /* ─── SCREENSHOT PLACEHOLDER ─── */
+  /*
+    ============================================================
+    SCREENSHOT PLACEHOLDERS
+    Replace each .screenshot-placeholder with an <img> tag:
+    <img src="your-screenshot.png" alt="Step description" class="screenshot">
+    ============================================================
+  */
+  .screenshot-placeholder {
+    width: 100%;
+    border: 1.5px dashed var(--light-mid);
+    border-radius: 3px;
+    background: linear-gradient(135deg, #ede8dc, #e4ddd0);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: default;
+  }
+
+  .screenshot-placeholder.tall { height: 320px; }
+  .screenshot-placeholder.medium { height: 240px; }
+  .screenshot-placeholder.short { height: 180px; }
+
+  /* Simulated window chrome */
+  .screenshot-placeholder::before {
+    content: '● ● ●';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 32px;
+    background: #d8d0bc;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    font-size: 9px;
+    letter-spacing: 5px;
+    color: #b8b0a0;
+    line-height: 32px;
+    border-bottom: 1px solid #c8c0ac;
+  }
+
+  .screenshot-placeholder::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 8px,
+      rgba(0,0,0,0.015) 8px,
+      rgba(0,0,0,0.015) 9px
+    );
+    pointer-events: none;
+  }
+
+  .ss-icon {
+    width: 40px;
+    height: 40px;
+    color: var(--light-mid);
+    opacity: 0.7;
+    margin-top: 20px;
+  }
+
+  .ss-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--light-mid);
+    text-align: center;
+  }
+
+  .ss-sublabel {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: #c4b99a;
+    opacity: 0.7;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  /* Click indicator overlays on screenshots */
+  .click-indicator {
+    position: relative;
+    display: inline-block;
+  }
+
+  .screenshot-with-annotations {
+    position: relative;
+    width: 100%;
+  }
+
+  /* Annotation callout below screenshot */
+  .annotation {
+    margin-top: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(192,57,43,0.06);
+    border-left: 3px solid var(--red);
+    border-radius: 0 2px 2px 0;
+  }
+
+  .annotation-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    background: var(--red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+
+  .annotation-icon svg {
+    width: 10px;
+    height: 10px;
+    fill: white;
+  }
+
+  .annotation-text {
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: #5a4a40;
+    font-weight: 300;
+  }
+
+  .annotation-text strong {
+    font-weight: 700;
+    color: var(--red);
+  }
+
+  /* Two-column screenshot layout */
+  .ss-duo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* Tip box */
+  .tip-box {
+    margin-top: 20px;
+    padding: 16px 20px;
+    border: 1px solid var(--gold);
+    border-radius: 2px;
+    background: rgba(184,134,11,0.04);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .tip-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+
+  .tip-text {
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: #5a4a38;
+    font-weight: 300;
+  }
+
+  /* ─── FOOTER ─── */
+  .page-footer {
+    border-top: 1.5px solid var(--ink);
+    padding: 28px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--aged);
+  }
+
+  .footer-logo {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -1px;
+    text-decoration: none;
+  }
+
+  .footer-logo span { color: var(--red); }
+
+  .footer-nav {
+    display: flex;
+    gap: 28px;
+  }
+
+  .footer-nav a {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-nav a:hover { color: var(--ink); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .page-header { animation: fadeUp 0.5s ease both; }
+  .video-section { animation: fadeUp 0.5s 0.1s ease both; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 0 24px; }
+    .nav-links { gap: 18px; }
+    .page-header { padding: 40px 24px 36px; }
+    .page-header h1 { font-size: 34px; }
+    main { padding: 48px 24px 80px; }
+    .step { grid-template-columns: 52px 1fr; }
+    .step:not(:last-child) .step-num-col::after { left: 25px; }
+    .step-num { width: 38px; height: 38px; font-size: 15px; }
+    .step-body { padding: 0 0 48px 16px; }
+    .ss-duo { grid-template-columns: 1fr; }
+    .page-footer { flex-direction: column; gap: 16px; padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="kojipdf-homepage.html" class="nav-logo">Koji<span>PDF</span></a>
+  <ul class="nav-links">
+    <li><a href="kojipdf-homepage.html">ホーム / Home</a></li>
+    <li><a href="#" class="active">チュートリアル / Tutorial</a></li>
+    <li><a href="https://github.com/Code4Construct/kojiPDFv150" target="_blank">GitHub</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-tag">使い方ガイド</div>
+  <h1>チュートリアル<br><span style="font-size:0.58em; color:#7a6e5f; font-weight:400; letter-spacing:0;">How to use KojiPDF</span></h1>
+  <p class="page-header-sub">動画と画像で分かりやすく解説。インストールからPDF出力まで、ステップごとにご案内します。<br>Follow the steps below — from installation to exporting your merged PDF.</p>
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <!-- ── VIDEO ── -->
+  <div class="video-section">
+    <div class="section-label">動画チュートリアル / Video Tutorial</div>
+
+    <div class="video-wrapper">
+      <!--
+        ============================================================
+        REPLACE YOUR_VIDEO_ID_HERE with your actual YouTube video ID
+        Example: https://www.youtube.com/watch?v=dQw4w9WgXcQ  →  dQw4w9WgXcQ
+        Full tag to use:
+        <iframe
+          src="https://www.youtube.com/embed/YOUR_VIDEO_ID_HERE"
+          title="KojiPDF Tutorial"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen>
+        </iframe>
+        ============================================================
+      -->
+      <div class="video-placeholder">
+        <div class="play-ring">
+          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+        <div class="video-placeholder-label">動画チュートリアル / Video Tutorial</div>
+        <div class="video-placeholder-sub">← YouTube の動画IDをここに設定してください → Replace YOUR_VIDEO_ID_HERE</div>
+      </div>
+    </div>
+
+    <div class="video-caption">
+      <span class="video-caption-text">KojiPDF v1.5.0 — 完全チュートリアル / Full walkthrough</span>
+      <span class="video-caption-duration">00:00 — placeholder</span>
+    </div>
+  </div>
+
+  <!-- ── STEP-BY-STEP GUIDE ── -->
+  <div class="guide-section">
+    <div class="section-label">ステップガイド / Step-by-Step Guide</div>
+
+    <div class="steps-list">
+
+      <!-- STEP 1 -->
+      <div class="step">
+        <div class="step-num-col">
+          <div class="step-num red">1</div>
+        </div>
+        <div class="step-body">
+          <div class="step-tag">Step 01</div>
+          <div class="step-title-jp">アプリを起動する</div>
+          <div class="step-title-en">Launch the Application</div>
+          <p class="step-desc">
+            インストール後、デスクトップのショートカットまたはスタートメニューから KojiPDF を起動します。<br>
+            After installation, launch KojiPDF from the desktop shortcut or Start menu.
+          </p>
+
+          <div class="screenshot-placeholder tall">
+            <svg class="ss-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            <div class="ss-label">スクリーンショット / Screenshot</div>
+            <div class="ss-sublabel">アプリ起動画面 · App launch screen</div>
+          </div>
+          <div class="annotation">
+            <div class="annotation-icon"><svg viewBox="0 0 10 10"><polygon points="2,1 8,5 2,9"/></svg></div>
+            <div class="annotation-text"><strong>ここをクリック / Click here</strong> — デスクトップのアイコンをダブルクリックしてアプリを起動 · Double-click the desktop icon to open the app.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step">
+        <div class="step-num-col">
+          <div class="step-num">2</div>
+        </div>
+        <div class="step-body">
+          <div class="step-tag">Step 02</div>
+          <div class="step-title-jp">フォルダを選択する</div>
+          <div class="step-title-en">Select Your Folder</div>
+          <p class="step-desc">
+            「フォルダを選択」ボタンをクリックし、結合したいPDFファイルが入ったフォルダを選択します。サブフォルダも自動的に検索されます。<br>
+            Click the "Select Folder" button and choose the folder containing the PDFs you want to merge. Subfolders are scanned automatically.
+          </p>
+
+          <div class="screenshot-placeholder tall">
+            <svg class="ss-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            <div class="ss-label">スクリーンショット / Screenshot</div>
+            <div class="ss-sublabel">フォルダ選択ダイアログ · Folder selection dialog</div>
+          </div>
+          <div class="annotation">
+            <div class="annotation-icon"><svg viewBox="0 0 10 10"><polygon points="2,1 8,5 2,9"/></svg></div>
+            <div class="annotation-text"><strong>「フォルダを選択」ボタン / "Select Folder" button</strong> — ウィンドウ上部のボタンをクリックしてダイアログを開く · Click the button at the top of the window to open the folder browser.</div>
+          </div>
+
+          <div class="tip-box">
+            <div class="tip-label">Tip</div>
+            <div class="tip-text">フォルダ構造がそのままPDFのしおり階層になります。整理されたフォルダ構成を用意しておきましょう。<br>Your folder structure becomes the bookmark hierarchy in the merged PDF — organize your folders before merging.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step">
+        <div class="step-num-col">
+          <div class="step-num">3</div>
+        </div>
+        <div class="step-body">
+          <div class="step-tag">Step 03</div>
+          <div class="step-title-jp">ファイルリストを確認する</div>
+          <div class="step-title-en">Review the File List</div>
+          <p class="step-desc">
+            選択したフォルダ内のPDFファイルが一覧表示されます。結合順序やしおりの構造を確認してください。Word・Excel・PowerPointファイルは自動的にPDFに変換されます。<br>
+            All PDF files in the folder are listed. Review the merge order and bookmark structure. Word, Excel, and PowerPoint files are automatically converted to PDF.
+          </p>
+
+          <div class="ss-duo">
+            <div>
+              <div class="screenshot-placeholder medium">
+                <svg class="ss-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                <div class="ss-label">ファイルリスト</div>
+                <div class="ss-sublabel">File list view</div>
+              </div>
+            </div>
+            <div>
+              <div class="screenshot-placeholder medium">
+                <svg class="ss-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h6l2 3H3zM3 6v13h18V9l-4-3H13"/><path d="M7 13h10M7 17h6"/></svg>
+                <div class="ss-label">しおりプレビュー</div>
+                <div class="ss-sublabel">Bookmark preview</div>
+              </div>
+            </div>
+          </div>
+          <div class="annotation">
+            <div class="annotation-icon"><svg viewBox="0 0 10 10"><polygon points="2,1 8,5 2,9"/></svg></div>
+            <div class="annotation-text"><strong>左側：ファイルリスト / Left: File list</strong> — 結合されるファイルの順序を確認できます · Check the order files will be merged. &nbsp;&nbsp;<strong>右側：しおり構造 / Right: Bookmark tree</strong> — 最終的なPDFのナビゲーション構造 · Preview of the final PDF navigation.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step">
+        <div class="step-num-col">
+          <div class="step-num">4</div>
+        </div>
+        <div class="step-body">
+          <div class="step-tag">Step 04</div>
+          <div class="step-title-jp">出力設定をする</div>
+          <div class="step-title-en">Configure Output Settings</div>
+          <p class="step-desc">
+            出力ファイル名と保存先フォルダを設定します。必要に応じてPDFの品質やしおりの設定を変更できます。<br>
+            Set the output file name and destination folder. You can also adjust PDF quality and bookmark options as needed.
+          </p>
+
+          <div class="screenshot-placeholder medium">
+            <svg class="ss-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/><path d="M14.83 9.17a4 4 0 0 1 0 5.66M9.17 9.17a4 4 0 0 0 0 5.66"/></svg>
+            <div class="ss-label">スクリーンショット / Screenshot</div>
+            <div class="ss-sublabel">出力設定パネル · Output settings panel</div>
+          </div>
+          <div class="annotation">
+            <div class="annotation-icon"><svg viewBox="0 0 10 10"><polygon points="2,1 8,5 2,9"/></svg></div>
+            <div class="annotation-text"><strong>出力先を選択 / Choose destination</strong> — 「参照」ボタンで保存先フォルダを指定し、ファイル名を入力してください · Click "Browse" to set the save location and type your desired file name.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="step">
+        <div class="step-num-col">
+          <div class="step-num red">5</div>
+        </div>
+        <div class="step-body">
+          <div class="step-tag">Step 05</div>
+          <div class="step-title-jp">PDFを生成する</div>
+          <div class="step-title-en">Generate the PDF</div>
+          <p class="step-desc">
+            「PDF生成」ボタンをクリックすると処理が開始されます。ファイル数によって処理時間が異なります。完了するとダイアログで通知されます。<br>
+            Click the "Generate PDF" button to start processing. Time varies by file count. A dialog will notify you when complete.
+          </p>
+
+          <div class="screenshot-placeholder tall">
+            <svg class="ss-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <div class="ss-label">スクリーンショット / Screenshot</div>
+            <div class="ss-sublabel">処理中の画面 · Processing / progress screen</div>
+          </div>
+          <div class="annotation">
+            <div class="annotation-icon"><svg viewBox="0 0 10 10"><polygon points="2,1 8,5 2,9"/></svg></div>
+            <div class="annotation-text"><strong>「PDF生成」ボタン / "Generate PDF" button</strong> — ウィンドウ下部の大きなボタンをクリック。プログレスバーで進捗を確認できます · Click the large button at the bottom. A progress bar shows the current status.</div>
+          </div>
+
+          <div class="tip-box">
+            <div class="tip-label">Note</div>
+            <div class="tip-text">Word・Excel・PowerPointファイルが含まれる場合、Microsoft Officeがインストールされている必要があります。変換は自動で行われます。<br>If Office files are included, Microsoft Office must be installed. Conversion happens automatically in the background.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 6 -->
+      <div class="step">
+        <div class="step-num-col">
+          <div class="step-num">6</div>
+        </div>
+        <div class="step-body">
+          <div class="step-tag">Step 06</div>
+          <div class="step-title-jp">完成したPDFを確認する</div>
+          <div class="step-title-en">Review the Output PDF</div>
+          <p class="step-desc">
+            生成が完了したら、PDFビューアで開いてしおりの構造を確認します。フォルダ名が親しおり、ファイル名が子しおりとして表示されます。<br>
+            Once complete, open the PDF in your viewer to check the bookmark structure. Folder names appear as parent bookmarks; file names as child bookmarks.
+          </p>
+
+          <div class="screenshot-placeholder tall">
+            <svg class="ss-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            <div class="ss-label">スクリーンショット / Screenshot</div>
+            <div class="ss-sublabel">完成PDF・しおりパネル · Final PDF with bookmark panel</div>
+          </div>
+          <div class="annotation">
+            <div class="annotation-icon"><svg viewBox="0 0 10 10"><polygon points="2,1 8,5 2,9"/></svg></div>
+            <div class="annotation-text"><strong>しおりパネル / Bookmark panel</strong> — PDFビューアの左側にしおりパネルを表示して、階層構造を確認してください · Open the bookmark/outline panel on the left side of your PDF viewer to verify the hierarchy.</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /steps-list -->
+  </div><!-- /guide-section -->
+
+</main>
+
+<!-- FOOTER -->
+<footer class="page-footer">
+  <a href="kojipdf-homepage.html" class="footer-logo">Koji<span>PDF</span></a>
+  <nav class="footer-nav">
+    <a href="kojipdf-homepage.html">ホーム / Home</a>
+    <a href="https://github.com/Code4Construct/kojiPDFv150" target="_blank">GitHub</a>
+    <a href="https://github.com/Code4Construct/kojiPDFv150/releases/download/v1.5.0/kojiPDFv150setup.exe">ダウンロード</a>
+  </nav>
+</footer>
+
+</body>
+</html>
