@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KojiPDF - 工事検査用PDF作成ツール</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=DM+Mono:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #062a46;
+    --ink-2: #0b4268;
+    --paper: #fff4d6;
+    --surface: #fffaf0;
+    --aged: #f2c96d;
+    --red: #b5143f;
+    --gold: #e9bf60;
+    --mid: #466172;
+    --light-mid: #93a9b6;
+    --line: #d7b865;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  nav {
+    background: var(--ink);
+    border-bottom: 1px solid var(--ink-2);
+    padding: 0 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--paper);
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .nav-icon {
+    width: 46px;
+    height: 46px;
+    object-fit: contain;
+  }
+
+  .nav-logo {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+
+  .nav-logo span { color: var(--red); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--light-mid);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--red); }
+
+  .language-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .lang-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,244,214,0.35);
+    background: #f6fbff;
+    color: var(--ink);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+  }
+
+  .lang-btn:hover { transform: translateY(-1px); }
+
+  .lang-btn.active {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(233,191,96,0.18);
+  }
+
+  .lang-btn.en { background: #f6fbff; }
+
+  .lang-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+  }
+
+  .hero {
+    min-height: calc(88vh - 64px);
+    padding: 74px 60px 56px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background:
+      linear-gradient(90deg, rgba(6,42,70,0.96) 0%, rgba(6,42,70,0.88) 42%, rgba(6,42,70,0.50) 68%, rgba(6,42,70,0.20) 100%),
+      url("japanese.png") right center / min(66vw, 900px) auto no-repeat,
+      var(--ink);
+    border-bottom: 4px solid var(--red);
+  }
+
+  .hero::after {
+    content: 'kojiPDF';
+    position: absolute;
+    right: 34px;
+    bottom: -22px;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 128px;
+    font-weight: 800;
+    color: rgba(255,255,255,0.05);
+    letter-spacing: -5px;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    width: min(620px, 100%);
+    position: relative;
+    z-index: 1;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 26px;
+    height: 2px;
+    background: var(--gold);
+  }
+
+  h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 800;
+    line-height: 0.95;
+    color: var(--paper);
+    letter-spacing: -2px;
+    margin-bottom: 22px;
+  }
+
+  h1 span { color: var(--red); }
+
+  .pdf-mark {
+    position: relative;
+    display: inline-block;
+  }
+
+  .pdf-mark::after {
+    content: '';
+    position: absolute;
+    width: 0.88em;
+    height: 0.50em;
+    right: -0.24em;
+    top: -0.04em;
+    background: url("koji-helmet.png") center / contain no-repeat;
+    filter: saturate(0.78) brightness(0.88) drop-shadow(0 8px 10px rgba(0,0,0,0.24));
+    pointer-events: none;
+    transform: rotate(18deg);
+    transform-origin: 74% 70%;
+  }
+
+  .hero-copy {
+    max-width: 560px;
+    color: #dbe8ee;
+    font-size: 16px;
+    line-height: 2;
+    margin-bottom: 30px;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .btn {
+    min-height: 44px;
+    padding: 0 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: transform 0.2s, background 0.2s, color 0.2s, border-color 0.2s;
+  }
+
+  .btn:hover { transform: translateY(-1px); }
+
+  .btn-primary {
+    background: var(--red);
+    color: white;
+    box-shadow: 0 10px 28px rgba(181,20,63,0.25);
+  }
+
+  .btn-secondary {
+    border-color: rgba(233,191,96,0.7);
+    color: var(--gold);
+    background: rgba(233,191,96,0.08);
+  }
+
+  .section { padding: 82px 60px; }
+
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .intro { background: var(--surface); }
+
+  .story {
+    background: var(--paper);
+    border-top: 1px solid rgba(6,42,70,0.08);
+    border-bottom: 1px solid rgba(6,42,70,0.08);
+  }
+
+  .transform {
+    background: var(--surface);
+    border-top: 1px solid rgba(6,42,70,0.08);
+  }
+
+  .transform-head {
+    max-width: 760px;
+    margin-bottom: 28px;
+  }
+
+  .transform h2 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(30px, 4vw, 48px);
+    line-height: 1.25;
+    letter-spacing: -1px;
+    margin-bottom: 14px;
+  }
+
+  .transform p {
+    color: #24465c;
+    line-height: 2;
+    font-size: 15px;
+  }
+
+  .transform-visual img {
+    width: 100%;
+    display: block;
+    border: 1px solid rgba(6,42,70,0.16);
+    box-shadow: 0 18px 50px rgba(6,42,70,0.18);
+  }
+
+  .story-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(320px, 1.08fr);
+    gap: 34px;
+    align-items: center;
+  }
+
+  .story-panel {
+    border-left: 4px solid var(--red);
+    padding: 6px 0 6px 28px;
+  }
+
+  .story-visual img {
+    width: 100%;
+    display: block;
+    border: 1px solid rgba(6,42,70,0.16);
+    box-shadow: 0 18px 50px rgba(6,42,70,0.18);
+  }
+
+  .story h2 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(30px, 4vw, 48px);
+    line-height: 1.25;
+    letter-spacing: -1px;
+    margin-bottom: 18px;
+  }
+
+  .story p {
+    color: #24465c;
+    line-height: 2.05;
+    font-size: 15px;
+  }
+
+  .story p + p {
+    margin-top: 18px;
+  }
+
+  .intro-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+    gap: 42px;
+    align-items: center;
+  }
+
+  .intro h2,
+  .story h2,
+  .workflow h2,
+  .video h2 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(30px, 4vw, 48px);
+    line-height: 1.25;
+    letter-spacing: -1px;
+    margin-bottom: 18px;
+  }
+
+  .intro p,
+  .workflow-copy,
+  .video-copy {
+    color: #24465c;
+    line-height: 2;
+    font-size: 15px;
+  }
+
+  .app-shot {
+    width: 100%;
+    display: block;
+    border: 1px solid #bfd0d8;
+    box-shadow: 0 18px 50px rgba(6,42,70,0.18);
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 34px;
+  }
+
+  .feature {
+    background: var(--paper);
+    border: 1px solid rgba(6,42,70,0.14);
+    border-radius: 6px;
+    padding: 22px;
+  }
+
+  .feature-mark {
+    font-family: 'DM Mono', monospace;
+    color: var(--red);
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  .feature h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .feature p {
+    color: #24465c;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .workflow { background: var(--paper); }
+
+  .workflow-head {
+    max-width: 720px;
+    margin-bottom: 38px;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .step {
+    min-height: 190px;
+    padding: 24px;
+    background: var(--surface);
+  }
+
+  .step-num {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 800;
+    margin-bottom: 18px;
+  }
+
+  .step:nth-child(4) .step-num { background: var(--red); }
+
+  .step h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .step p {
+    color: #24465c;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .video {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .video .section-label { color: var(--gold); }
+  .video .section-label::after { background: var(--ink-2); }
+  .video-copy { color: #dbe8ee; max-width: 680px; margin-bottom: 30px; }
+
+  .video-frame {
+    width: 100%;
+    background: #041b2f;
+    border: 1px solid var(--ink-2);
+    box-shadow: 0 18px 50px rgba(0,0,0,0.25);
+  }
+
+  .video-frame video {
+    width: 100%;
+    display: block;
+  }
+
+  .download {
+    background: var(--aged);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .download-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+  }
+
+  .download h2 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    letter-spacing: -1px;
+    margin-bottom: 10px;
+  }
+
+  .download p {
+    color: #24465c;
+    line-height: 1.8;
+  }
+
+  footer {
+    background: var(--ink);
+    padding: 28px 60px;
+    color: var(--light-mid);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo {
+    color: var(--paper);
+    text-decoration: none;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 20px;
+    font-weight: 800;
+  }
+
+  .footer-logo span { color: var(--red); }
+
+  .footer-nav {
+    display: flex;
+    gap: 26px;
+  }
+
+  .footer-nav a {
+    color: var(--light-mid);
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .footer-nav a:hover { color: var(--gold); }
+
+  @media (max-width: 960px) {
+    nav { padding: 12px 24px; align-items: flex-start; flex-direction: column; }
+    .nav-right { width: 100%; justify-content: space-between; gap: 18px; }
+    .nav-links { gap: 18px; flex-wrap: wrap; }
+    .hero {
+      padding: 58px 24px 44px;
+      background:
+        linear-gradient(180deg, rgba(6,42,70,0.96), rgba(6,42,70,0.86)),
+        url("japanese.png") center bottom / 780px auto no-repeat,
+        var(--ink);
+    }
+    .hero-content { width: 100%; }
+    .section { padding: 58px 24px; }
+    .story-layout { grid-template-columns: 1fr; }
+    .story-panel { padding-left: 20px; }
+    .intro-grid { grid-template-columns: 1fr; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .download-row { align-items: flex-start; flex-direction: column; }
+    footer { padding: 24px; flex-direction: column; gap: 16px; }
+  }
+
+  @media (max-width: 560px) {
+    nav { padding: 10px 18px; }
+    .nav-right { align-items: flex-start; flex-direction: column; }
+    .hero { min-height: 78vh; padding: 48px 18px 40px; }
+    .hero::after { font-size: 70px; right: 18px; }
+    .hero-copy { font-size: 14px; }
+    .section { padding: 48px 18px; }
+    .story-panel { padding-left: 16px; }
+    .steps { grid-template-columns: 1fr; }
+    .btn { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="kojipdf-homepage.html" class="nav-brand">
+    <img src="iconsmall_v2.png" alt="KojiPDF" class="nav-icon">
+    <span class="nav-logo">Koji<span>PDF</span></span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="kojipdf-homepage.html" class="active" data-ja="ホーム" data-en="Home">ホーム</a></li>
+      <li><a href="kojiPDF.html" data-ja="チュートリアル" data-en="Tutorial">チュートリアル</a></li>
+      <li><a href="https://github.com/Code4Construct/kojiPDFv150" target="_blank">GitHub</a></li>
+    </ul>
+    <div class="language-toggle" aria-label="Language selector">
+      <button type="button" class="lang-btn ja active" data-lang="ja" aria-label="日本語">
+        <img src="flag_jp.svg" alt="">
+      </button>
+      <button type="button" class="lang-btn en" data-lang="en" aria-label="English">
+        <img src="flag_gb.svg" alt="">
+      </button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-content">
+    <div class="eyebrow" data-ja="工事検査用PDFツール" data-en="Construction PDF Tool">工事検査用PDFツール</div>
+    <h1>Koji<span class="pdf-mark">PDF</span></h1>
+    <p class="hero-copy" data-ja="工事検査用のPDFを、フォルダ選択から一気に作成。PDFを結合し、フォルダ構造をしおりとして追加し、Word・Excel・PowerPointのPDF変換にも対応します。" data-en="Create inspection-ready construction PDFs from a folder in one smooth flow. KojiPDF merges PDFs, adds bookmarks from your folder structure, and can convert Word, Excel, and PowerPoint files to PDF.">
+      工事検査用のPDFを、フォルダ選択から一気に作成。PDFを結合し、フォルダ構造をしおりとして追加し、Word・Excel・PowerPointのPDF変換にも対応します。
+    </p>
+    <div class="hero-actions">
+      <a href="https://github.com/Code4Construct/kojiPDFv150/releases" class="btn btn-primary" target="_blank" data-ja="ダウンロード" data-en="Download">ダウンロード</a>
+      <a href="kojiPDF.html" class="btn btn-secondary" data-ja="使い方を見る" data-en="View Tutorial">使い方を見る</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="section intro">
+    <div class="section-inner">
+      <div class="section-label" data-ja="できること" data-en="What It Does">できること</div>
+      <div class="intro-grid">
+        <div>
+          <h2 data-ja="検査資料を、探しやすい一つのPDFへ。" data-en="Turn inspection documents into one easy-to-browse PDF.">検査資料を、探しやすい一つのPDFへ。</h2>
+          <p data-ja="KojiPDFは、工事施工中に扱う電子データを検査・確認しやすいPDFにまとめるためのツールです。選択したフォルダ内のPDFを結合し、ファイル名とフォルダ名を使ってしおり付きPDFとして保存します。" data-en="KojiPDF helps organize electronic construction documents into a PDF that is easier to inspect and review. It merges PDFs inside the selected folder and saves them with bookmarks based on file and folder names.">
+            KojiPDFは、工事施工中に扱う電子データを検査・確認しやすいPDFにまとめるためのツールです。選択したフォルダ内のPDFを結合し、ファイル名とフォルダ名を使ってしおり付きPDFとして保存します。
+          </p>
+          <div class="feature-grid">
+            <div class="feature">
+              <div class="feature-mark">01</div>
+              <h3 data-ja="フォルダ単位で結合" data-en="Merge by Folder">フォルダ単位で結合</h3>
+              <p data-ja="サブフォルダまで読み取り、資料一式をまとめて処理できます。" data-en="Scan subfolders and process a complete document set at once.">サブフォルダまで読み取り、資料一式をまとめて処理できます。</p>
+            </div>
+            <div class="feature">
+              <div class="feature-mark">02</div>
+              <h3 data-ja="しおりを自動作成" data-en="Automatic Bookmarks">しおりを自動作成</h3>
+              <p data-ja="フォルダ名を親しおり、ファイル名を子しおりとして追加します。" data-en="Use folder names as parent bookmarks and file names as child bookmarks.">フォルダ名を親しおり、ファイル名を子しおりとして追加します。</p>
+            </div>
+            <div class="feature">
+              <div class="feature-mark">03</div>
+              <h3 data-ja="Office変換に対応" data-en="Office Conversion">Office変換に対応</h3>
+              <p data-ja="Word・Excel・PowerPointをPDFに変換してから結合できます。" data-en="Convert Word, Excel, and PowerPoint files to PDF before merging.">Word・Excel・PowerPointをPDFに変換してから結合できます。</p>
+            </div>
+          </div>
+        </div>
+        <img src="japanese.png" alt="KojiPDF v1.6.0 application screen" class="app-shot">
+      </div>
+    </div>
+  </section>
+
+  <section class="section transform">
+    <div class="section-inner">
+      <div class="section-label" data-ja="変換イメージ" data-en="Conversion Image">変換イメージ</div>
+      <div class="transform-head">
+        <h2 data-ja="複雑なフォルダも、しおり付きPDFへ。" data-en="Complex folders become one bookmarked PDF.">複雑なフォルダも、しおり付きPDFへ。</h2>
+        <p data-ja="各フォルダに複雑に入っているPDF、Word、Excel、PowerPointファイルを整理し、フォルダ構造を活かしたしおり付きPDFとしてまとめます。" data-en="PDF, Word, Excel, and PowerPoint files stored across complex folders are organized into one PDF with bookmarks that preserve the folder structure.">
+          各フォルダに複雑に入っているPDF、Word、Excel、PowerPointファイルを整理し、フォルダ構造を活かしたしおり付きPDFとしてまとめます。
+        </p>
+      </div>
+      <figure class="transform-visual">
+        <img
+          src="folder-files-to-bookmarked-pdf-ja.png"
+          alt="複雑なフォルダ内のPDF、Word、Excel、PowerPointがしおり付きPDFになる図"
+          data-ja-src="folder-files-to-bookmarked-pdf-ja.png"
+          data-en-src="folder-files-to-bookmarked-pdf.png"
+          data-ja-alt="複雑なフォルダ内のPDF、Word、Excel、PowerPointがしおり付きPDFになる図"
+          data-en-alt="Complex folders containing PDF, Word, Excel, and PowerPoint files becoming one bookmarked PDF">
+      </figure>
+    </div>
+  </section>
+
+  <section class="section story">
+    <div class="section-inner">
+      <div class="section-label" data-ja="誕生秘話" data-en="Origin Story">誕生秘話</div>
+      <div class="story-layout">
+        <div class="story-panel">
+          <h2 data-ja="紙に戻らざるを得なかった悔しさから。" data-en="Born from the frustration of having to go back to paper.">紙に戻らざるを得なかった悔しさから。</h2>
+          <p data-ja="某市の工事関係書類を電子化したものの、何万枚もの資料の中から必要な書類を瞬時に探し出すことができず、結局は紙の書類で検査せざるを得なかった経験がありました。そのとき、当時はまだ今ほど賢くなかった生成AIを使いながら、ファイル名や構造化されたフォルダをPDFのしおりに変換すれば、工事検査で本当に使える電子書類になるのではないかと思いつきました。そこから夢中で作り上げたのがKojiPDFです。" data-en="After digitizing construction documents for a certain city, there was still a painful problem: among tens of thousands of pages, the needed document could not be found instantly, so the inspection had to fall back to paper. While experimenting with generative AI, which was still far less capable at the time, the idea emerged: if file names and structured folders could become PDF bookmarks, the digital documents might finally become useful for real construction inspections. KojiPDF was built from that spark, with a lot of focused, late-night momentum.">
+            某市の工事関係書類を電子化したものの、何万枚もの資料の中から必要な書類を瞬時に探し出すことができず、結局は紙の書類で検査せざるを得なかった経験がありました。そのとき、当時はまだ今ほど賢くなかった生成AIを使いながら、ファイル名や構造化されたフォルダをPDFのしおりに変換すれば、工事検査で本当に使える電子書類になるのではないかと思いつきました。そこから夢中で作り上げたのがKojiPDFです。
+          </p>
+          <p data-ja="後になって思いがけず、同じ仕組みが大量の資料を扱うペーパーレス会議にも役立つことが分かりました。そこで、Word・Excel・PowerPointなどを自動でPDFに変換する機能、用紙サイズを統一する機能、資料の邪魔になりにくい透過文字のページ番号などを追加し、検査資料だけでなく会議資料も扱いやすい形へ育てていきました。" data-en="Later, it unexpectedly became clear that the same idea was also useful for paperless meetings with large document sets. That led to additional features: automatic conversion from Word, Excel, and PowerPoint to PDF, unified paper size settings, and translucent page numbers that do not get in the way of the content. KojiPDF gradually grew from an inspection tool into something that also makes meeting materials easier to handle.">
+            後になって思いがけず、同じ仕組みが大量の資料を扱うペーパーレス会議にも役立つことが分かりました。そこで、Word・Excel・PowerPointなどを自動でPDFに変換する機能、用紙サイズを統一する機能、資料の邪魔になりにくい透過文字のページ番号などを追加し、検査資料だけでなく会議資料も扱いやすい形へ育てていきました。
+          </p>
+        </div>
+        <figure class="story-visual">
+          <img src="origin-story-construction-pdf-overload.png" alt="A stressed construction worker facing many open PDF files on a computer screen">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section workflow">
+    <div class="section-inner">
+      <div class="section-label" data-ja="操作の流れ" data-en="Workflow">操作の流れ</div>
+      <div class="workflow-head">
+        <h2 data-ja="操作は4ステップ。" data-en="Four simple steps.">操作は4ステップ。</h2>
+        <p class="workflow-copy" data-ja="フォルダを選び、保存先を決め、必要な結合設定を選んだら作成するだけ。ページ番号、しおり表示、用紙サイズ変更などの設定も同じ画面で調整できます。" data-en="Choose a folder, set the output PDF, adjust the merge options, and create. Page numbers, bookmark display, paper size conversion, and Office conversion can all be configured from the same screen.">
+          フォルダを選び、保存先を決め、必要な結合設定を選んだら作成するだけ。ページ番号、しおり表示、用紙サイズ変更などの設定も同じ画面で調整できます。
+        </p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3 data-ja="フォルダ選択" data-en="Select Folder">フォルダ選択</h3>
+          <p data-ja="結合したいPDFやOfficeファイルが入ったフォルダを選択します。" data-en="Select the folder containing the PDFs or Office files you want to merge.">結合したいPDFやOfficeファイルが入ったフォルダを選択します。</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3 data-ja="出力PDF指定" data-en="Set Output PDF">出力PDF指定</h3>
+          <p data-ja="保存先と完成PDFのファイル名を指定します。" data-en="Choose the destination and file name for the finished PDF.">保存先と完成PDFのファイル名を指定します。</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3 data-ja="結合設定" data-en="Configure Options">結合設定</h3>
+          <p data-ja="しおり、ページ番号、用紙サイズ、Office変換の設定を調整します。" data-en="Adjust bookmarks, page numbers, paper size, and Office conversion settings.">しおり、ページ番号、用紙サイズ、Office変換の設定を調整します。</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h3 data-ja="作成" data-en="Create">作成</h3>
+          <p data-ja="赤い作成ボタンで処理を開始。完了後、一つのPDFとして保存されます。" data-en="Start processing with the red create button. When complete, everything is saved as one PDF.">赤い作成ボタンで処理を開始。完了後、一つのPDFとして保存されます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section video">
+    <div class="section-inner">
+      <div class="section-label" data-ja="プレビュー" data-en="Preview">プレビュー</div>
+      <h2 data-ja="実際の動きも確認できます。" data-en="See KojiPDF in action.">実際の動きも確認できます。</h2>
+      <p class="video-copy" data-ja="同じフォルダ内の動画素材を使って、ホームページ上でKojiPDFの操作イメージを見られるようにしました。詳しい手順はチュートリアルページへ進んでください。" data-en="This page uses the local video file so you can preview the KojiPDF workflow directly on the homepage. For the full walkthrough, open the tutorial page.">
+        同じフォルダ内の動画素材を使って、ホームページ上でKojiPDFの操作イメージを見られるようにしました。詳しい手順はチュートリアルページへ進んでください。
+      </p>
+      <div class="video-frame">
+        <video src="media.mp4" controls preload="metadata" poster="japanese.png"></video>
+      </div>
+    </div>
+  </section>
+
+  <section class="section download">
+    <div class="section-inner download-row">
+      <div>
+        <h2 data-ja="KojiPDFを試す" data-en="Try KojiPDF">KojiPDFを試す</h2>
+        <p data-ja="セットアップ、ソースコード、更新情報はGitHubのリリースページから確認できます。" data-en="Installers, source code, and release updates are available from the GitHub releases page.">セットアップ、ソースコード、更新情報はGitHubのリリースページから確認できます。</p>
+      </div>
+      <a href="https://github.com/Code4Construct/kojiPDFv150/releases" class="btn btn-primary" target="_blank" data-ja="リリースを開く" data-en="Open Releases">リリースを開く</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <a href="kojipdf-homepage.html" class="footer-logo">Koji<span>PDF</span></a>
+  <div class="footer-nav">
+    <a href="kojiPDF.html" data-ja="チュートリアル" data-en="Tutorial">チュートリアル</a>
+    <a href="https://github.com/Code4Construct/kojiPDFv150" target="_blank">GitHub</a>
+    <a href="https://github.com/Code4Construct/kojiPDFv150/releases" target="_blank" data-ja="ダウンロード" data-en="Download">ダウンロード</a>
+  </div>
+</footer>
+
+<script>
+  const titles = {
+    ja: 'KojiPDF - 工事検査用PDF作成ツール',
+    en: 'KojiPDF - Construction Inspection PDF Tool'
+  };
+
+  const setLanguage = (lang) => {
+    document.documentElement.lang = lang;
+    document.title = titles[lang];
+
+    document.querySelectorAll('[data-ja][data-en]').forEach((element) => {
+      element.textContent = element.dataset[lang];
+    });
+
+    document.querySelectorAll('[data-ja-src][data-en-src]').forEach((image) => {
+      image.src = image.dataset[`${lang}Src`];
+      if (image.dataset[`${lang}Alt`]) {
+        image.alt = image.dataset[`${lang}Alt`];
+      }
+    });
+
+    document.querySelectorAll('.lang-btn').forEach((button) => {
+      const isActive = button.dataset.lang === lang;
+      button.classList.toggle('active', isActive);
+      button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+  };
+
+  document.querySelectorAll('.lang-btn').forEach((button) => {
+    button.addEventListener('click', () => setLanguage(button.dataset.lang));
+  });
+
+  setLanguage('ja');
+</script>
+
+</body>
+</html>
