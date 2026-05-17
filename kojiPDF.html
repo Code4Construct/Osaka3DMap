@@ -80,6 +80,13 @@
 
   .nav-logo span { color: var(--red); }
 
+  .nav-version {
+    margin-left: 6px;
+    color: var(--paper) !important;
+    font-size: 0.78em;
+    letter-spacing: -0.04em;
+  }
+
   .nav-right {
     display: flex;
     align-items: center;
@@ -232,52 +239,6 @@
     opacity: 0.4;
   }
 
-  .video-section { margin-bottom: 88px; }
-
-  .video-wrapper {
-    position: relative;
-    width: 100%;
-    padding-bottom: 56.25%;
-    background: var(--ink);
-    border: 1.5px solid var(--ink);
-    overflow: hidden;
-    box-shadow: 0 12px 48px rgba(6,42,70,0.18);
-  }
-
-  .video-wrapper iframe,
-  .video-wrapper video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
-
-  .video-caption {
-    margin-top: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-  }
-
-  .video-caption-text {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--mid);
-    letter-spacing: 1px;
-  }
-
-  .video-caption-duration {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--light-mid);
-    border: 1px solid var(--light-mid);
-    padding: 3px 10px;
-    border-radius: 2px;
-    opacity: 0.8;
-  }
 
   .steps-list {
     display: flex;
@@ -384,6 +345,24 @@
 
   .screenshot-placeholder.tall { height: 320px; }
   .screenshot-placeholder.medium { height: 240px; }
+
+  .tutorial-shot {
+    width: 100%;
+    display: block;
+    border: 1.5px solid var(--ink);
+    box-shadow: 0 12px 36px rgba(6,42,70,0.14);
+    background: white;
+  }
+
+  .tutorial-shot.tall {
+    max-height: 360px;
+    object-fit: contain;
+  }
+
+  .tutorial-shot.medium {
+    max-height: 260px;
+    object-fit: contain;
+  }
 
   .screenshot-placeholder::before {
     content: '● ● ●';
@@ -547,7 +526,6 @@
   }
 
   .page-header { animation: fadeUp 0.5s ease both; }
-  .video-section { animation: fadeUp 0.5s 0.1s ease both; }
 
   @media (max-width: 860px) {
     nav {
@@ -580,7 +558,6 @@
   @media (max-width: 560px) {
     nav { padding: 10px 18px; }
     .nav-right { align-items: flex-start; flex-direction: column; }
-    .video-caption { align-items: flex-start; flex-direction: column; }
   }
 </style>
 </head>
@@ -589,7 +566,7 @@
 <nav>
   <a href="kojipdf-homepage.html" class="nav-brand">
     <img src="iconsmall_v2.png" alt="KojiPDF" class="nav-icon">
-    <span class="nav-logo">Koji<span>PDF</span></span>
+    <span class="nav-logo">Koji<span>PDF</span><span class="nav-version">v2</span></span>
   </a>
   <div class="nav-right">
     <ul class="nav-links">
@@ -611,29 +588,12 @@
 <header class="page-header">
   <div class="page-header-tag" data-ja="使い方ガイド" data-en="How-to Guide">使い方ガイド</div>
   <h1><span data-ja="チュートリアル" data-en="Tutorial">チュートリアル</span></h1>
-  <p class="page-header-sub" data-ja="動画とステップで、KojiPDFの基本操作を確認できます。インストール後の起動から、フォルダ選択、PDF生成、完成ファイルの確認まで順番に進めます。" data-en="Learn the basic KojiPDF workflow with a video and step-by-step guide. Follow the process from launching the app to selecting a folder, generating the PDF, and reviewing the final output.">
-    動画とステップで、KojiPDFの基本操作を確認できます。インストール後の起動から、フォルダ選択、PDF生成、完成ファイルの確認まで順番に進めます。
+  <p class="page-header-sub" data-ja="KojiPDFの基本操作を、ステップごとに確認できます。インストール後の起動から、フォルダ選択、PDF生成、完成ファイルの確認まで順番に進めます。" data-en="Learn the basic KojiPDF workflow step by step. Follow the process from launching the app to selecting a folder, generating the PDF, and reviewing the final output.">
+    KojiPDFの基本操作を、ステップごとに確認できます。インストール後の起動から、フォルダ選択、PDF生成、完成ファイルの確認まで順番に進めます。
   </p>
 </header>
 
 <main>
-  <section class="video-section">
-    <div class="section-label" data-ja="動画チュートリアル" data-en="Video Tutorial">動画チュートリアル</div>
-
-    <div class="video-wrapper">
-      <iframe
-        src="https://www.youtube.com/embed/BCPC91jU5AA"
-        title="KojiPDF Tutorial"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen>
-      </iframe>
-    </div>
-
-    <div class="video-caption">
-      <span class="video-caption-text" data-ja="KojiPDF v1.5.0 - 基本操作の流れ" data-en="KojiPDF v1.5.0 - Basic workflow">KojiPDF v1.5.0 - 基本操作の流れ</span>
-      <span class="video-caption-duration" data-ja="動画" data-en="Video">動画</span>
-    </div>
-  </section>
 
   <section class="guide-section">
     <div class="section-label" data-ja="ステップ別ガイド" data-en="Step-by-Step Guide">ステップ別ガイド</div>
@@ -648,11 +608,7 @@
           <p class="step-desc" data-ja="インストール後、デスクトップのショートカットまたはスタートメニューからKojiPDFを起動します。" data-en="After installation, launch KojiPDF from the desktop shortcut or Start menu.">
             インストール後、デスクトップのショートカットまたはスタートメニューからKojiPDFを起動します。
           </p>
-          <div class="screenshot-placeholder tall">
-            <svg class="ss-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-            <div class="ss-label" data-ja="スクリーンショット" data-en="Screenshot">スクリーンショット</div>
-            <div class="ss-sublabel" data-ja="アプリ起動画面" data-en="App launch screen">アプリ起動画面</div>
-          </div>
+          <img src="tutorial-app-launch.png" alt="KojiPDF app launch screen" class="tutorial-shot tall">
           <div class="annotation">
             <div class="annotation-icon"><svg viewBox="0 0 10 10"><polygon points="2,1 8,5 2,9"/></svg></div>
             <div class="annotation-text" data-ja="デスクトップアイコンをダブルクリックして、アプリを開きます。" data-en="Double-click the desktop icon to open the app."><strong>ここを確認</strong> デスクトップアイコンをダブルクリックして、アプリを開きます。</div>
@@ -669,11 +625,7 @@
           <p class="step-desc" data-ja="「フォルダ選択」ボタンをクリックし、結合したいPDFファイルが入ったフォルダを選択します。サブフォルダも自動的に検索されます。" data-en="Click the Select Folder button and choose the folder containing the PDFs you want to merge. Subfolders are scanned automatically.">
             「フォルダ選択」ボタンをクリックし、結合したいPDFファイルが入ったフォルダを選択します。サブフォルダも自動的に検索されます。
           </p>
-          <div class="screenshot-placeholder tall">
-            <svg class="ss-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-            <div class="ss-label" data-ja="スクリーンショット" data-en="Screenshot">スクリーンショット</div>
-            <div class="ss-sublabel" data-ja="フォルダ選択ダイアログ" data-en="Folder selection dialog">フォルダ選択ダイアログ</div>
-          </div>
+          <img src="tutorial-folder-output.png" alt="Folder and output selection fields" class="tutorial-shot medium">
           <div class="tip-box">
             <div class="tip-label">Tip</div>
             <div class="tip-text" data-ja="フォルダ構造がそのままPDFのしおり階層になります。先にフォルダを整理しておくと、完成PDFも見やすくなります。" data-en="Your folder structure becomes the bookmark hierarchy in the merged PDF. Organize your folders first to make the output easier to browse.">フォルダ構造がそのままPDFのしおり階層になります。先にフォルダを整理しておくと、完成PDFも見やすくなります。</div>
@@ -691,16 +643,8 @@
             選択したフォルダ内のファイルが一覧表示されます。結合順序やしおりの構造を確認してください。Word・Excel・PowerPointファイルはPDFに変換してから結合できます。
           </p>
           <div class="ss-duo">
-            <div class="screenshot-placeholder medium">
-              <svg class="ss-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-              <div class="ss-label" data-ja="ファイルリスト" data-en="File List">ファイルリスト</div>
-              <div class="ss-sublabel" data-ja="結合対象" data-en="Merge targets">結合対象</div>
-            </div>
-            <div class="screenshot-placeholder medium">
-              <svg class="ss-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h6l2 3H3zM3 6v13h18V9l-4-3H13"/><path d="M7 13h10M7 17h6"/></svg>
-              <div class="ss-label" data-ja="しおりプレビュー" data-en="Bookmark Preview">しおりプレビュー</div>
-              <div class="ss-sublabel" data-ja="完成PDFの構造" data-en="Final PDF structure">完成PDFの構造</div>
-            </div>
+            <img src="tutorial-options.png" alt="KojiPDF options area" class="tutorial-shot medium">
+            <img src="tutorial-bookmark-flow.png" alt="Folder structure becoming bookmarked PDF" class="tutorial-shot medium">
           </div>
         </div>
       </article>
@@ -714,11 +658,7 @@
           <p class="step-desc" data-ja="出力ファイル名と保存先フォルダを指定します。必要に応じてページ番号、しおり表示、用紙サイズ、Office変換などの設定を調整します。" data-en="Set the output file name and destination folder. Adjust page numbers, bookmark display, paper size, Office conversion, and other options as needed.">
             出力ファイル名と保存先フォルダを指定します。必要に応じてページ番号、しおり表示、用紙サイズ、Office変換などの設定を調整します。
           </p>
-          <div class="screenshot-placeholder medium">
-            <svg class="ss-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/><path d="M14.83 9.17a4 4 0 0 1 0 5.66M9.17 9.17a4 4 0 0 0 0 5.66"/></svg>
-            <div class="ss-label" data-ja="スクリーンショット" data-en="Screenshot">スクリーンショット</div>
-            <div class="ss-sublabel" data-ja="出力設定パネル" data-en="Output settings panel">出力設定パネル</div>
-          </div>
+          <img src="tutorial-options.png" alt="KojiPDF output settings panel" class="tutorial-shot medium">
         </div>
       </article>
 
@@ -731,11 +671,7 @@
           <p class="step-desc" data-ja="赤い「作成」ボタンをクリックすると処理が開始されます。ファイル数やOffice変換の有無によって処理時間は変わります。" data-en="Click the red Create button to start processing. Processing time depends on the number of files and whether Office conversion is needed.">
             赤い「作成」ボタンをクリックすると処理が開始されます。ファイル数やOffice変換の有無によって処理時間は変わります。
           </p>
-          <div class="screenshot-placeholder tall">
-            <svg class="ss-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            <div class="ss-label" data-ja="スクリーンショット" data-en="Screenshot">スクリーンショット</div>
-            <div class="ss-sublabel" data-ja="処理中の画面" data-en="Processing screen">処理中の画面</div>
-          </div>
+          <img src="tutorial-process-log.png" alt="KojiPDF processing screen" class="tutorial-shot tall">
           <div class="tip-box">
             <div class="tip-label">Note</div>
             <div class="tip-text" data-ja="Word・Excel・PowerPointファイルを変換する場合は、Microsoft Officeがインストールされている必要があります。" data-en="Microsoft Office must be installed when converting Word, Excel, or PowerPoint files.">Word・Excel・PowerPointファイルを変換する場合は、Microsoft Officeがインストールされている必要があります。</div>
@@ -752,11 +688,7 @@
           <p class="step-desc" data-ja="生成が完了したら、PDFビューアで開いてしおりの構造を確認します。フォルダ名が親しおり、ファイル名が子しおりとして表示されます。" data-en="Once complete, open the PDF in your viewer and check the bookmark structure. Folder names appear as parent bookmarks, and file names appear as child bookmarks.">
             生成が完了したら、PDFビューアで開いてしおりの構造を確認します。フォルダ名が親しおり、ファイル名が子しおりとして表示されます。
           </p>
-          <div class="screenshot-placeholder tall">
-            <svg class="ss-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-            <div class="ss-label" data-ja="スクリーンショット" data-en="Screenshot">スクリーンショット</div>
-            <div class="ss-sublabel" data-ja="完成PDFとしおりパネル" data-en="Final PDF with bookmark panel">完成PDFとしおりパネル</div>
-          </div>
+          <img src="tutorial-bookmark-flow.png" alt="Final PDF bookmark structure" class="tutorial-shot tall">
         </div>
       </article>
     </div>
