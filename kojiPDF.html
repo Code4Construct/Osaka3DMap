@@ -724,7 +724,9 @@
       button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     });
 
-    document.querySelectorAll('a[href="kojipdf-homepage.html"]').forEach((link) => {
+    localStorage.setItem('kojipdf-language', lang);
+
+    document.querySelectorAll('a[href^="kojipdf-homepage.html"]').forEach((link) => {
       link.href = `kojipdf-homepage.html?lang=${lang}`;
     });
   };
@@ -735,9 +737,12 @@
 
   const params = new URLSearchParams(window.location.search);
   const requestedLang = params.get('lang');
+  const savedLang = localStorage.getItem('kojipdf-language');
   const browserLang = navigator.language || '';
   const initialLang = requestedLang === 'en' || requestedLang === 'ja'
     ? requestedLang
+    : savedLang === 'en' || savedLang === 'ja'
+      ? savedLang
     : browserLang.toLowerCase().startsWith('en')
       ? 'en'
       : 'ja';
