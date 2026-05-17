@@ -347,7 +347,8 @@
   .screenshot-placeholder.medium { height: 240px; }
 
   .tutorial-shot {
-    width: 100%;
+    width: auto;
+    max-width: 100%;
     display: block;
     border: 1.5px solid var(--ink);
     box-shadow: 0 12px 36px rgba(6,42,70,0.14);
@@ -637,22 +638,6 @@
         <div class="step-num-col"><div class="step-num">3</div></div>
         <div class="step-body">
           <div class="step-tag">Step 03</div>
-          <h2 class="step-title" data-ja="ファイル一覧を確認する" data-en="Review the File List">ファイル一覧を確認する</h2>
-          <div class="step-subtitle" data-ja="結合順序としおりを確認" data-en="Check order and bookmarks">結合順序としおりを確認</div>
-          <p class="step-desc" data-ja="選択したフォルダ内のファイルが一覧表示されます。結合順序やしおりの構造を確認してください。Word・Excel・PowerPointファイルはPDFに変換してから結合できます。" data-en="Files in the selected folder are listed. Review the merge order and bookmark structure. Word, Excel, and PowerPoint files can be converted to PDF before merging.">
-            選択したフォルダ内のファイルが一覧表示されます。結合順序やしおりの構造を確認してください。Word・Excel・PowerPointファイルはPDFに変換してから結合できます。
-          </p>
-          <div class="ss-duo">
-            <img src="tutorial-options.png" alt="KojiPDF options area" class="tutorial-shot medium">
-            <img src="tutorial-bookmark-flow.png" alt="Folder structure becoming bookmarked PDF" class="tutorial-shot medium">
-          </div>
-        </div>
-      </article>
-
-      <article class="step">
-        <div class="step-num-col"><div class="step-num">4</div></div>
-        <div class="step-body">
-          <div class="step-tag">Step 04</div>
           <h2 class="step-title" data-ja="出力設定を決める" data-en="Configure Output Settings">出力設定を決める</h2>
           <div class="step-subtitle" data-ja="保存先とオプション" data-en="Destination and options">保存先とオプション</div>
           <p class="step-desc" data-ja="出力ファイル名と保存先フォルダを指定します。必要に応じてページ番号、しおり表示、用紙サイズ、Office変換などの設定を調整します。" data-en="Set the output file name and destination folder. Adjust page numbers, bookmark display, paper size, Office conversion, and other options as needed.">
@@ -663,9 +648,9 @@
       </article>
 
       <article class="step">
-        <div class="step-num-col"><div class="step-num red">5</div></div>
+        <div class="step-num-col"><div class="step-num red">4</div></div>
         <div class="step-body">
-          <div class="step-tag">Step 05</div>
+          <div class="step-tag">Step 04</div>
           <h2 class="step-title" data-ja="PDFを作成する" data-en="Generate the PDF">PDFを作成する</h2>
           <div class="step-subtitle" data-ja="作成ボタンで処理開始" data-en="Start with the create button">作成ボタンで処理開始</div>
           <p class="step-desc" data-ja="赤い「作成」ボタンをクリックすると処理が開始されます。ファイル数やOffice変換の有無によって処理時間は変わります。" data-en="Click the red Create button to start processing. Processing time depends on the number of files and whether Office conversion is needed.">
@@ -680,9 +665,9 @@
       </article>
 
       <article class="step">
-        <div class="step-num-col"><div class="step-num">6</div></div>
+        <div class="step-num-col"><div class="step-num">5</div></div>
         <div class="step-body">
-          <div class="step-tag">Step 06</div>
+          <div class="step-tag">Step 05</div>
           <h2 class="step-title" data-ja="完成したPDFを確認する" data-en="Review the Output PDF">完成したPDFを確認する</h2>
           <div class="step-subtitle" data-ja="しおり構造をチェック" data-en="Check the bookmark structure">しおり構造をチェック</div>
           <p class="step-desc" data-ja="生成が完了したら、PDFビューアで開いてしおりの構造を確認します。フォルダ名が親しおり、ファイル名が子しおりとして表示されます。" data-en="Once complete, open the PDF in your viewer and check the bookmark structure. Folder names appear as parent bookmarks, and file names appear as child bookmarks.">
