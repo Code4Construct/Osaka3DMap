@@ -572,7 +572,7 @@
     <ul class="nav-links">
       <li><a href="kojipdf-homepage.html" data-ja="ホーム" data-en="Home">ホーム</a></li>
       <li><a href="#" class="active" data-ja="チュートリアル" data-en="Tutorial">チュートリアル</a></li>
-      <li><a href="https://github.com/Code4Construct/kojiPDFv150" target="_blank">GitHub</a></li>
+      <li><a href="https://github.com/Code4Construct/kojiPDFv200" target="_blank">GitHub</a></li>
     </ul>
     <div class="language-toggle" aria-label="Language selector">
       <button type="button" class="lang-btn ja active" data-lang="ja" aria-label="日本語">
@@ -699,8 +699,8 @@
   <a href="kojipdf-homepage.html" class="footer-logo">Koji<span>PDF</span></a>
   <div class="footer-nav">
     <a href="kojipdf-homepage.html" data-ja="ホーム" data-en="Home">ホーム</a>
-    <a href="https://github.com/Code4Construct/kojiPDFv150" target="_blank">GitHub</a>
-    <a href="https://github.com/Code4Construct/kojiPDFv150/releases/download/v1.5.0/kojiPDFv150setup.exe" data-ja="ダウンロード" data-en="Download">ダウンロード</a>
+    <a href="https://github.com/Code4Construct/kojiPDFv200" target="_blank">GitHub</a>
+    <a href="https://github.com/Code4Construct/kojiPDFv200/releases" data-ja="ダウンロード" data-en="Download">ダウンロード</a>
   </div>
 </footer>
 
@@ -723,13 +723,25 @@
       button.classList.toggle('active', isActive);
       button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     });
+
+    document.querySelectorAll('a[href="kojipdf-homepage.html"]').forEach((link) => {
+      link.href = `kojipdf-homepage.html?lang=${lang}`;
+    });
   };
 
   document.querySelectorAll('.lang-btn').forEach((button) => {
     button.addEventListener('click', () => setLanguage(button.dataset.lang));
   });
 
-  setLanguage('ja');
+  const params = new URLSearchParams(window.location.search);
+  const requestedLang = params.get('lang');
+  const browserLang = navigator.language || '';
+  const initialLang = requestedLang === 'en' || requestedLang === 'ja'
+    ? requestedLang
+    : browserLang.toLowerCase().startsWith('en')
+      ? 'en'
+      : 'ja';
+  setLanguage(initialLang);
 </script>
 
 </body>

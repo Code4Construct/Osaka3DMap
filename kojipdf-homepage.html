@@ -842,13 +842,25 @@
       button.classList.toggle('active', isActive);
       button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     });
+
+    document.querySelectorAll('a[href="kojiPDF.html"]').forEach((link) => {
+      link.href = `kojiPDF.html?lang=${lang}`;
+    });
   };
 
   document.querySelectorAll('.lang-btn').forEach((button) => {
     button.addEventListener('click', () => setLanguage(button.dataset.lang));
   });
 
-  setLanguage('ja');
+  const params = new URLSearchParams(window.location.search);
+  const requestedLang = params.get('lang');
+  const browserLang = navigator.language || '';
+  const initialLang = requestedLang === 'en' || requestedLang === 'ja'
+    ? requestedLang
+    : browserLang.toLowerCase().startsWith('en')
+      ? 'en'
+      : 'ja';
+  setLanguage(initialLang);
 </script>
 
 </body>
