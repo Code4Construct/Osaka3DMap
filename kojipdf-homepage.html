@@ -554,8 +554,10 @@
   .meeting-visual-title {
     position: absolute;
     top: 1.2%;
-    left: 20%;
-    right: 20%;
+    left: 50%;
+    width: fit-content;
+    max-width: 94%;
+    transform: translateX(-50%);
     padding: clamp(8px, 1.2vw, 14px) 18px;
     border-radius: 6px;
     background: rgba(12,31,48,0.94);
@@ -564,6 +566,7 @@
     font-weight: 700;
     line-height: 1.25;
     text-align: center;
+    white-space: nowrap;
   }
 
   .meeting-card {
@@ -1133,10 +1136,9 @@
     .story-layout { grid-template-columns: 1fr; }
     .story-panel { padding-left: 20px; }
     .story-visual { width: min(48%, 360px); }
-    .meeting-visual-title { left: 15%; right: 15%; }
+    .meeting-visual-title { max-width: 96%; }
     .meeting-card-grid { grid-template-columns: 1fr; }
     .meeting-card { padding: 16px; }
-    .meeting-card ul { display: none; }
     .paperless-layout { grid-template-columns: 1fr; }
     .trust-layout { grid-template-columns: 1fr; }
     .trust-list { grid-template-columns: 1fr; }
@@ -1163,9 +1165,25 @@
       width: 100%;
       margin: 18px 0;
     }
-    .meeting-visual-title { left: 6%; right: 6%; }
+    .meeting-fatigue-head h2 {
+      font-size: 28px;
+      line-height: 1.35;
+    }
+    .desktop-break { display: none; }
+    .meeting-visual-title {
+      max-width: 96%;
+      white-space: normal;
+    }
     .meeting-card { padding: 10px; }
-    .meeting-card-conclusion { display: none; }
+    .meeting-card-conclusion { font-size: 13px; }
+    .meeting-card ul {
+      gap: 4px;
+      margin-bottom: 10px;
+    }
+    .meeting-card li {
+      font-size: 10px;
+      line-height: 1.45;
+    }
     .steps { grid-template-columns: 1fr; }
     .guide-item { grid-template-columns: 1fr; }
     .btn { width: 100%; }
@@ -1258,7 +1276,7 @@
   <section class="section meeting-fatigue">
     <div class="section-inner">
       <div class="meeting-fatigue-head">
-        <h2 data-ja-html="ペーパーレス会議で、紙の良さが<br>恋しくなっていませんか。" data-en="Are you secretly printing paper behind your paperless meetings?">ペーパーレス会議で、紙の良さが<br>恋しくなっていませんか。</h2>
+        <h2 data-ja-html="ペーパーレス会議で、紙の良さが<br class=&quot;desktop-break&quot;>恋しくなっていませんか。" data-en="Do you miss what paper gets right during paperless meetings?">ペーパーレス会議で、紙の良さが<br class="desktop-break">恋しくなっていませんか。</h2>
         <p data-ja="紙の資料は、全体の分量や、いま説明されている位置がすぐにわかります。しかし、多種類のファイルが大量に入った会議資料では、全体像や現在位置が見えにくくなり、確認のために印刷したくなってしまいます。" data-en="Paper documents make it easy to see the overall volume and where the current explanation sits. But when meeting materials contain many different files, the whole picture and current position become harder to see, making you want to print them for checking.">
           紙の資料は、全体の分量や、いま説明されている位置がすぐにわかります。しかし、多種類のファイルが大量に入った会議資料では、全体像や現在位置が見えにくくなり、確認のために印刷したくなってしまいます。
         </p>
@@ -1299,7 +1317,7 @@
       <div class="paperless-layout">
         <div class="paperless-copy">
           <div class="section-label" data-ja="解決策" data-en="Solution">解決策</div>
-          <h2 data-ja="会議データの絶壁に、梯子をかける。" data-en="Build a path up the wall of meeting materials.">会議データの絶壁に、梯子をかける。</h2>
+          <h2 data-ja="会議データの絶壁に、梯子をかける。" data-en="Place a ladder against the cliff of meeting data.">会議データの絶壁に、梯子をかける。</h2>
           <p data-ja="KojiPDFは、散在するファイルを栞付きの一冊のPDFにまとめます。紙の資料で見えていた「ゴール（全体の分量）」と「自分の場所（いま見ている位置）」を、つかみやすくします。読む側は栞をたどるだけで必要な資料へ移動でき、作る側は作成段階で何度でも一冊のPDFにまとめて、資料の流れを確認できます。" data-en="KojiPDF gathers scattered files into one bookmarked PDF. It makes it easier to grasp the goal, the overall volume, and your current place, the position you are viewing, just as paper documents once did. Readers can follow the bookmarks to the needed material, while creators can repeatedly compile everything into one PDF during preparation and check the flow of the materials.">
             KojiPDFは、散在するファイルを栞付きの一冊のPDFにまとめます。紙の資料で見えていた「ゴール（全体の分量）」と「自分の場所（いま見ている位置）」を、つかみやすくします。読む側は栞をたどるだけで必要な資料へ移動でき、作る側は作成段階で何度でも一冊のPDFにまとめて、資料の流れを確認できます。
           </p>
@@ -1432,7 +1450,7 @@
           <article class="guide-item"><div class="guide-index">4</div><div><h3 data-ja="作成ボタンでPDFを出力する" data-en="Create the PDF">作成ボタンでPDFを出力する</h3><p data-ja="最後に赤い「作成」ボタンを押すと、しおり付きPDFとして保存されます。" data-en="Press the red Create button to save one bookmarked PDF.">最後に赤い「作成」ボタンを押すと、しおり付きPDFとして保存されます。</p></div></article>
         </div>
         <aside class="guide-aside">
-          <img src="v200GUI_process.png" alt="kojiPDF v2.00 processing screen">
+          <img src="v200GUI_process.png" alt="kojiPDF v2.1.0 processing screen">
           <h3 data-ja="処理中の画面例" data-en="Processing Example">処理中の画面例</h3>
           <p data-ja="結合処理中は、進行状況や処理ログを画面上で確認できます。" data-en="During processing, you can review progress and logs on screen.">結合処理中は、進行状況や処理ログを画面上で確認できます。</p>
         </aside>
@@ -1447,7 +1465,7 @@
         <img src="v150GUI.jpg" alt="kojiPDF v1.50 application screen">
         <div>
           <h3>v1.50</h3>
-          <p data-ja="旧バージョンはVectorで公開しています。現在のv2.0.0とは画面構成が異なります。" data-en="The earlier v1.50 release remains available on Vector. Its interface differs from the current v2.0.0 version.">旧バージョンはVectorで公開しています。現在のv2.0.0とは画面構成が異なります。</p>
+          <p data-ja="旧バージョンはVectorで公開しています。現在のv2.1.0とは画面構成が異なります。" data-en="The earlier v1.50 release remains available on Vector. Its interface differs from the current v2.1.0 version.">旧バージョンはVectorで公開しています。現在のv2.1.0とは画面構成が異なります。</p>
           <a href="https://www.vector.co.jp/soft/winnt/writing/se527459.html" class="btn btn-secondary" target="_blank" data-ja="Vectorでダウンロード" data-en="Download on Vector">Vectorでダウンロード</a>
         </div>
       </div>
