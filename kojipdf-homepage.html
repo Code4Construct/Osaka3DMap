@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>kojiPDF - 工事検査用PDF作成ツール</title>
+<title>kojiPDF - 会議用PDF結合ツール</title>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=DM+Mono:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1171,8 +1171,17 @@
     }
     .desktop-break { display: none; }
     .meeting-visual-title {
-      max-width: 96%;
+      position: static;
+      order: -1;
+      width: 100%;
+      max-width: none;
+      transform: none;
+      border-radius: 0;
       white-space: normal;
+    }
+    .meeting-fatigue-visual {
+      display: flex;
+      flex-direction: column;
     }
     .meeting-card { padding: 10px; }
     .meeting-card-conclusion { font-size: 13px; }
@@ -1317,7 +1326,7 @@
       <div class="paperless-layout">
         <div class="paperless-copy">
           <div class="section-label" data-ja="解決策" data-en="Solution">解決策</div>
-          <h2 data-ja="会議データの絶壁に、梯子をかける。" data-en="Place a ladder against the cliff of meeting data.">会議データの絶壁に、梯子をかける。</h2>
+          <h2 data-ja="会議データの壁をスムーズに登る。" data-en="Climb the wall of meeting data smoothly.">会議データの壁をスムーズに登る。</h2>
           <p data-ja="KojiPDFは、散在するファイルを栞付きの一冊のPDFにまとめます。紙の資料で見えていた「ゴール（全体の分量）」と「自分の場所（いま見ている位置）」を、つかみやすくします。読む側は栞をたどるだけで必要な資料へ移動でき、作る側は作成段階で何度でも一冊のPDFにまとめて、資料の流れを確認できます。" data-en="KojiPDF gathers scattered files into one bookmarked PDF. It makes it easier to grasp the goal, the overall volume, and your current place, the position you are viewing, just as paper documents once did. Readers can follow the bookmarks to the needed material, while creators can repeatedly compile everything into one PDF during preparation and check the flow of the materials.">
             KojiPDFは、散在するファイルを栞付きの一冊のPDFにまとめます。紙の資料で見えていた「ゴール（全体の分量）」と「自分の場所（いま見ている位置）」を、つかみやすくします。読む側は栞をたどるだけで必要な資料へ移動でき、作る側は作成段階で何度でも一冊のPDFにまとめて、資料の流れを確認できます。
           </p>
@@ -1400,35 +1409,35 @@
       <div class="story-layout">
         <div class="story-panel">
           <h2 data-ja="電子化しても、検査だけは紙に戻らざるを得なかった。" data-en="Even after digitization, inspections still had to return to paper.">電子化しても、検査だけは紙に戻らざるを得なかった。</h2>
-          <p data-ja="工事関係書類の電子化には、苦労して取り組んだ。しかし、書類検査では電子データのままでは実用にならず、結局すべて紙で出力せざるを得なかった。紙で出すなら、電子化する意味はあるのか。そんなジレンマに陥っていた。" data-en="I worked hard to digitize construction-related documents. But in document inspections, the files were not practical enough to use as digital data, and in the end everything still had to be printed on paper. If they had to be printed anyway, what was the point of digitizing them? I found myself trapped in that dilemma.">
-            工事関係書類の電子化には、苦労して取り組んだ。しかし、書類検査では電子データのままでは実用にならず、結局すべて紙で出力せざるを得なかった。紙で出すなら、電子化する意味はあるのか。そんなジレンマに陥っていた。
+          <p data-ja="工事関係書類の電子化には、苦労しながら取り組んできました。しかし、書類検査では電子データのままでは実用にならず、結局すべて紙で出力せざるを得ませんでした。紙で出すなら、電子化する意味はあるのでしょうか。そんなジレンマに陥っていました。" data-en="I worked hard to digitize construction-related documents. But in document inspections, the files were not practical enough to use as digital data, and in the end everything still had to be printed on paper. If they had to be printed anyway, what was the point of digitizing them? I found myself trapped in that dilemma.">
+            工事関係書類の電子化には、苦労しながら取り組んできました。しかし、書類検査では電子データのままでは実用にならず、結局すべて紙で出力せざるを得ませんでした。紙で出すなら、電子化する意味はあるのでしょうか。そんなジレンマに陥っていました。
           </p>
           <figure class="story-visual">
             <img src="origin-story-construction-pdf-overload.png" alt="A stressed construction worker facing many open PDF files on a computer screen">
           </figure>
-          <p data-ja="何百ものフォルダ。数千ものPDFファイル。整理や保存には便利でも、工事の書類検査では「必要な資料を、その場ですぐに出せること」が求められる。" data-en="Hundreds of folders. Thousands of PDF files. They were useful for organizing and storing documents, but construction document inspections required something else: the ability to bring up the needed material immediately, on the spot.">
-            何百ものフォルダ。数千ものPDFファイル。整理や保存には便利でも、工事の書類検査では「必要な資料を、その場ですぐに出せること」が求められる。
+          <p data-ja="何百ものフォルダ。数千ものPDFファイル。整理や保存には便利でも、工事の書類検査では「必要な資料を、その場ですぐに出せること」が求められます。" data-en="Hundreds of folders. Thousands of PDF files. They were useful for organizing and storing documents, but construction document inspections required something else: the ability to bring up the needed material immediately, on the spot.">
+            何百ものフォルダ。数千ものPDFファイル。整理や保存には便利でも、工事の書類検査では「必要な資料を、その場ですぐに出せること」が求められます。
           </p>
-          <p data-ja="指示された資料を見せるため、そのたびにフォルダを開き、ファイルを探し、別のPDFを読み込む――。電子化されたはずなのに、検査では紙のほうが速い。いや、電子データでは遅すぎて、紙でなければ検査にならない。" data-en="To show each requested document, I had to open a folder, search for the file, and load another PDF every time. The documents had been digitized, and yet paper was still faster during inspections. More than that, the digital files were simply too slow; without paper, the inspection could not function.">
-            指示された資料を見せるため、そのたびにフォルダを開き、ファイルを探し、別のPDFを読み込む――。電子化されたはずなのに、検査では紙のほうが速い。いや、電子データでは遅すぎて、紙でなければ検査にならない。
+          <p data-ja="指示された資料を見せるために、そのたびにフォルダを開き、ファイルを探し、別のPDFを読み込む必要がありました。電子化されたはずなのに、検査では紙のほうが速いのです。むしろ、電子データでは遅すぎて、紙でなければ検査にならない状況でした。" data-en="To show each requested document, I had to open a folder, search for the file, and load another PDF every time. The documents had been digitized, and yet paper was still faster during inspections. More than that, the digital files were simply too slow; without paper, the inspection could not function.">
+            指示された資料を見せるために、そのたびにフォルダを開き、ファイルを探し、別のPDFを読み込む必要がありました。電子化されたはずなのに、検査では紙のほうが速いのです。むしろ、電子データでは遅すぎて、紙でなければ検査にならない状況でした。
           </p>
-          <p data-ja="では、どうすれば電子データのまま検査に使えるのか。答えは見えていた。すべての資料がひとつの「しおり付きPDF」になっていれば、再読み込みを待つことなく、クリックひとつで目的の資料へたどり着ける。" data-en="So how could the documents be used for inspections while remaining digital? The answer was already visible. If every document were gathered into one bookmarked PDF, there would be no need to wait for files to reload, and the needed material could be reached with a single click.">
-            では、どうすれば電子データのまま検査に使えるのか。答えは見えていた。すべての資料がひとつの「しおり付きPDF」になっていれば、再読み込みを待つことなく、クリックひとつで目的の資料へたどり着ける。
+          <p data-ja="では、どうすれば電子データのまま検査に使えるのでしょうか。答えは見えていました。すべての資料がひとつの「しおり付きPDF」になっていれば、再読み込みを待つことなく、クリックひとつで目的の資料へたどり着けます。" data-en="So how could the documents be used for inspections while remaining digital? The answer was already visible. If every document were gathered into one bookmarked PDF, there would be no need to wait for files to reload, and the needed material could be reached with a single click.">
+            では、どうすれば電子データのまま検査に使えるのでしょうか。答えは見えていました。すべての資料がひとつの「しおり付きPDF」になっていれば、再読み込みを待つことなく、クリックひとつで目的の資料へたどり着けます。
           </p>
-          <p data-ja="しかし、大量の資料からひとつのしおり付きPDFを作るのは、とても手間のかかる作業だった。毎回、手作業でできるものではない。" data-en="But creating one bookmarked PDF from a large collection of documents was extremely time-consuming. It was not something that could be done by hand every time.">
-            しかし、大量の資料からひとつのしおり付きPDFを作るのは、とても手間のかかる作業だった。毎回、手作業でできるものではない。
+          <p data-ja="しかし、大量の資料からひとつのしおり付きPDFを作るのは、とても手間のかかる作業でした。毎回、手作業でできるものではありません。" data-en="But creating one bookmarked PDF from a large collection of documents was extremely time-consuming. It was not something that could be done by hand every time.">
+            しかし、大量の資料からひとつのしおり付きPDFを作るのは、とても手間のかかる作業でした。毎回、手作業でできるものではありません。
           </p>
-          <p data-ja="「すべてのPDFを結合して、フォルダ名とファイル名から、自動でしおりを作ってくれるアプリはないのか。」探しても見つからない。それなら、自分で作るしかない。" data-en="“Is there no app that can merge all the PDFs and automatically create bookmarks from the folder and file names?” I searched, but found nothing. So I had to build it myself.">
-            「すべてのPDFを結合して、フォルダ名とファイル名から、自動でしおりを作ってくれるアプリはないのか。」探しても見つからない。それなら、自分で作るしかない。
+          <p data-ja="「すべてのPDFを結合して、フォルダ名とファイル名から、自動でしおりを作ってくれるアプリはないのか。」そう思って探しても、見つかりませんでした。それなら、自分で作るしかありません。" data-en="“Is there no app that can merge all the PDFs and automatically create bookmarks from the folder and file names?” I searched, but found nothing. So I had to build it myself.">
+            「すべてのPDFを結合して、フォルダ名とファイル名から、自動でしおりを作ってくれるアプリはないのか。」そう思って探しても、見つかりませんでした。それなら、自分で作るしかありません。
           </p>
-          <p data-ja="そうして生まれたのが、kojiPDFだ。当時公開されたばかりの生成AIに助けられながら、試行錯誤を重ね、夢中で作り上げた。" data-en="That is how kojiPDF was born. With help from generative AI, which had only just become publicly available at the time, I kept experimenting and built it with complete focus.">
-            そうして生まれたのが、kojiPDFだ。当時公開されたばかりの生成AIに助けられながら、試行錯誤を重ね、夢中で作り上げた。
+          <p data-ja="そうして生まれたのが、kojiPDFです。当時公開されたばかりの生成AIに助けられながら、試行錯誤を重ね、夢中で作り上げました。" data-en="That is how kojiPDF was born. With help from generative AI, which had only just become publicly available at the time, I kept experimenting and built it with complete focus.">
+            そうして生まれたのが、kojiPDFです。当時公開されたばかりの生成AIに助けられながら、試行錯誤を重ね、夢中で作り上げました。
           </p>
-          <p data-ja="その後、このアプリが工事検査だけでなく、ペーパーレス会議にも役立つことに気づき、Word・Excel・PowerPointの自動PDF変換、用紙サイズの統一、透過ページ番号などの機能を加え、少しずつ育ててきた。" data-en="Later, I realized that the app was useful not only for construction inspections, but also for paperless meetings. I gradually added features such as automatic PDF conversion from Word, Excel, and PowerPoint, unified paper sizes, and translucent page numbers.">
-            その後、このアプリが工事検査だけでなく、ペーパーレス会議にも役立つことに気づき、Word・Excel・PowerPointの自動PDF変換、用紙サイズの統一、透過ページ番号などの機能を加え、少しずつ育ててきた。
+          <p data-ja="その後、このアプリが工事検査だけでなく、ペーパーレス会議にも役立つことに気づきました。Word・Excel・PowerPointの自動PDF変換、用紙サイズの統一、透過ページ番号などの機能を加えながら、少しずつ育ててきました。" data-en="Later, I realized that the app was useful not only for construction inspections, but also for paperless meetings. I gradually added features such as automatic PDF conversion from Word, Excel, and PowerPoint, unified paper sizes, and translucent page numbers.">
+            その後、このアプリが工事検査だけでなく、ペーパーレス会議にも役立つことに気づきました。Word・Excel・PowerPointの自動PDF変換、用紙サイズの統一、透過ページ番号などの機能を加えながら、少しずつ育ててきました。
           </p>
-          <p data-ja="kojiPDFは、大量の電子化資料を効率よく閲覧するために生まれたツールだ。見たい資料に、すぐたどり着けるように。大量の資料を、紙に戻さず扱えるように。" data-en="kojiPDF is a tool born to make large volumes of digitized documents easier to browse efficiently. So the material you need is always within reach. So large collections of documents can stay digital instead of returning to paper.">
-            kojiPDFは、大量の電子化資料を効率よく閲覧するために生まれたツールだ。見たい資料に、すぐたどり着けるように。大量の資料を、紙に戻さず扱えるように。
+          <p data-ja="kojiPDFは、大量の電子化資料を効率よく閲覧するために生まれたツールです。見たい資料に、すぐたどり着けるように。大量の資料を、紙に戻さず扱えるように。" data-en="kojiPDF is a tool born to make large volumes of digitized documents easier to browse efficiently. So the material you need is always within reach. So large collections of documents can stay digital instead of returning to paper.">
+            kojiPDFは、大量の電子化資料を効率よく閲覧するために生まれたツールです。見たい資料に、すぐたどり着けるように。大量の資料を、紙に戻さず扱えるように。
           </p>
         </div>
       </div>
@@ -1484,8 +1493,8 @@
 
 <script>
   const titles = {
-    ja: 'kojiPDF - 工事検査用PDF作成ツール',
-    en: 'kojiPDF - Construction Inspection PDF Tool'
+    ja: 'kojiPDF - 会議用PDF結合ツール',
+    en: 'kojiPDF - Meeting PDF Merger'
   };
 
   const setLanguage = (lang) => {
