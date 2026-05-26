@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>arinobu</title>
+<title>Code4Construct</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -69,28 +69,57 @@
 
   .bubble {
     position: absolute;
-    bottom: -120px;
+    bottom: -80px;
     border-radius: 50%;
     background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.98), rgba(182,224,242,0.32) 42%, rgba(99,167,196,0.12) 72%);
     border: 1px solid rgba(92, 154, 181, 0.34);
     box-shadow:
       inset 0 0 14px rgba(255,255,255,0.65),
       0 8px 22px rgba(80, 138, 163, 0.12);
-    animation-name: rise;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    opacity: 0.72;
+    animation: bubble-rise var(--duration, 24s) linear infinite;
+    animation-delay: var(--delay, 0s);
+    will-change: transform, opacity;
   }
 
-  @keyframes rise {
+  .mermaid-bubble {
+    position: absolute;
+    bottom: -120px;
+    width: var(--mermaid-size, 180px);
+    height: var(--mermaid-size, 180px);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(circle at 28% 24%, rgba(255,255,255,0.98), rgba(255,255,255,0.2) 16%, transparent 28%),
+      radial-gradient(circle at 50% 55%, rgba(175,230,244,0.42), rgba(92,179,205,0.18) 66%, rgba(66,139,174,0.08));
+    border: 1px solid rgba(92, 154, 181, 0.38);
+    box-shadow:
+      inset 0 0 28px rgba(255,255,255,0.72),
+      0 18px 42px rgba(80, 138, 163, 0.16);
+    animation: bubble-rise var(--duration, 30s) linear infinite;
+    animation-delay: var(--delay, 0s);
+    will-change: transform, opacity;
+  }
+
+  .mermaid-bubble span {
+    font-size: calc(var(--mermaid-size, 180px) * 0.48);
+    transform: rotate(-10deg);
+    filter: drop-shadow(0 8px 12px rgba(20, 50, 71, 0.18));
+  }
+
+  @keyframes bubble-rise {
     0% {
-      transform: translate3d(0, 0, 0) scale(0.9);
+      transform: translate3d(0, 12vh, 0) scale(var(--scale, 1));
       opacity: 0;
     }
-    10% { opacity: 0.5; }
-    50% { transform: translate3d(18px, -52vh, 0) scale(1); }
+    12% { opacity: var(--alpha, 0.58); }
+    50% {
+      transform: translate3d(var(--drift, 18px), -52vh, 0) scale(var(--scale, 1));
+      opacity: var(--alpha, 0.58);
+    }
+    88% { opacity: var(--alpha, 0.58); }
     100% {
-      transform: translate3d(-12px, -110vh, 0) scale(1.08);
+      transform: translate3d(calc(var(--drift, 18px) * -0.7), -118vh, 0) scale(calc(var(--scale, 1) * 1.06));
       opacity: 0;
     }
   }
@@ -105,15 +134,8 @@
   nav {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     padding: 28px 0;
-  }
-
-  .brand {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
   }
 
   .nav-links {
@@ -232,10 +254,29 @@
 
   section { margin-bottom: 28px; }
 
+  .section-heading {
+    margin-bottom: 16px;
+  }
+
+  .section-heading h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 4vw, 44px);
+    line-height: 1.08;
+    margin-top: 6px;
+  }
+
   .section-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 18px;
+  }
+
+  .section-grid.two-column {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .section-grid.single-column {
+    grid-template-columns: 1fr;
   }
 
   .glass-card {
@@ -304,13 +345,14 @@
 
   @media (max-width: 860px) {
     .hero { grid-template-columns: 1fr; min-height: auto; }
-    .section-grid { grid-template-columns: 1fr; }
+    .section-grid,
+    .section-grid.two-column { grid-template-columns: 1fr; }
     .project-card { grid-template-columns: 1fr; }
   }
 
   @media (max-width: 640px) {
     .page { width: min(100% - 32px, 1120px); }
-    nav { align-items: flex-start; flex-direction: column; gap: 16px; }
+    nav { align-items: flex-start; gap: 16px; }
     .nav-links { gap: 16px; flex-wrap: wrap; }
   }
 </style>
@@ -319,10 +361,10 @@
   <div class="bubbles" aria-hidden="true"></div>
   <div class="page">
     <nav>
-      <div class="brand">arinobu</div>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
-        <li><a href="#interests">Interests</a></li>
+        <li><a href="#vibe-coding">Vibe Coding</a></li>
+        <li><a href="#wide-roaming">Wide Roaming</a></li>
         <li><a href="#projects">Projects</a></li>
       </ul>
     </nav>
@@ -330,14 +372,14 @@
     <header class="hero" id="about">
       <div>
         <div class="eyebrow">Personal homepage</div>
-        <h1>arinobu</h1>
+        <h1>Code4Construct</h1>
         <p class="hero-copy">
           A quiet personal space for hobbies, small experiments, and things made along the way.
           I enjoy learning, building useful tools, and collecting ideas that make everyday work a little smoother.
         </p>
         <div class="actions">
           <a href="#projects" class="btn btn-primary">View projects</a>
-          <a href="kojipdf-homepage.html" class="btn btn-secondary">Open KojiPDF</a>
+          <a href="kojipdf-homepage.html" class="btn btn-secondary">Open kojiPDF</a>
         </div>
       </div>
 
@@ -345,38 +387,35 @@
         <div class="profile-orb"></div>
         <h2>Hello.</h2>
         <p>
-          This page is a simple introduction to arinobu:
-          interests, personal work, and selected projects.
+          This page is a simple introduction to small tools,
+          experiments, personal work, and selected projects.
         </p>
       </aside>
     </header>
 
-    <section id="interests">
-      <div class="section-grid">
+    <section id="vibe-coding">
+      <div class="section-heading">
+        <div class="card-label">Making</div>
+        <h2>Vibe Coding</h2>
+      </div>
+      <div class="section-grid two-column">
         <article class="glass-card">
-          <div class="card-label">01 / Making</div>
-          <h3>Vibe Coding</h3>
+          <div class="card-label">Small tools</div>
+          <h3>Ideas into working shapes</h3>
           <p>Turning ideas into small working tools through quick experiments and iterative building.</p>
         </article>
         <article class="glass-card">
-          <div class="card-label">02 / Walking</div>
-          <h3>Historic Roads</h3>
-          <p>Walking old routes, tracing history through landscapes, towns, and the roads between them.</p>
-        </article>
-        <article class="glass-card">
-          <div class="card-label">03 / Mapping</div>
+          <div class="card-label">Mapping</div>
           <h3>QGIS</h3>
           <p>Exploring maps, spatial data, and the stories that become clearer when placed on geography.</p>
         </article>
       </div>
-    </section>
 
-    <section id="projects">
-      <div class="project-list">
+      <div class="project-list" id="projects">
         <article class="glass-card project-card">
           <div>
             <div class="card-label">Featured project</div>
-            <h3>KojiPDF</h3>
+            <h3>kojiPDF</h3>
             <p>
               A PDF tool for merging documents, creating bookmarks from folder structures,
               and preparing easier-to-browse materials for inspection work and paperless meetings.
@@ -388,7 +427,7 @@
         <article class="glass-card project-card">
           <div>
             <div class="card-label">Upcoming project</div>
-            <h3>Schliemannz’s Tongue</h3>
+            <h3>Schliemann's Tongue</h3>
             <p>
               A future project page reserved for language, learning, and other experiments still taking shape.
             </p>
@@ -398,27 +437,76 @@
       </div>
     </section>
 
+    <section id="wide-roaming">
+      <div class="section-heading">
+        <div class="card-label">Outside</div>
+        <h2>Wide Roaming</h2>
+      </div>
+      <div class="section-grid single-column">
+        <article class="glass-card">
+          <div class="card-label">Historic Roads</div>
+          <h3>Historic Roads</h3>
+          <p>Walking old routes, tracing history through landscapes, towns, and the roads between them.</p>
+        </article>
+      </div>
+    </section>
+
     <footer>
-      © arinobu
+      © Code4Construct
     </footer>
   </div>
   <script>
     const bubbleLayer = document.querySelector('.bubbles');
-    const bubbleCount = 10;
+    const bubbleCount = 18;
 
     const randomBetween = (min, max) => Math.random() * (max - min) + min;
+    const bubbleHues = [8, 36, 54, 142, 188, 224, 286];
 
     const createBubble = () => {
+      const mermaid = Math.random() < 0.033;
+      if (mermaid) {
+        const mermaidBubble = document.createElement('span');
+        const mermaidIcon = document.createElement('span');
+        const duration = randomBetween(24, 42);
+        mermaidBubble.className = 'mermaid-bubble';
+        mermaidIcon.textContent = '🧜‍♀️';
+        mermaidBubble.style.left = `${randomBetween(4, 90)}%`;
+        mermaidBubble.style.setProperty('--mermaid-size', `${randomBetween(180, 320)}px`);
+        mermaidBubble.style.setProperty('--duration', `${duration}s`);
+        mermaidBubble.style.setProperty('--delay', `${randomBetween(-duration, 0)}s`);
+        mermaidBubble.style.setProperty('--drift', `${randomBetween(-42, 42)}px`);
+        mermaidBubble.style.setProperty('--scale', randomBetween(0.9, 1.08).toFixed(2));
+        mermaidBubble.appendChild(mermaidIcon);
+        bubbleLayer.appendChild(mermaidBubble);
+        return;
+      }
+
       const bubble = document.createElement('span');
       bubble.className = 'bubble';
 
-      const size = randomBetween(14, 58);
+      const giant = Math.random() < 0.1;
+      const size = giant ? randomBetween(280, 1160) : randomBetween(42, 174);
+      const duration = randomBetween(18, 34);
+      const colorful = Math.random() < 0.2;
       bubble.style.left = `${randomBetween(2, 96)}%`;
       bubble.style.width = `${size}px`;
       bubble.style.height = `${size}px`;
-      bubble.style.animationDuration = `${randomBetween(12, 26)}s`;
-      bubble.style.animationDelay = `${randomBetween(-24, 0)}s`;
-      bubble.style.opacity = randomBetween(0.45, 0.82).toFixed(2);
+      if (colorful) {
+        const hue = bubbleHues[Math.floor(Math.random() * bubbleHues.length)];
+        bubble.style.background = `
+          radial-gradient(circle at 30% 30%,
+            rgba(255,255,255,0.96),
+            hsla(${hue}, 78%, 76%, 0.42) 42%,
+            hsla(${hue + 36}, 74%, 58%, 0.18) 72%
+          )
+        `;
+        bubble.style.borderColor = `hsla(${hue}, 70%, 58%, 0.36)`;
+      }
+      bubble.style.setProperty('--duration', `${duration}s`);
+      bubble.style.setProperty('--delay', `${randomBetween(-duration, 0)}s`);
+      bubble.style.setProperty('--drift', `${randomBetween(-34, 34)}px`);
+      bubble.style.setProperty('--alpha', randomBetween(0.32, 0.62).toFixed(2));
+      bubble.style.setProperty('--scale', randomBetween(0.82, 1.18).toFixed(2));
 
       bubbleLayer.appendChild(bubble);
     };
