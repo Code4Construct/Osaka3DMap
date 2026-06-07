@@ -1,0 +1,697 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>kojiPDF - ダウンロード</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=DM+Mono:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #062a46;
+    --ink-2: #0b4268;
+    --paper: #fff4d6;
+    --surface: #fffaf0;
+    --red: #b5143f;
+    --gold: #e9bf60;
+    --mid: #466172;
+    --light-mid: #93a9b6;
+    --line: #d7b865;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  nav {
+    background: var(--ink);
+    border-bottom: 1px solid var(--ink-2);
+    padding: 0 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--paper);
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .nav-icon {
+    width: 46px;
+    height: 46px;
+    object-fit: contain;
+  }
+
+  .nav-logo {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+
+  .nav-logo span { color: var(--red); }
+  .nav-version {
+    margin-left: 6px;
+    color: var(--paper) !important;
+    font-size: 0.78em;
+    letter-spacing: -0.04em;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--light-mid);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--red); }
+
+  .language-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .lang-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,244,214,0.35);
+    background: #f6fbff;
+    color: var(--ink);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+  }
+
+  .lang-btn:hover { transform: translateY(-1px); }
+
+  .lang-btn.active {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(233,191,96,0.18);
+  }
+
+  .lang-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+  }
+
+  .page-hero {
+    background: var(--ink);
+    color: var(--paper);
+    border-bottom: 4px solid var(--red);
+    padding: 64px 60px 58px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-hero::after {
+    content: 'Download';
+    position: absolute;
+    right: 36px;
+    bottom: -20px;
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(74px, 12vw, 150px);
+    font-weight: 800;
+    color: rgba(255,255,255,0.05);
+    letter-spacing: -4px;
+    pointer-events: none;
+  }
+
+  .page-hero-inner,
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 26px;
+    height: 2px;
+    background: var(--gold);
+  }
+
+  h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(48px, 7vw, 84px);
+    line-height: 1;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+  }
+
+  .page-hero p {
+    max-width: 700px;
+    color: #dbe8ee;
+    font-size: 15px;
+    line-height: 2;
+  }
+
+  .hero-actions,
+  .trust-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .hero-actions { margin-top: 24px; }
+
+  .btn {
+    min-height: 44px;
+    padding: 0 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: transform 0.2s, background 0.2s, color 0.2s, border-color 0.2s;
+  }
+
+  .btn:hover { transform: translateY(-1px); }
+
+  .btn-primary {
+    background: var(--red);
+    color: white;
+    box-shadow: 0 10px 28px rgba(181,20,63,0.25);
+  }
+
+  .btn-secondary {
+    border-color: rgba(233,191,96,0.7);
+    color: var(--gold);
+    background: rgba(233,191,96,0.08);
+  }
+
+  .section { padding: 82px 60px; }
+
+  .trust {
+    background: var(--surface);
+    border-bottom: 1px solid rgba(6,42,70,0.08);
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .trust-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    align-items: start;
+    max-width: 820px;
+  }
+
+  .trust h2 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(30px, 4vw, 48px);
+    line-height: 1.25;
+    letter-spacing: -1px;
+    margin-bottom: 18px;
+  }
+
+  .trust-subtitle {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+    color: #7a520f;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .trust-subtitle::before,
+  .trust-subtitle::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #c49731;
+  }
+
+  .trust p {
+    color: #0f344d;
+    line-height: 2;
+    font-size: 15px;
+  }
+
+  .trust p + p { margin-top: 16px; }
+
+  .trust-card,
+  .trust-verification {
+    border-top: 1px solid #c49731;
+    background: transparent;
+    padding-top: 24px;
+  }
+
+  .trust-card h3,
+  .trust-verification h3 {
+    font-size: 17px;
+    margin-bottom: 12px;
+  }
+
+  .trust-release-meta {
+    display: grid;
+    gap: 6px;
+    margin: 14px 0 16px;
+    padding: 14px 16px;
+    border: 1px solid rgba(180,125,22,0.28);
+    background: rgba(255,255,255,0.34);
+    color: #0f344d;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .trust-release-meta code {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .trust-vt-window {
+    max-height: 420px;
+    overflow-y: auto;
+    border: 1px solid rgba(6,42,70,0.22);
+    border-radius: 6px;
+    background: #111424;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04), 0 16px 38px rgba(6,42,70,0.14);
+  }
+
+  .trust-vt-window img {
+    width: 100%;
+    display: block;
+  }
+
+  .warning-guide {
+    border-top: 1px solid #c49731;
+    padding-top: 24px;
+  }
+
+  .warning-guide h3 {
+    font-size: 17px;
+    margin-bottom: 12px;
+  }
+
+  .warning-guide-steps {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+  }
+
+  .warning-step {
+    border: 1px solid rgba(180,125,22,0.28);
+    background: rgba(255,255,255,0.34);
+    padding: 12px;
+  }
+
+  .warning-step img {
+    width: 100%;
+    display: block;
+    border: 1px solid rgba(6,42,70,0.16);
+    background: white;
+  }
+
+  .warning-step p {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .trust-note {
+    margin-top: 12px;
+    font-size: 12px;
+    line-height: 1.8;
+    color: #5d7180;
+  }
+
+  .trust-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    list-style: none;
+    margin-bottom: 20px;
+  }
+
+  .trust-list a {
+    display: block;
+    color: #0f344d;
+    font-size: 13px;
+    line-height: 1.7;
+    padding: 10px 12px 10px 34px;
+    position: relative;
+    text-decoration: none;
+    border: 1px solid rgba(180,125,22,0.24);
+    background: rgba(255,255,255,0.34);
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .trust-list a:hover {
+    transform: translateY(-1px);
+    border-color: #b47d16;
+    background: rgba(180,125,22,0.1);
+  }
+
+  .trust-list a::before {
+    content: '✓';
+    position: absolute;
+    left: 12px;
+    top: 10px;
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  .trust-actions .btn { min-width: 190px; }
+
+  .trust .btn-secondary {
+    border-color: #b47d16;
+    color: #7a520f;
+    background: rgba(255,255,255,0.42);
+  }
+
+  footer {
+    background: var(--ink);
+    padding: 28px 60px;
+    color: var(--light-mid);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    color: var(--paper);
+    text-decoration: none;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 20px;
+    font-weight: 800;
+  }
+
+  .footer-logo span { color: var(--red); }
+
+  .footer-nav {
+    display: flex;
+    gap: 26px;
+  }
+
+  .footer-nav a {
+    color: var(--light-mid);
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .footer-nav a:hover { color: var(--gold); }
+
+  @media (max-width: 960px) {
+    nav { padding: 12px 24px; align-items: flex-start; flex-direction: column; }
+    .nav-right { width: 100%; justify-content: space-between; gap: 18px; }
+    .nav-links { gap: 18px; flex-wrap: wrap; }
+    .page-hero, .section { padding-left: 24px; padding-right: 24px; }
+    .warning-guide-steps { grid-template-columns: 1fr; }
+    .trust-list { grid-template-columns: 1fr; }
+    footer { padding: 24px; flex-direction: column; gap: 16px; }
+  }
+
+  @media (max-width: 560px) {
+    nav { padding: 10px 18px; }
+    .nav-links { gap: 14px; }
+    .page-hero, .section { padding-left: 18px; padding-right: 18px; }
+    .hero-actions .btn,
+    .trust-actions .btn { width: 100%; }
+    .footer-nav { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="kojipdf-homepage.html" class="nav-brand">
+    <img src="images/iconsmall_v2.png" alt="kojiPDF" class="nav-icon">
+    <span class="nav-logo">koji<span>PDF</span><span class="nav-version">v2</span></span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="kojipdf-homepage.html" data-ja="ホーム" data-en="Home">ホーム</a></li>
+      <li><a href="kojipdf-download.html" class="active" data-ja="ダウンロード" data-en="Download">ダウンロード</a></li>
+      <li><a href="kojiPDF-tutorial.html" data-ja="チュートリアル（作成中）" data-en="Tutorial (Under Construction)">チュートリアル（作成中）</a></li>
+      <li><a href="https://github.com/Code4Construct/kojiPDFv210" target="_blank">GitHub</a></li>
+    </ul>
+    <div class="language-toggle" aria-label="Language selector">
+      <button type="button" class="lang-btn ja active" data-lang="ja" aria-label="日本語">
+        <img src="images/flag_jp.svg" alt="">
+      </button>
+      <button type="button" class="lang-btn en" data-lang="en" aria-label="English">
+        <img src="images/flag_gb.svg" alt="">
+      </button>
+    </div>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <div class="page-hero-inner">
+    <div class="eyebrow" data-ja="ダウンロード" data-en="Download">ダウンロード</div>
+    <h1 data-ja="ダウンロード" data-en="Download">ダウンロード</h1>
+    <p data-ja="kojiPDF v2.1.0 のインストーラーと、配布ファイルを確認するための情報を掲載しています。" data-en="Download the kojiPDF v2.1.0 installer and review the information for verifying the distributed file.">
+      kojiPDF v2.1.0 のインストーラーと、配布ファイルを確認するための情報を掲載しています。
+    </p>
+    <div class="hero-actions">
+      <a href="downloads/kojiPDF_Setup_2.1.0.msi" class="btn btn-primary" download data-ja="本サイトからダウンロードする" data-en="Download from this site">本サイトからダウンロードする</a>
+      <a href="https://www.vector.co.jp/soft/winnt/writing/se527459.html" class="btn btn-secondary" target="_blank" data-ja="Vectorからダウンロードする" data-en="Download from Vector">Vectorからダウンロードする</a>
+      <a href="https://github.com/Code4Construct/kojiPDFv210/releases/tag/v2.1.0" class="btn btn-secondary" target="_blank" data-ja="GitHubからダウンロードする" data-en="Download from GitHub">GitHubからダウンロードする</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="section trust">
+    <div class="section-inner">
+      <div class="section-label" data-ja="安全性と透明性" data-en="Safety and Transparency">安全性と透明性</div>
+      <div class="trust-layout">
+        <div>
+          <h2 data-ja="インストール時にウィルス警告がでる理由について" data-en="Why security warnings may appear during installation">インストール時にウィルス警告がでる理由について</h2>
+          <div class="trust-subtitle" data-ja="安心して使っていただくために" data-en="So you can use it with confidence">安心して使っていただくために</div>
+          <p data-ja="kojiPDFは、工事関係者が個人で開発しているオープンソースソフトウェアです。有料の商用ソフトではなく、ペーパーレス会議や電子検査を少しでも使いやすくするために作っている、誰でも使えるPDFツールです。" data-en="kojiPDF is open-source software developed personally by someone in the construction field. It is not a paid commercial product, but a PDF tool made so anyone can make paperless meetings and electronic inspections easier to handle.">
+            kojiPDFは、工事関係者が個人で開発しているオープンソースソフトウェアです。有料の商用ソフトではなく、ペーパーレス会議や電子検査を少しでも使いやすくするために作っている、誰でも使えるPDFツールです。
+          </p>
+          <p data-ja="一方で、個人が作ったばかりのWindowsアプリは、ダウンロード時やインストール時にウィルス警告やSmartScreenの警告が表示されることがあります。これは、必ずしもアプリが危険という意味ではありません。" data-en="At the same time, new Windows apps made by individuals can show antivirus or SmartScreen warnings when downloaded or installed. This does not necessarily mean the app is dangerous.">
+            一方で、個人が作ったばかりのWindowsアプリは、ダウンロード時やインストール時にウィルス警告やSmartScreenの警告が表示されることがあります。これは、必ずしもアプリが危険という意味ではありません。
+          </p>
+          <p data-ja="Windowsやセキュリティソフトは、アプリの中身だけでなく、発行元の署名、配布実績、ダウンロード数、利用者からの評価、過去の検出履歴なども参考にしています。市販ソフトや定評のあるOSSでは、有料のコード署名証明書や長年の利用実績によって信頼されやすくなっています。しかし、個人開発の新しいアプリでは、そうした信頼情報がまだ少ないため、警告が出やすくなります。" data-en="Windows and security software look not only at the app itself, but also at publisher signatures, distribution history, download counts, user reputation, and past detection history. Commercial software and well-established OSS are often trusted through paid code-signing certificates and long-term usage records. New apps from individual developers have fewer of those trust signals, so warnings are more likely to appear.">
+            Windowsやセキュリティソフトは、アプリの中身だけでなく、発行元の署名、配布実績、ダウンロード数、利用者からの評価、過去の検出履歴なども参考にしています。市販ソフトや定評のあるOSSでは、有料のコード署名証明書や長年の利用実績によって信頼されやすくなっています。しかし、個人開発の新しいアプリでは、そうした信頼情報がまだ少ないため、警告が出やすくなります。
+          </p>
+          <p data-ja="kojiPDFでも、現時点では高価な有料コード署名を取得できておらず、SignPath FoundationのようなOSS向け署名サービスについても、プロジェクトの知名度や利用実績が不足しているため、すぐに利用することは難しい状況です。" data-en="For kojiPDF, I have not yet been able to obtain an expensive paid code-signing certificate. OSS signing services such as SignPath Foundation are also difficult to use immediately because the project still lacks enough public recognition and usage history.">
+            kojiPDFでも、現時点では高価な有料コード署名を取得できておらず、SignPath FoundationのようなOSS向け署名サービスについても、プロジェクトの知名度や利用実績が不足しているため、すぐに利用することは難しい状況です。
+          </p>
+          <p data-ja="そのため、警告を完全に消すことはまだ難しいですが、利用者がご自身で確認できる材料をできるだけ公開しています。配布ファイルのSHA256、GitHub Releases、GitHub Actionsのビルド履歴、公開しているソースコード、VirusTotalの検査結果を確認できるようにしています。" data-en="Because of that, completely removing those warnings is still difficult. Instead, I publish as much verifiable information as possible: the SHA256 of the distributed file, GitHub Releases, GitHub Actions build history, the public source code, and the VirusTotal scan result.">
+            そのため、警告を完全に消すことはまだ難しいですが、利用者がご自身で確認できる材料をできるだけ公開しています。配布ファイルのSHA256、GitHub Releases、GitHub Actionsのビルド履歴、公開しているソースコード、VirusTotalの検査結果を確認できるようにしています。
+          </p>
+          <p data-ja="これらは安全性を完全に保証するものではありません。しかし、「どのファイルを配布しているか」「そのファイルが改ざんされていないか」「どのようにビルドされているか」「検査時点で主要なセキュリティベンダーに検出されているか」を確認するための客観的な情報です。" data-en="These do not completely guarantee safety. However, they are objective information for checking which file is being distributed, whether that file has been altered, how it was built, and whether major security vendors detected it at the time of the scan.">
+            これらは安全性を完全に保証するものではありません。しかし、「どのファイルを配布しているか」「そのファイルが改ざんされていないか」「どのようにビルドされているか」「検査時点で主要なセキュリティベンダーに検出されているか」を確認するための客観的な情報です。
+          </p>
+        </div>
+        <aside class="trust-verification">
+          <h3 data-ja="配布ファイルの検証情報" data-en="Release Verification">配布ファイルの検証情報</h3>
+          <p data-ja="kojiPDF v2.1.0 のMSIについて、VirusTotalで52件のセキュリティベンダーで検査した結果、malicious=0 / suspicious=0 でした。" data-en="For the kojiPDF v2.1.0 MSI, VirusTotal scanned it with 52 security vendors, and the result was malicious=0 / suspicious=0.">
+            kojiPDF v2.1.0 のMSIについて、VirusTotalで52件のセキュリティベンダーで検査した結果、malicious=0 / suspicious=0 でした。
+          </p>
+          <div class="trust-release-meta" aria-label="kojiPDF v2.1.0 verification details">
+            <div><strong>kojiPDF v2.1.0</strong></div>
+            <div>MSI: <code>kojiPDF_Setup_2.1.0.msi</code></div>
+            <div>SHA256: <code>f4be5b39c3f0357837b92b800bb35cec91087f86bc371ec30c80f7a7a925c3ef</code></div>
+            <div>VirusTotal: <code>malicious=0 suspicious=0</code></div>
+          </div>
+          <div class="trust-vt-window" aria-label="VirusTotal scan result screenshot">
+            <img src="images/virustotal-kojiPDF-2.1.0.png" alt="VirusTotal scan result for kojiPDF_Setup_2.1.0.msi showing no security vendors flagged the file as malicious" loading="lazy">
+          </div>
+          <p class="trust-note" data-ja="VirusTotalの結果は安全性を判断する材料の一つにすぎませんが、配布ファイルの状態を確認するための参考情報として広く利用されています。" data-en="VirusTotal results are only one factor for judging safety, but they are widely used as reference information for checking the state of distributed files.">
+            VirusTotalの結果は安全性を判断する材料の一つにすぎませんが、配布ファイルの状態を確認するための参考情報として広く利用されています。
+          </p>
+        </aside>
+        <aside class="warning-guide">
+          <h3 data-ja="SmartScreenの警告が表示された場合" data-en="If a SmartScreen warning appears">SmartScreenの警告が表示された場合</h3>
+          <p data-ja="上記の検証情報や公開ソースコードをご確認いただき、このアプリを信頼いただける場合のみ、Windowsの警告画面で次のように進めてください。" data-en="After reviewing the verification information and public source code above, proceed only if you trust this app. In the Windows warning screen, use the following steps.">
+            上記の検証情報や公開ソースコードをご確認いただき、このアプリを信頼いただける場合のみ、Windowsの警告画面で次のように進めてください。
+          </p>
+          <div class="warning-guide-steps">
+            <figure class="warning-step">
+              <img src="images/warning01j.png" data-ja-src="images/warning01j.png" data-en-src="images/warning01e.png" data-ja-alt="Windows SmartScreenの警告画面。詳細情報リンクが表示されている。" data-en-alt="Windows SmartScreen warning screen showing the More info link." alt="Windows SmartScreenの警告画面。詳細情報リンクが表示されている。" loading="lazy">
+              <p data-ja="最初の画面では、内容を確認するために「詳細情報」を選択します。" data-en="On the first screen, select More info to review the details.">
+                最初の画面では、内容を確認するために「詳細情報」を選択します。
+              </p>
+            </figure>
+            <figure class="warning-step">
+              <img src="images/warning02j.png" data-ja-src="images/warning02j.png" data-en-src="images/warning02e.png" data-ja-alt="Windows SmartScreenの警告画面。実行ボタンが表示されている。" data-en-alt="Windows SmartScreen warning screen showing the Run anyway button." alt="Windows SmartScreenの警告画面。実行ボタンが表示されている。" loading="lazy">
+              <p data-ja="内容を確認し、問題ないと判断できる場合は「実行」を選択してください。" data-en="After reviewing the details, select Run anyway only if you are comfortable proceeding.">
+                内容を確認し、問題ないと判断できる場合は「実行」を選択してください。
+              </p>
+            </figure>
+          </div>
+        </aside>
+        <aside class="trust-card">
+          <h3 data-ja="確認できること" data-en="What you can verify">確認できること</h3>
+          <ul class="trust-list">
+            <li><a href="https://github.com/Code4Construct/kojiPDFv210/releases/tag/v2.1.0" target="_blank" data-ja="GitHub Releasesで配布ファイルを確認できます" data-en="Check the distributed file on GitHub Releases">GitHub Releasesで配布ファイルを確認できます</a></li>
+            <li><a href="https://github.com/Code4Construct/kojiPDFv210/releases/tag/v2.1.0" target="_blank" data-ja="SHA256でファイルの同一性を確認できます" data-en="Verify the file identity with SHA256">SHA256でファイルの同一性を確認できます</a></li>
+            <li><a href="https://github.com/Code4Construct/kojiPDFv210/actions" target="_blank" data-ja="GitHub Actionsでビルド履歴を確認できます" data-en="Review the build history in GitHub Actions">GitHub Actionsでビルド履歴を確認できます</a></li>
+            <li><a href="https://github.com/Code4Construct/kojiPDFv210" target="_blank" data-ja="GitHubでソースコードを確認できます" data-en="Read the source code on GitHub">GitHubでソースコードを確認できます</a></li>
+            <li><a href="https://www.virustotal.com/gui/file/f4be5b39c3f0357837b92b800bb35cec91087f86bc371ec30c80f7a7a925c3ef/detection" target="_blank" data-ja="VirusTotalで検査時点の検出状況を確認できます" data-en="Check detection status at the time of the scan on VirusTotal">VirusTotalで検査時点の検出状況を確認できます</a></li>
+          </ul>
+          <p class="trust-note" data-ja="もしkojiPDFが役に立った場合は、GitHubスター、Vectorでの評価、感想や紹介などで応援していただけると、将来的なコード署名取得や信頼性向上につながります。" data-en="If kojiPDF helps you, a GitHub star, Vector rating, feedback, or a short introduction can help improve trust and support future code-signing efforts.">
+            もしkojiPDFが役に立った場合は、GitHubスター、Vectorでの評価、感想や紹介などで応援していただけると、将来的なコード署名取得や信頼性向上につながります。
+          </p>
+          <div class="trust-actions">
+            <a href="https://www.vector.co.jp/soft/winnt/writing/se527459.html" class="btn btn-secondary" target="_blank" data-ja="Vectorで応援する" data-en="Support on Vector">Vectorで応援する</a>
+            <a href="https://github.com/Code4Construct/kojiPDFv210" class="btn btn-primary" target="_blank" data-ja="GitHubで応援する" data-en="Support on GitHub">GitHubで応援する</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <a href="kojipdf-homepage.html" class="footer-logo">koji<span>PDF</span></a>
+  <div class="footer-nav">
+    <a href="kojipdf-homepage.html" data-ja="ホーム" data-en="Home">ホーム</a>
+    <a href="kojiPDF-tutorial.html" data-ja="チュートリアル（作成中）" data-en="Tutorial (Under Construction)">チュートリアル（作成中）</a>
+    <a href="https://github.com/Code4Construct/kojiPDFv210" target="_blank">GitHub</a>
+  </div>
+</footer>
+
+<script>
+  const titles = {
+    ja: 'kojiPDF - ダウンロード',
+    en: 'kojiPDF - Download'
+  };
+
+  const setLanguage = (lang) => {
+    document.documentElement.lang = lang;
+    document.title = titles[lang];
+
+    document.querySelectorAll('[data-ja][data-en]').forEach((element) => {
+      element.textContent = element.dataset[lang];
+    });
+
+    document.querySelectorAll('[data-ja-src][data-en-src]').forEach((image) => {
+      image.src = image.dataset[`${lang}Src`];
+      if (image.dataset[`${lang}Alt`]) {
+        image.alt = image.dataset[`${lang}Alt`];
+      }
+    });
+
+    document.querySelectorAll('.lang-btn').forEach((button) => {
+      const isActive = button.dataset.lang === lang;
+      button.classList.toggle('active', isActive);
+      button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+
+    localStorage.setItem('kojipdf-language', lang);
+
+    document.querySelectorAll('a[href^="kojiPDF-tutorial.html"]').forEach((link) => {
+      link.href = `kojiPDF-tutorial.html?lang=${lang}`;
+    });
+  };
+
+  document.querySelectorAll('.lang-btn').forEach((button) => {
+    button.addEventListener('click', () => setLanguage(button.dataset.lang));
+  });
+
+  const params = new URLSearchParams(window.location.search);
+  const requestedLang = params.get('lang');
+  const savedLang = localStorage.getItem('kojipdf-language');
+  const browserLang = navigator.language || '';
+  const initialLang = requestedLang === 'en' || requestedLang === 'ja'
+    ? requestedLang
+    : savedLang === 'en' || savedLang === 'ja'
+      ? savedLang
+      : browserLang.toLowerCase().startsWith('en')
+        ? 'en'
+        : 'ja';
+  setLanguage(initialLang);
+</script>
+
+</body>
+</html>

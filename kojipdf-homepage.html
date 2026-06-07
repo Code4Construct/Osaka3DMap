@@ -161,7 +161,7 @@
     overflow: hidden;
     background:
       linear-gradient(90deg, rgba(6,42,70,0.96) 0%, rgba(6,42,70,0.88) 42%, rgba(6,42,70,0.50) 68%, rgba(6,42,70,0.20) 100%),
-      url("v200GUI.png") right center / min(62vw, 820px) auto no-repeat,
+      url("images/v200GUI.png") right center / min(62vw, 820px) auto no-repeat,
       var(--ink);
     border-bottom: 4px solid var(--red);
   }
@@ -245,7 +245,7 @@
     height: 0.50em;
     right: -0.24em;
     top: -0.04em;
-    background: url("koji-helmet.png") center / contain no-repeat;
+    background: url("images/koji-helmet.png") center / contain no-repeat;
     filter: saturate(0.78) brightness(0.88) drop-shadow(0 8px 10px rgba(0,0,0,0.24));
     pointer-events: none;
     transform: rotate(18deg);
@@ -346,6 +346,10 @@
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: 10px;
+  }
+
+  .download-page-btn {
+    width: min(100%, 420px);
   }
 
   .hero-support {
@@ -1127,7 +1131,7 @@
       padding: 58px 24px 44px;
       background:
         linear-gradient(180deg, rgba(6,42,70,0.96), rgba(6,42,70,0.86)),
-        url("v200GUI.png") center bottom / 680px auto no-repeat,
+        url("images/v200GUI.png") center bottom / 680px auto no-repeat,
         var(--ink);
     }
     .hero-content { width: 100%; }
@@ -1203,21 +1207,22 @@
 
 <nav>
   <a href="kojipdf-homepage.html" class="nav-brand">
-    <img src="iconsmall_v2.png" alt="kojiPDF" class="nav-icon">
+    <img src="images/iconsmall_v2.png" alt="kojiPDF" class="nav-icon">
     <span class="nav-logo">koji<span>PDF</span><span class="nav-version">v2</span></span>
   </a>
   <div class="nav-right">
     <ul class="nav-links">
       <li><a href="kojipdf-homepage.html" class="active" data-ja="ホーム" data-en="Home">ホーム</a></li>
+      <li><a href="kojipdf-download.html" data-ja="ダウンロード" data-en="Download">ダウンロード</a></li>
       <li><a href="kojiPDF-tutorial.html" data-ja="チュートリアル（作成中）" data-en="Tutorial (Under Construction)">チュートリアル（作成中）</a></li>
       <li><a href="https://github.com/Code4Construct/kojiPDFv210" target="_blank">GitHub</a></li>
     </ul>
     <div class="language-toggle" aria-label="Language selector">
       <button type="button" class="lang-btn ja active" data-lang="ja" aria-label="日本語">
-        <img src="flag_jp.svg" alt="">
+        <img src="images/flag_jp.svg" alt="">
       </button>
       <button type="button" class="lang-btn en" data-lang="en" aria-label="English">
-        <img src="flag_gb.svg" alt="">
+        <img src="images/flag_gb.svg" alt="">
       </button>
     </div>
   </div>
@@ -1229,7 +1234,7 @@
     <h1>koji<span class="pdf-mark">PDF</span><span class="hero-version">v2</span></h1>
     <div class="hero-showcase">
       <figure class="hero-flow-visual">
-        <img src="folder-files-to-bookmarked-pdf.png" alt="フォルダ内のPDF、Word、Excel、PowerPointを一冊のしおり付きPDFにまとめる流れ">
+        <img src="images/folder-files-to-bookmarked-pdf.png" alt="フォルダ内のPDF、Word、Excel、PowerPointを一冊のしおり付きPDFにまとめる流れ">
         <div class="hero-feature-grid">
           <div class="hero-feature">
             <h3 data-ja="フォルダ単位で結合" data-en="Merge by Folder">フォルダ単位で結合</h3>
@@ -1258,10 +1263,7 @@
         <div class="download-options">
           <div class="download-options-label" data-ja="ダウンロード方法" data-en="Download Options">ダウンロード方法</div>
           <div class="hero-actions">
-            <a href="downloads/kojiPDF_Setup_2.1.0.msi" class="btn btn-primary" download data-ja="本サイトからダウンロードする" data-en="Download from this site">本サイトからダウンロードする</a>
-            <a href="https://www.vector.co.jp/soft/winnt/writing/se527459.html" class="btn btn-secondary" target="_blank" data-ja="Vectorからダウンロードする" data-en="Download from Vector">Vectorからダウンロードする</a>
-            <a href="https://github.com/Code4Construct/kojiPDFv210/releases/tag/v2.1.0" class="btn btn-secondary" target="_blank" data-ja="GitHubからダウンロードする" data-en="Download from GitHub">GitHubからダウンロードする</a>
-            <a href="kojiPDF-tutorial.html" class="btn btn-secondary" data-ja="使い方を見る" data-en="View Tutorial">使い方を見る</a>
+            <a href="kojipdf-download.html" class="btn btn-primary download-page-btn" data-ja="ダウンロードページへ" data-en="Go to Download Page">ダウンロードページへ</a>
           </div>
         </div>
         <div class="hero-support">
@@ -1291,7 +1293,7 @@
         </p>
       </div>
       <figure class="meeting-fatigue-visual">
-        <img src="bothsides-photo-balanced.png" alt="ペーパレス会議の読む側と作る側の課題">
+        <img src="images/bothsides-photo-balanced.png" alt="ペーパレス会議の読む側と作る側の課題">
         <figcaption class="meeting-visual-title" data-ja="紙が無くなって効率的なはずなのに？" data-en="Paper is gone, so why does it still feel inefficient?">紙が無くなって効率的なはずなのに？</figcaption>
         <div class="meeting-card-grid">
           <div class="meeting-card reading">
@@ -1332,73 +1334,8 @@
           </p>
         </div>
         <figure class="paperless-visual">
-          <img src="wallclimbing.png" alt="ペーパレス会議資料をしおり付きPDFにまとめるイメージ">
+          <img src="images/wallclimbing.png" alt="ペーパレス会議資料をしおり付きPDFにまとめるイメージ">
         </figure>
-      </div>
-    </div>
-  </section>
-
-  <section class="section trust">
-    <div class="section-inner">
-      <div class="section-label" data-ja="安全性と透明性" data-en="Safety and Transparency">安全性と透明性</div>
-      <div class="trust-layout">
-        <div>
-          <h2 data-ja="インストール時にウィルス警告がでる理由について" data-en="Why security warnings may appear during installation">インストール時にウィルス警告がでる理由について</h2>
-          <div class="trust-subtitle" data-ja="安心して使っていただくために" data-en="So you can use it with confidence">安心して使っていただくために</div>
-          <p data-ja="kojiPDFは、工事関係者が個人で開発しているオープンソースソフトウェアです。有料の商用ソフトではなく、ペーパーレス会議や電子検査を少しでも使いやすくするために作っている、誰でも使えるPDFツールです。" data-en="kojiPDF is open-source software developed personally by someone in the construction field. It is not a paid commercial product, but a PDF tool made so anyone can make paperless meetings and electronic inspections easier to handle.">
-            kojiPDFは、工事関係者が個人で開発しているオープンソースソフトウェアです。有料の商用ソフトではなく、ペーパーレス会議や電子検査を少しでも使いやすくするために作っている、誰でも使えるPDFツールです。
-          </p>
-          <p data-ja="一方で、個人が作ったばかりのWindowsアプリは、ダウンロード時やインストール時にウィルス警告やSmartScreenの警告が表示されることがあります。これは、必ずしもアプリが危険という意味ではありません。" data-en="At the same time, new Windows apps made by individuals can show antivirus or SmartScreen warnings when downloaded or installed. This does not necessarily mean the app is dangerous.">
-            一方で、個人が作ったばかりのWindowsアプリは、ダウンロード時やインストール時にウィルス警告やSmartScreenの警告が表示されることがあります。これは、必ずしもアプリが危険という意味ではありません。
-          </p>
-          <p data-ja="Windowsやセキュリティソフトは、アプリの中身だけでなく、発行元の署名、配布実績、ダウンロード数、利用者からの評価、過去の検出履歴なども参考にしています。市販ソフトや定評のあるOSSでは、有料のコード署名証明書や長年の利用実績によって信頼されやすくなっています。しかし、個人開発の新しいアプリでは、そうした信頼情報がまだ少ないため、警告が出やすくなります。" data-en="Windows and security software look not only at the app itself, but also at publisher signatures, distribution history, download counts, user reputation, and past detection history. Commercial software and well-established OSS are often trusted through paid code-signing certificates and long-term usage records. New apps from individual developers have fewer of those trust signals, so warnings are more likely to appear.">
-            Windowsやセキュリティソフトは、アプリの中身だけでなく、発行元の署名、配布実績、ダウンロード数、利用者からの評価、過去の検出履歴なども参考にしています。市販ソフトや定評のあるOSSでは、有料のコード署名証明書や長年の利用実績によって信頼されやすくなっています。しかし、個人開発の新しいアプリでは、そうした信頼情報がまだ少ないため、警告が出やすくなります。
-          </p>
-          <p data-ja="kojiPDFでも、現時点では高価な有料コード署名を取得できておらず、SignPath FoundationのようなOSS向け署名サービスについても、プロジェクトの知名度や利用実績が不足しているため、すぐに利用することは難しい状況です。" data-en="For kojiPDF, I have not yet been able to obtain an expensive paid code-signing certificate. OSS signing services such as SignPath Foundation are also difficult to use immediately because the project still lacks enough public recognition and usage history.">
-            kojiPDFでも、現時点では高価な有料コード署名を取得できておらず、SignPath FoundationのようなOSS向け署名サービスについても、プロジェクトの知名度や利用実績が不足しているため、すぐに利用することは難しい状況です。
-          </p>
-          <p data-ja="そのため、警告を完全に消すことはまだ難しいですが、利用者がご自身で確認できる材料をできるだけ公開しています。配布ファイルのSHA256、GitHub Releases、GitHub Actionsのビルド履歴、公開しているソースコード、VirusTotalの検査結果を確認できるようにしています。" data-en="Because of that, completely removing those warnings is still difficult. Instead, I publish as much verifiable information as possible: the SHA256 of the distributed file, GitHub Releases, GitHub Actions build history, the public source code, and the VirusTotal scan result.">
-            そのため、警告を完全に消すことはまだ難しいですが、利用者がご自身で確認できる材料をできるだけ公開しています。配布ファイルのSHA256、GitHub Releases、GitHub Actionsのビルド履歴、公開しているソースコード、VirusTotalの検査結果を確認できるようにしています。
-          </p>
-          <p data-ja="これらは安全性を完全に保証するものではありません。しかし、「どのファイルを配布しているか」「そのファイルが改ざんされていないか」「どのようにビルドされているか」「検査時点で主要なセキュリティベンダーに検出されているか」を確認するための客観的な情報です。" data-en="These do not completely guarantee safety. However, they are objective information for checking which file is being distributed, whether that file has been altered, how it was built, and whether major security vendors detected it at the time of the scan.">
-            これらは安全性を完全に保証するものではありません。しかし、「どのファイルを配布しているか」「そのファイルが改ざんされていないか」「どのようにビルドされているか」「検査時点で主要なセキュリティベンダーに検出されているか」を確認するための客観的な情報です。
-          </p>
-        </div>
-        <aside class="trust-verification">
-          <h3 data-ja="配布ファイルの検証情報" data-en="Release Verification">配布ファイルの検証情報</h3>
-          <p data-ja="kojiPDF v2.1.0 のMSIについて、VirusTotalで52件のセキュリティベンダーで検査した結果、malicious=0 / suspicious=0 でした。" data-en="For the kojiPDF v2.1.0 MSI, VirusTotal scanned it with 52 security vendors, and the result was malicious=0 / suspicious=0.">
-            kojiPDF v2.1.0 のMSIについて、VirusTotalで52件のセキュリティベンダーで検査した結果、malicious=0 / suspicious=0 でした。
-          </p>
-          <div class="trust-release-meta" aria-label="kojiPDF v2.1.0 verification details">
-            <div><strong>kojiPDF v2.1.0</strong></div>
-            <div>MSI: <code>kojiPDF_Setup_2.1.0.msi</code></div>
-            <div>SHA256: <code>f4be5b39c3f0357837b92b800bb35cec91087f86bc371ec30c80f7a7a925c3ef</code></div>
-            <div>VirusTotal: <code>malicious=0 suspicious=0</code></div>
-          </div>
-          <div class="trust-vt-window" aria-label="VirusTotal scan result screenshot">
-            <img src="virustotal-kojiPDF-2.1.0.png" alt="VirusTotal scan result for kojiPDF_Setup_2.1.0.msi showing no security vendors flagged the file as malicious" loading="lazy">
-          </div>
-          <p class="trust-note" data-ja="VirusTotalの結果は安全性を判断する材料の一つにすぎませんが、配布ファイルの状態を確認するための参考情報として広く利用されています。" data-en="VirusTotal results are only one factor for judging safety, but they are widely used as reference information for checking the state of distributed files.">
-            VirusTotalの結果は安全性を判断する材料の一つにすぎませんが、配布ファイルの状態を確認するための参考情報として広く利用されています。
-          </p>
-        </aside>
-        <aside class="trust-card">
-          <h3 data-ja="確認できること" data-en="What you can verify">確認できること</h3>
-          <ul class="trust-list">
-            <li><a href="https://github.com/Code4Construct/kojiPDFv210/releases/tag/v2.1.0" target="_blank" data-ja="GitHub Releasesで配布ファイルを確認できます" data-en="Check the distributed file on GitHub Releases">GitHub Releasesで配布ファイルを確認できます</a></li>
-            <li><a href="https://github.com/Code4Construct/kojiPDFv210/releases/tag/v2.1.0" target="_blank" data-ja="SHA256でファイルの同一性を確認できます" data-en="Verify the file identity with SHA256">SHA256でファイルの同一性を確認できます</a></li>
-            <li><a href="https://github.com/Code4Construct/kojiPDFv210/actions" target="_blank" data-ja="GitHub Actionsでビルド履歴を確認できます" data-en="Review the build history in GitHub Actions">GitHub Actionsでビルド履歴を確認できます</a></li>
-            <li><a href="https://github.com/Code4Construct/kojiPDFv210" target="_blank" data-ja="GitHubでソースコードを確認できます" data-en="Read the source code on GitHub">GitHubでソースコードを確認できます</a></li>
-            <li><a href="https://www.virustotal.com/gui/file/f4be5b39c3f0357837b92b800bb35cec91087f86bc371ec30c80f7a7a925c3ef/detection" target="_blank" data-ja="VirusTotalで検査時点の検出状況を確認できます" data-en="Check detection status at the time of the scan on VirusTotal">VirusTotalで検査時点の検出状況を確認できます</a></li>
-          </ul>
-          <p class="trust-note" data-ja="もしkojiPDFが役に立った場合は、GitHubスター、Vectorでの評価、感想や紹介などで応援していただけると、将来的なコード署名取得や信頼性向上につながります。" data-en="If kojiPDF helps you, a GitHub star, Vector rating, feedback, or a short introduction can help improve trust and support future code-signing efforts.">
-            もしkojiPDFが役に立った場合は、GitHubスター、Vectorでの評価、感想や紹介などで応援していただけると、将来的なコード署名取得や信頼性向上につながります。
-          </p>
-          <div class="trust-actions">
-            <a href="https://www.vector.co.jp/soft/winnt/writing/se527459.html" class="btn btn-secondary" target="_blank" data-ja="Vectorで応援する" data-en="Support on Vector">Vectorで応援する</a>
-            <a href="https://github.com/Code4Construct/kojiPDFv210" class="btn btn-primary" target="_blank" data-ja="GitHubで応援する" data-en="Support on GitHub">GitHubで応援する</a>
-          </div>
-        </aside>
       </div>
     </div>
   </section>
@@ -1413,7 +1350,7 @@
             工事関係書類の電子化には、苦労しながら取り組んできました。しかし、書類検査では電子データのままでは実用にならず、結局すべて紙で出力せざるを得ませんでした。紙で出すなら、電子化する意味はあるのでしょうか。そんなジレンマに陥っていました。
           </p>
           <figure class="story-visual">
-            <img src="origin-story-construction-pdf-overload.png" alt="A stressed construction worker facing many open PDF files on a computer screen">
+            <img src="images/origin-story-construction-pdf-overload.png" alt="A stressed construction worker facing many open PDF files on a computer screen">
           </figure>
           <p data-ja="何百ものフォルダ。数千ものPDFファイル。整理や保存には便利でも、工事の書類検査では「必要な資料を、その場ですぐに出せること」が求められます。" data-en="Hundreds of folders. Thousands of PDF files. They were useful for organizing and storing documents, but construction document inspections required something else: the ability to bring up the needed material immediately, on the spot.">
             何百ものフォルダ。数千ものPDFファイル。整理や保存には便利でも、工事の書類検査では「必要な資料を、その場ですぐに出せること」が求められます。
@@ -1459,7 +1396,7 @@
           <article class="guide-item"><div class="guide-index">4</div><div><h3 data-ja="作成ボタンでPDFを出力する" data-en="Create the PDF">作成ボタンでPDFを出力する</h3><p data-ja="最後に赤い「作成」ボタンを押すと、しおり付きPDFとして保存されます。" data-en="Press the red Create button to save one bookmarked PDF.">最後に赤い「作成」ボタンを押すと、しおり付きPDFとして保存されます。</p></div></article>
         </div>
         <aside class="guide-aside">
-          <img src="v200GUI_process.png" alt="kojiPDF v2.1.0 processing screen">
+          <img src="images/v200GUI_process.png" alt="kojiPDF v2.1.0 processing screen">
           <h3 data-ja="処理中の画面例" data-en="Processing Example">処理中の画面例</h3>
           <p data-ja="結合処理中は、進行状況や処理ログを画面上で確認できます。" data-en="During processing, you can review progress and logs on screen.">結合処理中は、進行状況や処理ログを画面上で確認できます。</p>
         </aside>
@@ -1471,7 +1408,7 @@
     <div class="section-inner">
       <div class="section-label" data-ja="旧バージョン" data-en="Previous Version">旧バージョン</div>
       <div class="legacy-note-card">
-        <img src="v150GUI.jpg" alt="kojiPDF v1.50 application screen">
+        <img src="images/v150GUI.jpg" alt="kojiPDF v1.50 application screen">
         <div>
           <h3>v1.50</h3>
           <p data-ja="旧バージョンはVectorで公開しています。現在のv2.1.0とは画面構成が異なります。" data-en="The earlier v1.50 release remains available on Vector. Its interface differs from the current v2.1.0 version.">旧バージョンはVectorで公開しています。現在のv2.1.0とは画面構成が異なります。</p>
@@ -1487,7 +1424,7 @@
   <div class="footer-nav">
     <a href="kojiPDF-tutorial.html" data-ja="チュートリアル（作成中）" data-en="Tutorial (Under Construction)">チュートリアル（作成中）</a>
     <a href="https://github.com/Code4Construct/kojiPDFv210" target="_blank">GitHub</a>
-    <a href="downloads/kojiPDF_Setup_2.1.0.msi" download data-ja="ダウンロード" data-en="Download">ダウンロード</a>
+    <a href="kojipdf-download.html" data-ja="ダウンロード" data-en="Download">ダウンロード</a>
   </div>
 </footer>
 
