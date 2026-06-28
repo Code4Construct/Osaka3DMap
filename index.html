@@ -265,6 +265,14 @@
     margin-top: 6px;
   }
 
+  .section-heading p {
+    max-width: 620px;
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+
   .section-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -302,6 +310,27 @@
     color: var(--muted);
     line-height: 1.8;
     font-size: 14px;
+  }
+
+  .linked-card {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .linked-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(79, 143, 180, 0.34);
+    box-shadow: 0 24px 60px rgba(52, 88, 112, 0.18);
+  }
+
+  .card-inline-link {
+    display: inline-flex;
+    margin-top: 14px;
+    color: var(--accent-deep);
+    font-size: 13px;
+    font-weight: 700;
   }
 
   .project-card {
@@ -397,18 +426,23 @@
       <div class="section-heading">
         <div class="card-label">Making</div>
         <h2>Vibe Coding</h2>
+        <p>
+          Ideas into working shapes: quick experiments, AI-assisted iteration,
+          and small tools that make everyday work a little smoother.
+        </p>
       </div>
       <div class="section-grid two-column">
         <article class="glass-card">
           <div class="card-label">Small tools</div>
-          <h3>Ideas into working shapes</h3>
-          <p>Turning ideas into small working tools through quick experiments and iterative building.</p>
+          <h3>Vibe Coding</h3>
+          <p>Turning small observations into working tools through quick experiments and iterative building.</p>
         </article>
-        <article class="glass-card">
+        <a href="kojigis-homepage.html" class="glass-card linked-card">
           <div class="card-label">Mapping</div>
-          <h3>QGIS</h3>
-          <p>Exploring maps, spatial data, and the stories that become clearer when placed on geography.</p>
-        </article>
+          <h3>kojiGIS</h3>
+          <p>A QGIS plugin concept for map drawing, spatial data organization, and tools I wished existed in daily technical work.</p>
+          <span class="card-inline-link">Open kojiGIS</span>
+        </a>
       </div>
 
       <div class="project-list" id="projects">
@@ -442,7 +476,12 @@
         <div class="card-label">Outside</div>
         <h2>Wide Roaming</h2>
       </div>
-      <div class="section-grid single-column">
+      <div class="section-grid two-column">
+        <article class="glass-card">
+          <div class="card-label">Local travel</div>
+          <h3>Discover Local. Meet the World.</h3>
+          <p>Travel through Japan's local towns where the world has arrived. Experience familiar places through fresh eyes&mdash;and enjoy the feeling of traveling abroad without ever leaving Japan.</p>
+        </article>
         <article class="glass-card">
           <div class="card-label">Historic Roads</div>
           <h3>Historic Roads</h3>
