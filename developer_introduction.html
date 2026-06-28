@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Developer Introduction - Code4Construct</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=DM+Mono:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #062a46;
+    --ink-2: #0b4268;
+    --paper: #fff4d6;
+    --surface: #fffaf0;
+    --red: #b5143f;
+    --gold: #e9bf60;
+    --mid: #466172;
+    --light-mid: #93a9b6;
+    --line: #d7b865;
+    --developer-bg: url("images/developer-introduction-backimage.png");
+  }
+
+  body {
+    min-height: 100vh;
+    background:
+      linear-gradient(rgba(255,244,214,0.9), rgba(255,244,214,0.98)),
+      linear-gradient(90deg, rgba(6,42,70,0.045) 1px, transparent 1px),
+      linear-gradient(rgba(6,42,70,0.045) 1px, transparent 1px),
+      var(--paper);
+    background-size: auto, 42px 42px, 42px 42px, auto;
+    color: var(--ink);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    line-height: 1.9;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  nav {
+    min-height: 64px;
+    padding: 0 60px;
+    background: var(--ink);
+    border-bottom: 1px solid var(--ink-2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .brand {
+    color: var(--paper);
+    text-decoration: none;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+
+  .brand span { color: var(--gold); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--light-mid);
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--gold); }
+
+  .language-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .lang-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,244,214,0.35);
+    background: #f6fbff;
+    color: var(--ink);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+  }
+
+  .lang-btn:hover { transform: translateY(-1px); }
+
+  .lang-btn.active {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(233,191,96,0.18);
+  }
+
+  .lang-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+  }
+
+  main {
+    width: 100%;
+    margin: 0;
+    padding: 0 0 82px;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(360px, 0.62fr) minmax(280px, 0.38fr);
+    gap: clamp(28px, 4vw, 64px);
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background: var(--developer-bg) center / cover no-repeat;
+    padding: clamp(62px, 8vw, 112px) clamp(32px, 6vw, 92px);
+    min-height: calc(100vh - 64px);
+    box-shadow: none;
+  }
+
+  .hero > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(6,42,70,0.84) 0%, rgba(6,42,70,0.58) 38%, rgba(6,42,70,0.18) 66%, rgba(6,42,70,0.04) 100%),
+      linear-gradient(180deg, rgba(6,42,70,0.16) 0%, rgba(6,42,70,0.36) 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-copy-panel {
+    max-width: 760px;
+    padding: 0;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 2px;
+    background: var(--gold);
+  }
+
+  h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(42px, 7vw, 82px);
+    line-height: 1.02;
+    letter-spacing: -2px;
+    margin-bottom: 26px;
+    color: var(--paper);
+    text-shadow: 0 4px 26px rgba(0,0,0,0.48);
+  }
+
+  .lead {
+    color: #edf6fb;
+    font-size: 17px;
+    line-height: 2.1;
+    max-width: 720px;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.5);
+  }
+
+  .lead strong {
+    color: var(--paper);
+    font-weight: 700;
+  }
+
+  .profile-card,
+  .note-card {
+    background: var(--surface);
+    border: 1px solid rgba(215,184,101,0.86);
+    padding: 28px;
+    box-shadow: 0 18px 44px rgba(70, 55, 20, 0.08);
+  }
+
+  .profile-card h2,
+  .note-card h2 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 28px;
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+
+  .profile-card p,
+  .note-card p {
+    color: var(--mid);
+    font-size: 14px;
+  }
+
+  .profile-card {
+    align-self: end;
+    max-width: 360px;
+    justify-self: end;
+    background: rgba(255,250,240,0.88);
+    border-color: rgba(233,191,96,0.86);
+    backdrop-filter: blur(8px);
+  }
+
+  .content {
+    width: min(1080px, calc(100% - 48px));
+    margin: 48px auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .note-card {
+    min-height: 230px;
+  }
+
+  .note-card .label {
+    font-family: 'DM Mono', monospace;
+    color: var(--red);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .code4construct {
+    margin-top: 20px;
+    padding: 22px 24px;
+    border-left: 5px solid var(--gold);
+    background: rgba(6,42,70,0.58);
+    backdrop-filter: blur(8px);
+  }
+
+  .code4construct p {
+    color: #edf6fb;
+    font-size: 15px;
+  }
+
+  .code4construct strong { color: var(--paper); }
+
+  .ai-note {
+    width: min(1080px, calc(100% - 48px));
+    margin: 56px auto 0;
+    border: 1px solid rgba(215,184,101,0.86);
+    background: var(--surface);
+    padding: 32px;
+  }
+
+  .ai-note h2 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(30px, 4vw, 46px);
+    line-height: 1.18;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+
+  .ai-note p {
+    color: var(--mid);
+    font-size: 16px;
+    line-height: 2.05;
+  }
+
+  .actions {
+    margin-top: 34px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .btn {
+    min-height: 44px;
+    padding: 0 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--paper);
+    background: var(--ink);
+    border: 1px solid rgba(233,191,96,0.58);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.6px;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .btn.secondary {
+    color: var(--paper);
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(233,191,96,0.58);
+  }
+
+  footer {
+    width: min(1080px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 0 0 38px;
+    color: var(--mid);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 860px) {
+    nav {
+      align-items: flex-start;
+      flex-direction: column;
+      padding: 16px 24px;
+    }
+
+    .nav-right { width: 100%; justify-content: space-between; gap: 18px; }
+    .nav-links { flex-wrap: wrap; gap: 16px; }
+    main { padding: 0 0 60px; }
+    .hero,
+    .content { grid-template-columns: 1fr; }
+    .hero {
+      padding: 48px 24px;
+      min-height: auto;
+      background:
+        linear-gradient(180deg, rgba(6,42,70,0.82), rgba(6,42,70,0.34)),
+        var(--developer-bg) center / cover no-repeat;
+    }
+    .profile-card { justify-self: start; }
+    .ai-note,
+    .content { width: min(100% - 32px, 1080px); }
+    footer { width: min(100% - 32px, 1080px); }
+  }
+
+  @media (max-width: 560px) {
+    .nav-right {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="brand">Code<span>4</span>Construct</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html" data-ja="ホーム" data-en="Home">ホーム</a></li>
+      <li><a href="developer_introduction.html" class="active" data-ja="開発者" data-en="Developer">開発者</a></li>
+      <li><a href="kojipdf-homepage.html">kojiPDF</a></li>
+      <li><a href="kojigis-homepage.html">kojiGIS</a></li>
+    </ul>
+    <div class="language-toggle" aria-label="Language selector">
+      <button type="button" class="lang-btn ja active" data-lang="ja" aria-label="日本語">
+        <img src="images/flag_jp.svg" alt="">
+      </button>
+      <button type="button" class="lang-btn en" data-lang="en" aria-label="English">
+        <img src="images/flag_gb.svg" alt="">
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section class="hero">
+    <div class="hero-copy-panel">
+      <div class="eyebrow" data-ja="開発者紹介" data-en="Developer introduction">開発者紹介</div>
+      <h1 data-ja-html="仕事の中で見えた、<br>小さな「あったらいい」を形に。" data-en="Turning small everyday wishes from work into tools.">仕事の中で見えた、<br>小さな「あったらいい」を形に。</h1>
+      <p class="lead" data-ja-html="地方自治体の技術職員として働く中で、日々の業務には「もう少しこうできたら楽になるのに」と感じる場面がたくさんあります。そうした気づきを、仕事そのものとは少し距離を置き、<strong>ひとりの市民開発者</strong>として小さなアプリやツールにしています。" data-en-html="Working as a technical staff member in local government, I often encounter small moments where I think, “this would be easier if only there were a tool for it.” I take those observations slightly outside my official work and turn them into small apps and tools as <strong>an individual civic developer</strong>.">
+        地方自治体の技術職員として働く中で、日々の業務には「もう少しこうできたら楽になるのに」と感じる場面がたくさんあります。そうした気づきを、仕事そのものとは少し距離を置き、<strong>ひとりの市民開発者</strong>として小さなアプリやツールにしています。
+      </p>
+      <div class="code4construct">
+        <p data-ja-html="公共工事、資料整理、地図、検査、会議。現場に近いところで生まれた道具を、必要な人が見つけられる形で残しておきたい。その思いから、個人開発の活動名として <strong>Code4Construct</strong> を使い、GitHubでも一部の成果を公開しています。" data-en-html="Public works, document organization, maps, inspections, and meetings. I want to leave tools born close to the field in a form that people who need them can find. That is why I use <strong>Code4Construct</strong> as the name for this personal development work and publish some of it on GitHub.">
+          公共工事、資料整理、地図、検査、会議。現場に近いところで生まれた道具を、必要な人が見つけられる形で残しておきたい。その思いから、個人開発の活動名として <strong>Code4Construct</strong> を使い、GitHubでも一部の成果を公開しています。
+        </p>
+      </div>
+      <div class="actions">
+        <a href="kojipdf-homepage.html" class="btn">kojiPDF</a>
+        <a href="kojigis-homepage.html" class="btn secondary">kojiGIS</a>
+      </div>
+    </div>
+
+    <aside class="profile-card">
+      <h2 data-ja="市民開発者として" data-en="As a Civic Developer">市民開発者として</h2>
+      <p data-ja="所属や職務を代表するものではなく、個人として試作し、学びながら育てているページです。大きな仕組みを語るより、目の前の作業が少し軽くなる道具を大切にしています。" data-en="This page does not represent my organization or official duties. It is a personal space for prototyping, learning, and growing tools. Rather than speaking about grand systems, I care about tools that make the work in front of us a little lighter.">
+        所属や職務を代表するものではなく、個人として試作し、学びながら育てているページです。大きな仕組みを語るより、目の前の作業が少し軽くなる道具を大切にしています。
+      </p>
+    </aside>
+  </section>
+
+  <section class="ai-note">
+    <div class="eyebrow" data-ja="生成AI" data-en="Generative AI">生成AI</div>
+    <h2 data-ja="あきらめていた個人開発が、もう一度手の届くところへ。" data-en="Personal development, once out of reach, became possible again.">あきらめていた個人開発が、もう一度手の届くところへ。</h2>
+    <p data-ja="生成AIの登場によって、誰もが自分のためのアプリを作れる時代が来ました。若い頃は、Excel VBAの属人化問題などを見ながら、コーディングで仕事を効率化することには限界があると感じ、どこかであきらめていました。" data-en="With the arrival of generative AI, we have entered an age where anyone can build apps for their own needs. When I was younger, seeing issues such as Excel VBA tools becoming dependent on one person made me feel that using code to improve work had hard limits, and I had almost given up on it.">
+      生成AIの登場によって、誰もが自分のためのアプリを作れる時代が来ました。若い頃は、Excel VBAの属人化問題などを見ながら、コーディングで仕事を効率化することには限界があると感じ、どこかであきらめていました。
+    </p>
+    <p data-ja="けれども技術革新によって、還暦を前にして、自分の手でアプリを作れるようになりました。長く仕事の中で感じてきた不便を、少しずつ形にできる。まるで、遅れて魔法の杖を手にしたような気分です。" data-en="But technological change has made it possible for me to build apps with my own hands before reaching sixty. I can now give shape, little by little, to inconveniences I have felt through years of work. It feels as if I have finally been handed a magic wand, a little later in life.">
+      けれども技術革新によって、還暦を前にして、自分の手でアプリを作れるようになりました。長く仕事の中で感じてきた不便を、少しずつ形にできる。まるで、遅れて魔法の杖を手にしたような気分です。
+    </p>
+  </section>
+
+  <section class="content">
+    <article class="note-card">
+      <div class="label">Documents</div>
+      <h2>kojiPDF</h2>
+      <p data-ja="会議資料や検査資料を、しおり付きの一冊のPDFとして扱いやすくするためのツールです。" data-en="A tool for making meeting and inspection materials easier to handle as one bookmarked PDF.">
+        会議資料や検査資料を、しおり付きの一冊のPDFとして扱いやすくするためのツールです。
+      </p>
+    </article>
+    <article class="note-card">
+      <div class="label">Mapping</div>
+      <h2>kojiGIS</h2>
+      <p data-ja="QGISでの作図、地図データ整理、地番処理など、地図まわりの作業を見据えたプラグイン構想です。" data-en="A QGIS plugin concept for map drawing, spatial data organization, parcel-number workflows, and other map-related work.">
+        QGISでの作図、地図データ整理、地番処理など、地図まわりの作業を見据えたプラグイン構想です。
+      </p>
+    </article>
+    <article class="note-card">
+      <div class="label">Open</div>
+      <h2>Code4Construct</h2>
+      <p data-ja="完成品だけでなく、考えながら作っている過程も含めて、必要な人に届く形で少しずつ公開しています。" data-en="I publish not only finished tools but also parts of the process, little by little, so they can reach people who may need them.">
+        完成品だけでなく、考えながら作っている過程も含めて、必要な人に届く形で少しずつ公開しています。
+      </p>
+    </article>
+  </section>
+</main>
+
+<footer>
+  © Code4Construct
+</footer>
+
+<script>
+  const titles = {
+    ja: '開発者紹介 - Code4Construct',
+    en: 'Developer Introduction - Code4Construct'
+  };
+
+  const setLanguage = (lang) => {
+    document.documentElement.lang = lang;
+    document.title = titles[lang];
+
+    document.querySelectorAll('[data-ja][data-en]').forEach((element) => {
+      element.textContent = element.dataset[lang];
+    });
+
+    document.querySelectorAll('[data-ja-html][data-en]').forEach((element) => {
+      element.innerHTML = lang === 'ja' ? element.dataset.jaHtml : element.dataset.en;
+    });
+
+    document.querySelectorAll('[data-ja-html][data-en-html]').forEach((element) => {
+      element.innerHTML = lang === 'ja' ? element.dataset.jaHtml : element.dataset.enHtml;
+    });
+
+    document.querySelectorAll('.lang-btn').forEach((button) => {
+      const isActive = button.dataset.lang === lang;
+      button.classList.toggle('active', isActive);
+      button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+
+    localStorage.setItem('code4construct-language', lang);
+  };
+
+  document.querySelectorAll('.lang-btn').forEach((button) => {
+    button.addEventListener('click', () => setLanguage(button.dataset.lang));
+  });
+
+  const params = new URLSearchParams(window.location.search);
+  const requestedLang = params.get('lang');
+  const savedLang = localStorage.getItem('code4construct-language') || localStorage.getItem('kojipdf-language');
+  const browserLang = navigator.language || '';
+  const initialLang = requestedLang === 'en' || requestedLang === 'ja'
+    ? requestedLang
+    : savedLang === 'en' || savedLang === 'ja'
+      ? savedLang
+      : browserLang.toLowerCase().startsWith('en')
+        ? 'en'
+        : 'ja';
+  setLanguage(initialLang);
+</script>
+</body>
+</html>

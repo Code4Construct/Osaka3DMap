@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>koji GeoTools - Detail</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=DM+Mono:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #062a46;
+    --ink-2: #0b4268;
+    --paper: #fff4d6;
+    --surface: #fffaf0;
+    --gold: #e9bf60;
+    --line: #d7b865;
+    --green: #20825f;
+    --red: #b5143f;
+    --mid: #466172;
+    --light-mid: #93a9b6;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    min-height: 100vh;
+    background:
+      linear-gradient(rgba(255, 244, 214, 0.88), rgba(255, 244, 214, 0.96)),
+      linear-gradient(90deg, rgba(6, 42, 70, 0.05) 1px, transparent 1px),
+      linear-gradient(rgba(6, 42, 70, 0.05) 1px, transparent 1px),
+      var(--paper);
+    background-size: auto, 42px 42px, 42px 42px, auto;
+    color: var(--ink);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  nav {
+    min-height: 64px;
+    padding: 0 60px;
+    background: var(--ink);
+    border-bottom: 1px solid var(--ink-2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-brand {
+    color: var(--paper);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .nav-mark {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 3px double var(--gold);
+    background: var(--green);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 800;
+    font-size: 18px;
+  }
+
+  .nav-logo {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+
+  .nav-logo span { color: var(--gold); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--light-mid);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--gold); }
+
+  .language-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .lang-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,244,214,0.35);
+    background: #f6fbff;
+    color: var(--ink);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+  }
+
+  .lang-btn:hover { transform: translateY(-1px); }
+
+  .lang-btn.active {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(233,191,96,0.18);
+  }
+
+  .lang-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+  }
+
+  main {
+    width: min(1120px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 42px 0 72px;
+  }
+
+  .detail-panel {
+    border: 1px solid var(--line);
+    background:
+      linear-gradient(115deg, rgba(255,255,255,0.74), rgba(255,250,240,0.46)),
+      var(--surface);
+    padding: 28px;
+    display: grid;
+    grid-template-columns: minmax(300px, 0.72fr) minmax(420px, 1fr);
+    gap: 36px;
+    box-shadow: 0 18px 44px rgba(70, 55, 20, 0.08);
+  }
+
+  .section-kicker {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(34px, 5vw, 42px);
+    line-height: 1.16;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+
+  .lead {
+    color: var(--mid);
+    font-size: 15px;
+    line-height: 2.05;
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    list-style: none;
+  }
+
+  .feature-grid li {
+    min-height: 104px;
+    border: 1px solid rgba(6, 42, 70, 0.12);
+    background: rgba(255, 244, 214, 0.58);
+    padding: 16px;
+  }
+
+  .feature-grid strong {
+    display: block;
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .feature-grid span {
+    color: var(--mid);
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .note-panel {
+    margin-top: 18px;
+    border-left: 5px solid var(--green);
+    background: rgba(255, 250, 240, 0.74);
+    border-top: 1px solid rgba(215, 184, 101, 0.72);
+    border-right: 1px solid rgba(215, 184, 101, 0.72);
+    border-bottom: 1px solid rgba(215, 184, 101, 0.72);
+    padding: 20px 24px;
+  }
+
+  .note-panel h2 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 25px;
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+
+  .note-panel p {
+    color: var(--mid);
+    font-size: 14px;
+    line-height: 1.9;
+  }
+
+  footer {
+    width: min(1120px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 24px 0 34px;
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    color: var(--mid);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+  }
+
+  footer a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  footer a:hover { color: var(--green); }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; }
+    .nav-right { width: 100%; justify-content: space-between; gap: 18px; }
+    .detail-panel { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 620px) {
+    nav {
+      align-items: flex-start;
+      flex-direction: column;
+      padding: 14px 20px;
+    }
+
+    .nav-links { flex-wrap: wrap; gap: 16px; }
+    .nav-right { align-items: flex-start; flex-direction: column; }
+    main { width: min(100% - 28px, 1120px); padding-top: 28px; }
+    .detail-panel { padding: 22px; }
+    .feature-grid { grid-template-columns: 1fr; }
+    footer {
+      width: min(100% - 28px, 1120px);
+      flex-direction: column;
+    }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="kojigis-homepage.html" class="nav-brand" aria-label="Back to kojiGIS">
+    <span class="nav-mark">G</span>
+    <span class="nav-logo">koji<span>GeoTools</span></span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="kojigis-homepage.html">kojiGIS</a></li>
+      <li><a href="koji_geotools.html" class="active" data-ja="詳細" data-en="Detail">詳細</a></li>
+    </ul>
+    <div class="language-toggle" aria-label="Language selector">
+      <button type="button" class="lang-btn ja active" data-lang="ja" aria-label="日本語">
+        <img src="images/flag_jp.svg" alt="">
+      </button>
+      <button type="button" class="lang-btn en" data-lang="en" aria-label="English">
+        <img src="images/flag_gb.svg" alt="">
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section class="detail-panel">
+    <div>
+      <div class="section-kicker" data-ja="koji GeoTools 詳細" data-en="koji GeoTools detail">koji GeoTools 詳細</div>
+      <h1 data-ja="作図と抽出統合の入口" data-en="An Entry Point for Drawing and Feature Merging">作図と抽出統合の入口</h1>
+      <p class="lead" data-ja="実装上のkoji GeoToolsは、QGISのツールバーとプラグインメニューから起動する単一ランチャーです。画面内に機能ボタンを2列で並べ、選択した子ツールを呼び出す構成になっています。" data-en="In implementation, koji GeoTools is a single launcher opened from the QGIS toolbar and plugin menu. It lays out feature buttons in two columns and starts the selected child tool.">
+        実装上のkoji GeoToolsは、QGISのツールバーとプラグインメニューから起動する単一ランチャーです。画面内に機能ボタンを2列で並べ、選択した子ツールを呼び出す構成になっています。
+      </p>
+    </div>
+    <ul class="feature-grid">
+      <li>
+        <strong data-ja="レイヤセットを追加" data-en="Add Layer Sets">レイヤセットを追加</strong>
+        <span data-ja="施設統合ポテンシャルマップ用のレイヤセットをまとめて追加します。" data-en="Adds a prepared layer set for facility-integration potential maps.">施設統合ポテンシャルマップ用のレイヤセットをまとめて追加します。</span>
+      </li>
+      <li>
+        <strong data-ja="区境界・2km円を作成" data-en="Create Ward Boundaries and 2 km Circles">区境界・2km円を作成</strong>
+        <span data-ja="選択した地物から区境界と2km円を作成し、結果をレイヤとして保存します。" data-en="Creates ward boundaries and 2 km circles from selected features and saves the result as layers.">選択した地物から区境界と2km円を作成し、結果をレイヤとして保存します。</span>
+      </li>
+      <li>
+        <strong data-ja="ポリゴン内のポイントを統合" data-en="Merge Points Inside Polygons">ポリゴン内のポイントを統合</strong>
+        <span data-ja="選択ポリゴン内にある表示中のポイント地物を抽出して統合します。" data-en="Extracts and merges visible point features located inside selected polygons.">選択ポリゴン内にある表示中のポイント地物を抽出して統合します。</span>
+      </li>
+      <li>
+        <strong data-ja="ポリゴン内のポリゴンを統合" data-en="Merge Polygons Inside Polygons">ポリゴン内のポリゴンを統合</strong>
+        <span data-ja="選択ポリゴン内にある表示中のポリゴン地物を抽出して統合します。" data-en="Extracts and merges visible polygon features located inside selected polygons.">選択ポリゴン内にある表示中のポリゴン地物を抽出して統合します。</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="note-panel">
+    <h2 data-ja="ランチャー型のQGIS plugin" data-en="A Launcher-Style QGIS Plugin">ランチャー型のQGIS plugin</h2>
+    <p data-ja="koji GeoToolsは、個別機能をばらばらに見せるのではなく、ひとつの入口から必要な処理を選ぶ設計です。DPIと表示倍率を取得して画面サイズを調整し、QGIS環境でも押しやすいボタン配置になるようにしています。" data-en="koji GeoTools is designed to let users choose the needed process from one entry point rather than exposing each feature separately. It reads DPI and display scale to adjust the window size and keeps the buttons easy to press inside the QGIS environment.">
+      koji GeoToolsは、個別機能をばらばらに見せるのではなく、ひとつの入口から必要な処理を選ぶ設計です。DPIと表示倍率を取得して画面サイズを調整し、QGIS環境でも押しやすいボタン配置になるようにしています。
+    </p>
+  </section>
+</main>
+
+<footer>
+  <a href="kojigis-homepage.html" data-ja="kojiGISへ戻る" data-en="Back to kojiGIS">kojiGISへ戻る</a>
+  <span data-ja="作成中" data-en="Under construction">作成中</span>
+</footer>
+<script>
+  const titles = {
+    ja: 'koji GeoTools - 詳細',
+    en: 'koji GeoTools - Detail'
+  };
+
+  const setLanguage = (lang) => {
+    document.documentElement.lang = lang;
+    document.title = titles[lang];
+
+    document.querySelectorAll('[data-ja][data-en]').forEach((element) => {
+      element.textContent = element.dataset[lang];
+    });
+
+    document.querySelectorAll('[data-ja-html][data-en]').forEach((element) => {
+      element.innerHTML = lang === 'ja' ? element.dataset.jaHtml : element.dataset.en;
+    });
+
+    document.querySelectorAll('[data-ja-html][data-en-html]').forEach((element) => {
+      element.innerHTML = lang === 'ja' ? element.dataset.jaHtml : element.dataset.enHtml;
+    });
+
+    document.querySelectorAll('.lang-btn').forEach((button) => {
+      const isActive = button.dataset.lang === lang;
+      button.classList.toggle('active', isActive);
+      button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+
+    localStorage.setItem('code4construct-language', lang);
+  };
+
+  document.querySelectorAll('.lang-btn').forEach((button) => {
+    button.addEventListener('click', () => setLanguage(button.dataset.lang));
+  });
+
+  const params = new URLSearchParams(window.location.search);
+  const requestedLang = params.get('lang');
+  const savedLang = localStorage.getItem('code4construct-language') || localStorage.getItem('kojipdf-language');
+  const browserLang = navigator.language || '';
+  const initialLang = requestedLang === 'en' || requestedLang === 'ja'
+    ? requestedLang
+    : savedLang === 'en' || savedLang === 'ja'
+      ? savedLang
+      : browserLang.toLowerCase().startsWith('en')
+        ? 'en'
+        : 'ja';
+  setLanguage(initialLang);
+</script>
+</body>
+</html>

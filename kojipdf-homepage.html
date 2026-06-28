@@ -21,6 +21,7 @@
     --mid: #466172;
     --light-mid: #93a9b6;
     --line: #d7b865;
+    --documents-desk: url("images/kojipdf-documents-desk-hero.png");
   }
 
   html { scroll-behavior: smooth; }
@@ -160,8 +161,8 @@
     align-items: center;
     overflow: hidden;
     background:
-      linear-gradient(90deg, rgba(6,42,70,0.96) 0%, rgba(6,42,70,0.88) 42%, rgba(6,42,70,0.50) 68%, rgba(6,42,70,0.20) 100%),
-      url("images/v200GUI.png") right center / min(62vw, 820px) auto no-repeat,
+      linear-gradient(90deg, rgba(6,42,70,0.94) 0%, rgba(6,42,70,0.84) 42%, rgba(6,42,70,0.58) 70%, rgba(6,42,70,0.34) 100%),
+      var(--documents-desk) center / cover no-repeat,
       var(--ink);
     border-bottom: 4px solid var(--red);
   }
@@ -413,7 +414,8 @@
       padding: 48px clamp(48px, 4vw, 76px) 58px;
       align-items: flex-start;
       background:
-        linear-gradient(90deg, rgba(6,42,70,0.98) 0%, rgba(6,42,70,0.94) 58%, rgba(6,42,70,0.88) 100%),
+        linear-gradient(90deg, rgba(6,42,70,0.94) 0%, rgba(6,42,70,0.86) 48%, rgba(6,42,70,0.58) 74%, rgba(6,42,70,0.34) 100%),
+        var(--documents-desk) center / cover no-repeat,
         var(--ink);
     }
 
@@ -1088,6 +1090,45 @@
     line-height: 1.8;
   }
 
+  .related-tool {
+    background: var(--surface);
+    border-top: 1px solid rgba(215, 184, 101, 0.7);
+    border-bottom: 1px solid rgba(215, 184, 101, 0.7);
+  }
+
+  .related-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(260px, 0.62fr);
+    gap: 34px;
+    align-items: center;
+    border: 1px solid rgba(215, 184, 101, 0.85);
+    background: rgba(255, 244, 214, 0.5);
+    padding: 30px;
+  }
+
+  .related-panel h2 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(30px, 4vw, 46px);
+    line-height: 1.16;
+    letter-spacing: -1px;
+    margin-bottom: 14px;
+  }
+
+  .related-panel p {
+    color: var(--mid);
+    font-size: 15px;
+    line-height: 1.95;
+  }
+
+  .related-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .related-actions .btn {
+    width: min(100%, 260px);
+  }
+
   footer {
     background: var(--ink);
     padding: 28px 60px;
@@ -1130,8 +1171,8 @@
     .hero {
       padding: 58px 24px 44px;
       background:
-        linear-gradient(180deg, rgba(6,42,70,0.96), rgba(6,42,70,0.86)),
-        url("images/v200GUI.png") center bottom / 680px auto no-repeat,
+        linear-gradient(180deg, rgba(6,42,70,0.94), rgba(6,42,70,0.76)),
+        var(--documents-desk) center / cover no-repeat,
         var(--ink);
     }
     .hero-content { width: 100%; }
@@ -1150,6 +1191,8 @@
     .intro-grid { grid-template-columns: 1fr; }
     .guide-layout,
     .legacy-note-card { grid-template-columns: 1fr; }
+    .related-panel { grid-template-columns: 1fr; }
+    .related-actions { justify-content: flex-start; }
     .feature-grid { grid-template-columns: 1fr; }
     .steps { grid-template-columns: 1fr 1fr; }
     .download-row { align-items: flex-start; flex-direction: column; }
@@ -1215,6 +1258,7 @@
       <li><a href="kojipdf-homepage.html" class="active" data-ja="ホーム" data-en="Home">ホーム</a></li>
       <li><a href="kojipdf-download.html" data-ja="ダウンロード" data-en="Download">ダウンロード</a></li>
       <li><a href="kojiPDF-tutorial.html" data-ja="チュートリアル（作成中）" data-en="Tutorial (Under Construction)">チュートリアル（作成中）</a></li>
+      <li><a href="kojigis-homepage.html" data-ja="kojiGIS" data-en="kojiGIS">kojiGIS</a></li>
       <li><a href="https://github.com/Code4Construct/kojiPDFv210" target="_blank">GitHub</a></li>
     </ul>
     <div class="language-toggle" aria-label="Language selector">
@@ -1411,8 +1455,25 @@
         <img src="images/v150GUI.jpg" alt="kojiPDF v1.50 application screen">
         <div>
           <h3>v1.50</h3>
-          <p data-ja="旧バージョンはVectorで公開しています。現在のv2.1.0とは画面構成が異なります。" data-en="The earlier v1.50 release remains available on Vector. Its interface differs from the current v2.1.0 version.">旧バージョンはVectorで公開しています。現在のv2.1.0とは画面構成が異なります。</p>
-          <a href="https://www.vector.co.jp/soft/winnt/writing/se527459.html" class="btn btn-secondary" target="_blank" data-ja="Vectorでダウンロード" data-en="Download on Vector">Vectorでダウンロード</a>
+          <p data-ja="旧バージョン v1.50 はGitHub Releasesで公開しています。現在のv2.1.0とは画面構成が異なります。" data-en="The earlier v1.50 release is available on GitHub Releases. Its interface differs from the current v2.1.0 version.">旧バージョン v1.50 はGitHub Releasesで公開しています。現在のv2.1.0とは画面構成が異なります。</p>
+          <a href="https://github.com/Code4Construct/kojiPDFv150/releases/tag/v1.5.0" class="btn btn-secondary" target="_blank" data-ja="GitHub Releasesで見る" data-en="View on GitHub Releases">GitHub Releasesで見る</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section related-tool">
+    <div class="section-inner">
+      <div class="related-panel">
+        <div>
+          <div class="section-label" data-ja="関連ツール" data-en="Related Tool">関連ツール</div>
+          <h2 data-ja="日常業務で、あったらいいと思う道具を。" data-en="Tools I wished existed in everyday work.">日常業務で、あったらいいと思う道具を。</h2>
+          <p data-ja="kojiGISは、地方自治体の技術職員として日々の業務に向き合う中で、「こういう道具があれば少し楽になる」と感じたことから個人で作成しているQGISプラグイン構想です。kojiPDFと同じく、Code4ConstructとしてGitHubで公開しながら、現場の作業に静かに寄り添う道具として育てています。" data-en="kojiGIS is a QGIS plugin concept I am building personally from the perspective of a local-government technical staff member, shaped by small moments in daily work where a tool like this would make the job easier. Like kojiPDF, it is shared on GitHub as Code4Construct and is being grown quietly as a practical tool for real work.">
+            kojiGISは、地方自治体の技術職員として日々の業務に向き合う中で、「こういう道具があれば少し楽になる」と感じたことから個人で作成しているQGISプラグイン構想です。kojiPDFと同じく、Code4ConstructとしてGitHubで公開しながら、現場の作業に静かに寄り添う道具として育てています。
+          </p>
+        </div>
+        <div class="related-actions">
+          <a href="kojigis-homepage.html" class="btn btn-secondary" data-ja="kojiGISを見る" data-en="Visit kojiGIS">kojiGISを見る</a>
         </div>
       </div>
     </div>
@@ -1423,6 +1484,7 @@
   <a href="kojipdf-homepage.html" class="footer-logo">koji<span>PDF</span></a>
   <div class="footer-nav">
     <a href="kojiPDF-tutorial.html" data-ja="チュートリアル（作成中）" data-en="Tutorial (Under Construction)">チュートリアル（作成中）</a>
+    <a href="kojigis-homepage.html">kojiGIS</a>
     <a href="https://github.com/Code4Construct/kojiPDFv210" target="_blank">GitHub</a>
     <a href="kojipdf-download.html" data-ja="ダウンロード" data-en="Download">ダウンロード</a>
   </div>

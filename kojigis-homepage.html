@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>kojiGIS - QGIS Plugin Concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=DM+Mono:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #062a46;
+    --ink-2: #0b4268;
+    --paper: #fff4d6;
+    --surface: #fffaf0;
+    --red: #b5143f;
+    --gold: #e9bf60;
+    --ochre: #d5a747;
+    --mid: #466172;
+    --light-mid: #93a9b6;
+    --line: #d7b865;
+    --green: #20825f;
+    --orange: #c96f22;
+    --purple: #6d4aa0;
+    --vermilion: #b74332;
+    --hero-text-shadow: 0 2px 16px rgba(0,0,0,0.56);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    min-height: 100vh;
+    background:
+      linear-gradient(rgba(255, 244, 214, 0.88), rgba(255, 244, 214, 0.94)),
+      linear-gradient(90deg, rgba(6, 42, 70, 0.05) 1px, transparent 1px),
+      linear-gradient(rgba(6, 42, 70, 0.05) 1px, transparent 1px),
+      var(--paper);
+    background-size: auto, 42px 42px, 42px 42px, auto;
+    color: var(--ink);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  nav {
+    background: var(--ink);
+    border-bottom: 1px solid var(--ink-2);
+    padding: 0 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--paper);
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .nav-mark {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 3px double var(--gold);
+    background: var(--ochre);
+    color: var(--ink);
+    display: inline-grid;
+    place-items: center;
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 800;
+    font-size: 17px;
+    box-shadow: inset 0 0 0 3px rgba(6, 42, 70, 0.2);
+  }
+
+  .nav-logo {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+
+  .nav-logo span { color: var(--gold); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--light-mid);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--gold); }
+
+  .language-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .lang-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,244,214,0.35);
+    background: #f6fbff;
+    color: var(--ink);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+  }
+
+  .lang-btn:hover { transform: translateY(-1px); }
+
+  .lang-btn.active {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(233,191,96,0.18);
+  }
+
+  .lang-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+  }
+
+  .hero {
+    min-height: calc(84vh - 64px);
+    padding: 76px 60px 64px;
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 480px);
+    align-items: center;
+    gap: 48px;
+    overflow: hidden;
+    background:
+      var(--ink);
+    border-bottom: 4px solid var(--gold);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(0,0,0,0.34) 0%, rgba(0,0,0,0.16) 38%, rgba(0,0,0,0.04) 70%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .aerial-tiles {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    pointer-events: none;
+    z-index: 0;
+    filter: saturate(1.06) contrast(1.06);
+  }
+
+  .aerial-tiles img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero::after {
+    content: 'QGIS';
+    position: absolute;
+    right: 34px;
+    bottom: -22px;
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(92px, 16vw, 180px);
+    font-weight: 800;
+    color: rgba(255,255,255,0.05);
+    letter-spacing: -6px;
+    pointer-events: none;
+  }
+
+  .hero .eyebrow,
+  .hero h1,
+  .hero-copy,
+  .status-strip {
+    text-shadow: var(--hero-text-shadow);
+  }
+
+  .hero-content,
+  .hero-board {
+    position: relative;
+    z-index: 1;
+  }
+
+  .photo-credit {
+    position: absolute;
+    left: 60px;
+    bottom: 18px;
+    z-index: 2;
+    color: rgba(255,244,214,0.58);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.2px;
+  }
+
+  .photo-credit a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,244,214,0.28);
+  }
+
+  .map-context {
+    position: absolute;
+    right: 60px;
+    top: 88px;
+    z-index: 2;
+    max-width: 260px;
+    border: 1px solid rgba(233,191,96,0.42);
+    background: rgba(6,42,70,0.46);
+    color: rgba(255,244,214,0.82);
+    padding: 12px 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.3px;
+    line-height: 1.7;
+    text-transform: uppercase;
+    backdrop-filter: blur(4px);
+  }
+
+  .map-context span {
+    display: block;
+    color: var(--gold);
+    margin-bottom: 2px;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 26px;
+    height: 2px;
+    background: var(--gold);
+  }
+
+  h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(52px, 8vw, 94px);
+    font-weight: 800;
+    line-height: 0.95;
+    color: var(--paper);
+    letter-spacing: -2px;
+    margin-bottom: 22px;
+  }
+
+  h1 span { color: var(--gold); }
+
+  .hero-copy {
+    max-width: 640px;
+    color: #dbe8ee;
+    font-size: 16px;
+    line-height: 2;
+    margin-bottom: 26px;
+  }
+
+  .status-strip {
+    width: fit-content;
+    border: 1px solid rgba(233,191,96,0.5);
+    color: var(--gold);
+    background: rgba(255,244,214,0.07);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 12px 16px;
+  }
+
+  .hero-board {
+    min-height: 470px;
+    display: grid;
+    place-items: center;
+  }
+
+  .map-panel {
+    width: min(100%, 460px);
+    aspect-ratio: 1 / 1;
+    border: 1px solid rgba(233, 191, 96, 0.42);
+    background:
+      linear-gradient(135deg, rgba(255,250,240,0.92), rgba(242,201,109,0.86)),
+      repeating-linear-gradient(0deg, transparent 0 34px, rgba(6,42,70,0.09) 34px 35px),
+      repeating-linear-gradient(90deg, transparent 0 34px, rgba(6,42,70,0.09) 34px 35px);
+    box-shadow: 0 32px 70px rgba(0,0,0,0.28);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .map-panel svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .section {
+    padding: 74px 60px;
+  }
+
+  .section.alt {
+    background: rgba(255, 250, 240, 0.66);
+    border-top: 1px solid rgba(215, 184, 101, 0.54);
+    border-bottom: 1px solid rgba(215, 184, 101, 0.54);
+  }
+
+  .section-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  .section-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(280px, 1.1fr);
+    gap: 38px;
+    align-items: end;
+    margin-bottom: 36px;
+  }
+
+  .section-kicker {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(34px, 5vw, 58px);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+  }
+
+  .section-heading p,
+  .construction p,
+  .plugin-card p {
+    color: var(--mid);
+    font-size: 15px;
+    line-height: 1.9;
+  }
+
+  .plugin-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(180px, 1fr));
+    gap: 18px;
+  }
+
+  .plugin-card {
+    min-height: 330px;
+    background: var(--surface);
+    border: 1px solid rgba(215, 184, 101, 0.8);
+    padding: 22px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    box-shadow: 0 18px 40px rgba(70, 55, 20, 0.08);
+  }
+
+  .plugin-card h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: var(--ink);
+  }
+
+  .plugin-card .tool-summary {
+    font-size: 13px;
+    line-height: 1.75;
+  }
+
+  .card-status {
+    color: var(--mid);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+  }
+
+  .detail-link {
+    margin-top: auto;
+    min-height: 36px;
+    padding: 0 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background: var(--green);
+    border: 1px solid rgba(6, 42, 70, 0.18);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .set-note {
+    margin-top: 18px;
+    background: var(--surface);
+    border: 1px solid rgba(215, 184, 101, 0.8);
+    border-left: 5px solid var(--ink);
+    padding: 22px 24px;
+    display: grid;
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: 20px;
+    align-items: center;
+  }
+
+  .set-note-mark {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    border: 5px double var(--ink);
+    background: var(--gold);
+    color: var(--ink);
+    display: grid;
+    place-items: center;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 46px;
+    font-weight: 800;
+    box-shadow: inset 0 0 0 4px rgba(255,255,255,0.34);
+  }
+
+  .set-note h3 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 26px;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .set-note p {
+    color: var(--mid);
+    font-size: 15px;
+    line-height: 1.9;
+  }
+
+  .related-tool {
+    background: rgba(255, 250, 240, 0.72);
+  }
+
+  .related-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(240px, 0.55fr);
+    gap: 30px;
+    align-items: center;
+    border: 1px solid rgba(215, 184, 101, 0.8);
+    background: var(--surface);
+    padding: 30px;
+  }
+
+  .related-panel h2 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(30px, 4vw, 48px);
+    line-height: 1.12;
+    letter-spacing: -1px;
+    margin-bottom: 14px;
+  }
+
+  .related-panel p {
+    color: var(--mid);
+    font-size: 15px;
+    line-height: 1.95;
+  }
+
+  .related-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .related-link {
+    min-height: 44px;
+    padding: 0 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--paper);
+    background: var(--ink);
+    border: 1px solid rgba(6,42,70,0.18);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.6px;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .badge {
+    width: 148px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 7px double var(--ink);
+    background:
+      radial-gradient(circle at 50% 42%, #fff0b6 0 34%, var(--gold) 35% 74%, #ba8730 75% 100%);
+    display: grid;
+    grid-template-rows: 34px 1fr 34px;
+    justify-items: center;
+    align-items: center;
+    overflow: hidden;
+    box-shadow:
+      inset 0 0 0 4px rgba(255,255,255,0.35),
+      0 12px 24px rgba(6,42,70,0.15);
+  }
+
+  .badge-koji {
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 800;
+    font-size: 20px;
+    color: #0e5d99;
+    transform: translateY(5px);
+  }
+
+  .badge-symbol {
+    width: 84px;
+    height: 66px;
+  }
+
+  .tool-bar {
+    width: 112px;
+    min-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    border: 2px solid rgba(255,255,255,0.55);
+    box-shadow: 0 5px 10px rgba(6,42,70,0.18);
+  }
+
+  .geotools .tool-bar { background: var(--green); border-radius: 6px; }
+  .mapbundle .tool-bar { background: var(--orange); border-radius: 5px; min-height: 28px; }
+  .dataquery .tool-bar { background: var(--purple); border-radius: 999px; }
+  .chiban .tool-bar { background: var(--vermilion); border-radius: 2px 2px 8px 8px; }
+  .gis .tool-bar { background: var(--ink); border-radius: 4px; }
+
+  .construction-box,
+  .roadmap {
+    background: var(--surface);
+    border: 1px solid rgba(215, 184, 101, 0.8);
+    padding: 30px;
+  }
+
+  .construction-label {
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(34px, 6vw, 68px);
+    line-height: 0.94;
+    letter-spacing: -2px;
+    color: var(--red);
+    margin-bottom: 20px;
+  }
+
+  .roadmap ol {
+    list-style: none;
+    display: grid;
+    gap: 14px;
+  }
+
+  .roadmap li {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 14px;
+    align-items: start;
+    color: var(--mid);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .roadmap span {
+    width: 34px;
+    height: 34px;
+    background: var(--ink);
+    color: var(--gold);
+    display: grid;
+    place-items: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+  }
+
+  footer {
+    background: var(--ink);
+    color: var(--light-mid);
+    padding: 28px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    border-top: 4px solid var(--gold);
+  }
+
+  .footer-logo {
+    color: var(--paper);
+    text-decoration: none;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 22px;
+    font-weight: 800;
+  }
+
+  .footer-logo span { color: var(--gold); }
+
+  .footer-nav {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+  }
+
+  .footer-nav a {
+    color: var(--light-mid);
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .footer-nav a:hover { color: var(--gold); }
+
+  @media (max-width: 1120px) {
+    .plugin-grid { grid-template-columns: repeat(3, minmax(180px, 1fr)); }
+  }
+
+  @media (max-width: 860px) {
+    nav { padding: 0 24px; }
+    .nav-right { width: 100%; justify-content: space-between; gap: 18px; }
+    .nav-links { gap: 16px; flex-wrap: wrap; justify-content: flex-end; }
+    .hero {
+      min-height: auto;
+      padding: 56px 24px 44px;
+      grid-template-columns: 1fr;
+    }
+    .photo-credit { left: 24px; }
+    .hero-board { min-height: auto; }
+    .map-panel { max-width: 420px; }
+    .section { padding: 56px 24px; }
+    .section-heading { grid-template-columns: 1fr; }
+    .plugin-grid { grid-template-columns: repeat(2, minmax(160px, 1fr)); }
+    .set-note { grid-template-columns: 1fr; }
+    .related-panel { grid-template-columns: 1fr; }
+    .related-actions { justify-content: flex-start; }
+    footer { padding: 24px; flex-direction: column; align-items: flex-start; }
+    .map-context {
+      position: relative;
+      right: auto;
+      top: auto;
+      max-width: none;
+      grid-column: 1;
+    }
+  }
+
+  @media (max-width: 560px) {
+    nav { align-items: flex-start; flex-direction: column; padding: 14px 20px; }
+    .nav-right { align-items: flex-start; flex-direction: column; }
+    .nav-links { justify-content: flex-start; }
+    h1 { font-size: 52px; }
+    .plugin-grid { grid-template-columns: 1fr; }
+    .plugin-card { min-height: auto; }
+    .badge { width: 160px; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-brand" aria-label="Code4Construct home">
+    <span class="nav-mark">G</span>
+    <span class="nav-logo">koji<span>GIS</span></span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html" data-ja="ホーム" data-en="Home">ホーム</a></li>
+      <li><a href="#plugins" class="active" data-ja="プラグイン" data-en="Plugins">プラグイン</a></li>
+      <li><a href="kojipdf-homepage.html">kojiPDF</a></li>
+      <li><a href="#construction" data-ja="状況" data-en="Status">状況</a></li>
+    </ul>
+    <div class="language-toggle" aria-label="Language selector">
+      <button type="button" class="lang-btn ja active" data-lang="ja" aria-label="日本語">
+        <img src="images/flag_jp.svg" alt="">
+      </button>
+      <button type="button" class="lang-btn en" data-lang="en" aria-label="English">
+        <img src="images/flag_gb.svg" alt="">
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section class="hero">
+    <div class="aerial-tiles" aria-hidden="true">
+      <img src="https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/12/3587/1626.jpg" alt="">
+      <img src="https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/12/3588/1626.jpg" alt="">
+      <img src="https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/12/3589/1626.jpg" alt="">
+      <img src="https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/12/3590/1626.jpg" alt="">
+      <img src="https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/12/3591/1626.jpg" alt="">
+      <img src="https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/12/3587/1627.jpg" alt="">
+      <img src="https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/12/3588/1627.jpg" alt="">
+      <img src="https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/12/3589/1627.jpg" alt="">
+      <img src="https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/12/3590/1627.jpg" alt="">
+      <img src="https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/12/3591/1627.jpg" alt="">
+      <img src="https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/12/3587/1628.jpg" alt="">
+      <img src="https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/12/3588/1628.jpg" alt="">
+      <img src="https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/12/3589/1628.jpg" alt="">
+      <img src="https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/12/3590/1628.jpg" alt="">
+      <img src="https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/12/3591/1628.jpg" alt="">
+      <img src="https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/12/3587/1629.jpg" alt="">
+      <img src="https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/12/3588/1629.jpg" alt="">
+      <img src="https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/12/3589/1629.jpg" alt="">
+      <img src="https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/12/3590/1629.jpg" alt="">
+      <img src="https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/12/3591/1629.jpg" alt="">
+    </div>
+    <div class="hero-content">
+      <div class="eyebrow" data-ja="QGISプラグイン群" data-en="QGIS plugin family">QGISプラグイン群</div>
+      <h1>koji<span>GIS</span></h1>
+      <p class="hero-copy" data-ja="QGIS向けプラグイン群の構想ページです。GeoTools、MapBundle、DataQuery、Chibanを個別に育て、最終的にはそれらをまとめたセットpluginとしてkojiGISを用意する想定です。" data-en="A concept page for a family of QGIS plugins. GeoTools, MapBundle, DataQuery, and Chiban are being developed as individual tools, with kojiGIS planned as the final set plugin that brings them together.">
+        QGIS向けプラグイン群の構想ページです。GeoTools、MapBundle、DataQuery、Chibanを個別に育て、最終的にはそれらをまとめたセットpluginとしてkojiGISを用意する想定です。
+      </p>
+      <div class="status-strip" data-ja="作成中" data-en="Under construction">作成中</div>
+    </div>
+    <div class="hero-board" aria-label="kojiGIS concept map preview">
+      <div class="map-panel">
+        <svg viewBox="0 0 460 460" role="img" aria-label="Layered map and plugin concept illustration">
+          <defs>
+            <pattern id="smallGrid" width="28" height="28" patternUnits="userSpaceOnUse">
+              <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#062a46" stroke-opacity="0.12" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="460" height="460" fill="url(#smallGrid)"/>
+          <path d="M44 350 C96 278 128 254 178 268 C231 282 240 198 296 184 C350 171 370 118 420 92" fill="none" stroke="#0b4268" stroke-width="18" stroke-linecap="round" opacity="0.18"/>
+          <path d="M68 96 L174 62 L268 102 L386 66 L386 304 L268 346 L174 306 L68 340 Z" fill="#fffaf0" stroke="#062a46" stroke-width="4"/>
+          <path d="M174 62 L174 306 M268 102 L268 346" stroke="#062a46" stroke-width="3" opacity="0.35"/>
+          <path d="M90 136 L152 116 L152 190 L90 208 Z" fill="#8cc3d7" stroke="#062a46" stroke-width="3"/>
+          <path d="M202 128 L250 146 L234 230 L196 218 Z" fill="#9bcf88" stroke="#062a46" stroke-width="3"/>
+          <path d="M288 132 L356 112 L354 196 L304 214 Z" fill="#f2c96d" stroke="#062a46" stroke-width="3"/>
+          <path d="M110 250 C158 232 184 258 224 244 C270 228 314 246 352 224" fill="none" stroke="#b5143f" stroke-width="7" stroke-linecap="round"/>
+          <circle cx="330" cy="260" r="34" fill="#b5143f" stroke="#062a46" stroke-width="4"/>
+          <path d="M330 236 C344 236 354 247 354 260 C354 284 330 306 330 306 C330 306 306 284 306 260 C306 247 316 236 330 236 Z" fill="#fff4d6"/>
+          <circle cx="330" cy="260" r="9" fill="#062a46"/>
+          <g transform="translate(155 150)">
+            <circle cx="74" cy="74" r="70" fill="#d5a747" stroke="#062a46" stroke-width="9"/>
+            <circle cx="74" cy="74" r="58" fill="none" stroke="#062a46" stroke-width="2"/>
+            <text x="74" y="48" text-anchor="middle" font-family="Shippori Mincho, serif" font-size="30" font-weight="800" fill="#0e5d99">koji</text>
+            <text x="74" y="100" text-anchor="middle" font-family="Shippori Mincho, serif" font-size="62" font-weight="800" fill="#062a46">G</text>
+            <rect x="30" y="108" width="88" height="24" fill="#062a46" stroke="#fff4d6" stroke-width="2"/>
+            <text x="74" y="125" text-anchor="middle" font-family="DM Mono, monospace" font-size="13" font-weight="500" fill="#fff">GIS</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div class="photo-credit">
+      <span data-ja-html="航空写真: <a href=&quot;https://maps.gsi.go.jp/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>GSI Maps</a> / 大阪市役所・大阪湾周辺" data-en-html="Aerial photo: <a href=&quot;https://maps.gsi.go.jp/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>GSI Maps</a> / Osaka City Hall and Osaka Bay area">航空写真: <a href="https://maps.gsi.go.jp/" target="_blank" rel="noopener">GSI Maps</a> / 大阪市役所・大阪湾周辺</span>
+    </div>
+    <div class="map-context">
+      <span data-ja="大阪市役所 / 大阪湾" data-en="Osaka City Hall / Osaka Bay">大阪市役所 / 大阪湾</span>
+      <span data-ja="国土地理院タイルによる広域航空写真" data-en="Wide aerial photo from GSI tiles">国土地理院タイルによる広域航空写真</span>
+    </div>
+  </section>
+
+  <section class="section" id="plugins">
+    <div class="section-inner">
+      <div class="section-heading">
+        <div>
+          <div class="section-kicker" data-ja="プラグインイメージ案" data-en="Plugin image drafts">プラグインイメージ案</div>
+          <h2 data-ja="4つのQGISプラグイン像" data-en="Four QGIS Plugin Concepts">4つのQGISプラグイン像</h2>
+        </div>
+        <p data-ja="個別に開発する4つのツールについて、用途が見分けられるように共通バッジ、ツール別の記号・色、短い説明を並べています。" data-en="These four tools are shown with shared badge styling, tool-specific symbols and colors, and short descriptions so their intended roles are easy to distinguish.">
+          個別に開発する4つのツールについて、用途が見分けられるように共通バッジ、ツール別の記号・色、短い説明を並べています。
+        </p>
+      </div>
+
+      <div class="plugin-grid">
+        <article class="plugin-card geotools">
+          <div class="badge" aria-label="koji GeoTools icon concept">
+            <div class="badge-koji">koji</div>
+            <svg class="badge-symbol" viewBox="0 0 84 66" aria-hidden="true">
+              <circle cx="25" cy="31" r="18" fill="#8cc3d7" stroke="#062a46" stroke-width="4"/>
+              <path d="M46 13 L74 27 L64 55 L36 48 Z" fill="#9bcf88" stroke="#062a46" stroke-width="4"/>
+              <path d="M28 52 L63 17" stroke="#20825f" stroke-width="8" stroke-linecap="round"/>
+              <path d="M61 14 L72 7 L68 20 Z" fill="#fffaf0" stroke="#062a46" stroke-width="3"/>
+            </svg>
+            <div class="tool-bar">GeoTools</div>
+          </div>
+          <h3>koji GeoTools</h3>
+          <p class="tool-summary" data-ja="地図を作るための作図・編集ツール。レイヤセット追加、区境界・2km円作成、ポリゴン内地物の抽出統合を扱います。" data-en="A drawing and editing tool for making maps. It handles layer set creation, ward boundaries, 2 km circles, and extracting or merging features inside polygons.">地図を作るための作図・編集ツール。レイヤセット追加、区境界・2km円作成、ポリゴン内地物の抽出統合を扱います。</p>
+          <a href="koji_geotools.html" class="detail-link">Detail</a>
+        </article>
+
+        <article class="plugin-card mapbundle">
+          <div class="badge" aria-label="koji MapBundle icon concept">
+            <div class="badge-koji">koji</div>
+            <svg class="badge-symbol" viewBox="0 0 84 66" aria-hidden="true">
+              <path d="M12 18 L35 10 L35 48 L12 56 Z" fill="#8cc3d7" stroke="#062a46" stroke-width="4"/>
+              <path d="M35 10 L58 18 L58 56 L35 48 Z" fill="#b8d98d" stroke="#062a46" stroke-width="4"/>
+              <path d="M58 18 L74 12 L74 50 L58 56 Z" fill="#f2c96d" stroke="#062a46" stroke-width="4"/>
+              <path d="M48 38 L72 38 L72 58 L48 58 Z" fill="#c96f22" stroke="#062a46" stroke-width="3"/>
+              <path d="M48 38 L60 30 L72 38" fill="#e9bf60" stroke="#062a46" stroke-width="3"/>
+            </svg>
+            <div class="tool-bar">MapBundle</div>
+          </div>
+          <h3>koji MapBundle</h3>
+          <p class="tool-summary" data-ja="地図データをまとめて配るためのパッケージツール。" data-en="A package tool for preparing and distributing map data as a coherent set.">地図データをまとめて配るためのパッケージツール。</p>
+          <div class="card-status" data-ja="作成中" data-en="UNDER CONSTRUCTION">作成中</div>
+        </article>
+
+        <article class="plugin-card dataquery">
+          <div class="badge" aria-label="koji DataQuery icon concept">
+            <div class="badge-koji">koji</div>
+            <svg class="badge-symbol" viewBox="0 0 84 66" aria-hidden="true">
+              <rect x="8" y="14" width="25" height="34" fill="#8cc3d7" stroke="#062a46" stroke-width="4"/>
+              <rect x="51" y="14" width="25" height="34" fill="#8cc3d7" stroke="#062a46" stroke-width="4"/>
+              <path d="M33 26 C42 26 42 36 51 36" fill="none" stroke="#b5143f" stroke-width="5"/>
+              <path d="M36 10 L48 10 L44 24 L44 36 L40 40 L40 24 Z" fill="#6d4aa0" stroke="#062a46" stroke-width="3"/>
+              <path d="M13 25 H28 M13 36 H28 M56 25 H71 M56 36 H71" stroke="#062a46" stroke-width="2"/>
+            </svg>
+            <div class="tool-bar">DataQuery</div>
+          </div>
+          <h3>koji DataQuery</h3>
+          <p class="tool-summary" data-ja="表、結合、集計、SQL的な加工を扱うツール。QGIS版のPower Queryのような操作感を目指します。" data-en="A tool for tables, joins, aggregation, and SQL-like data processing, aiming for a Power Query-like experience inside QGIS.">表、結合、集計、SQL的な加工を扱うツール。QGIS版のPower Queryのような操作感を目指します。</p>
+          <div class="card-status" data-ja="作成中" data-en="UNDER CONSTRUCTION">作成中</div>
+        </article>
+
+        <article class="plugin-card chiban">
+          <div class="badge" aria-label="koji Chiban icon concept">
+            <div class="badge-koji">koji</div>
+            <svg class="badge-symbol" viewBox="0 0 84 66" aria-hidden="true">
+              <path d="M11 16 H73 V54 H11 Z" fill="#fffaf0" stroke="#062a46" stroke-width="4"/>
+              <path d="M28 16 V54 M54 16 V54 M11 34 H73" stroke="#0b4268" stroke-width="3"/>
+              <path d="M24 8 H60 V34 H24 Z" fill="#b74332" stroke="#062a46" stroke-width="4"/>
+              <text x="42" y="29" text-anchor="middle" font-family="Shippori Mincho, serif" font-size="24" font-weight="800" fill="#fff">番</text>
+            </svg>
+            <div class="tool-bar">Chiban</div>
+          </div>
+          <h3>koji Chiban</h3>
+          <p class="tool-summary" data-ja="日本語UIで地番を整理・解析・正規化する専用ツール。" data-en="A Japanese-language tool for organizing, parsing, and normalizing parcel numbers.">日本語UIで地番を整理・解析・正規化する専用ツール。</p>
+          <div class="card-status" data-ja="作成中" data-en="UNDER CONSTRUCTION">作成中</div>
+        </article>
+      </div>
+
+      <div class="set-note">
+        <div class="set-note-mark">G</div>
+        <div>
+          <h3 data-ja="kojiGISは最終セットplugin" data-en="kojiGIS as the Final Set Plugin">kojiGISは最終セットplugin</h3>
+          <p data-ja="kojiGISは、上の4つと並列に置く単独ツールではなく、GeoTools、MapBundle、DataQuery、Chibanをひとつにまとめる最終的なセットpluginとして整理する予定です。" data-en="kojiGIS is not planned as a fifth standalone tool alongside the four above. It is intended as the final set plugin that brings GeoTools, MapBundle, DataQuery, and Chiban together.">
+            kojiGISは、上の4つと並列に置く単独ツールではなく、GeoTools、MapBundle、DataQuery、Chibanをひとつにまとめる最終的なセットpluginとして整理する予定です。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section related-tool">
+    <div class="section-inner">
+      <div class="related-panel">
+        <div>
+          <div class="section-kicker" data-ja="関連ツール" data-en="Related tool">関連ツール</div>
+          <h2 data-ja="日常業務から生まれたkojiPDF" data-en="kojiPDF, Born from Everyday Work">日常業務から生まれたkojiPDF</h2>
+          <p data-ja="kojiPDFは、地方自治体の技術職員として日常業務の中で「あったらいい」と感じたことから個人で作成しているPDFツールです。散在するPDFやOffice資料を、しおり付きの一冊のPDFにまとめられるようにし、Code4ConstructとしてGitHubでも公開しています。" data-en="kojiPDF is a PDF tool I build personally from the perspective of a local-government technical staff member, shaped by everyday moments where I wished a tool like this existed. It helps gather scattered PDFs and Office files into one bookmarked PDF, and is also published on GitHub as Code4Construct.">
+            kojiPDFは、地方自治体の技術職員として日常業務の中で「あったらいい」と感じたことから個人で作成しているPDFツールです。散在するPDFやOffice資料を、しおり付きの一冊のPDFにまとめられるようにし、Code4ConstructとしてGitHubでも公開しています。
+          </p>
+        </div>
+        <div class="related-actions">
+          <a href="kojipdf-homepage.html" class="related-link">Visit kojiPDF</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="construction">
+    <div class="section-inner">
+      <div class="construction-box">
+        <div class="section-kicker" data-ja="現在の状況" data-en="Current page status">現在の状況</div>
+        <div class="construction-label">UNDER<br>CONSTRUCTION</div>
+        <p data-ja="このページは、QGISプラグイン群の見た目と世界観を先に固めるための仮ページです。機能詳細、スクリーンショット、配布情報は今後追加予定です。" data-en="This is a temporary page for shaping the visual direction and atmosphere of the QGIS plugin family. Feature details, screenshots, and distribution information will be added later.">
+          このページは、QGISプラグイン群の見た目と世界観を先に固めるための仮ページです。機能詳細、スクリーンショット、配布情報は今後追加予定です。
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <a href="index.html" class="footer-logo">koji<span>GIS</span></a>
+  <div class="footer-nav">
+    <a href="index.html" data-ja="ホーム" data-en="Home">ホーム</a>
+    <a href="kojipdf-homepage.html">kojiPDF</a>
+    <a href="#plugins" data-ja="プラグイン" data-en="Plugins">プラグイン</a>
+  </div>
+</footer>
+<script>
+  const titles = {
+    ja: 'kojiGIS - QGISプラグイン構想',
+    en: 'kojiGIS - QGIS Plugin Concepts'
+  };
+
+  const setLanguage = (lang) => {
+    document.documentElement.lang = lang;
+    document.title = titles[lang];
+
+    document.querySelectorAll('[data-ja][data-en]').forEach((element) => {
+      element.textContent = element.dataset[lang];
+    });
+
+    document.querySelectorAll('[data-ja-html][data-en]').forEach((element) => {
+      element.innerHTML = lang === 'ja' ? element.dataset.jaHtml : element.dataset.en;
+    });
+
+    document.querySelectorAll('[data-ja-html][data-en-html]').forEach((element) => {
+      element.innerHTML = lang === 'ja' ? element.dataset.jaHtml : element.dataset.enHtml;
+    });
+
+    document.querySelectorAll('.lang-btn').forEach((button) => {
+      const isActive = button.dataset.lang === lang;
+      button.classList.toggle('active', isActive);
+      button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+
+    localStorage.setItem('code4construct-language', lang);
+  };
+
+  document.querySelectorAll('.lang-btn').forEach((button) => {
+    button.addEventListener('click', () => setLanguage(button.dataset.lang));
+  });
+
+  const params = new URLSearchParams(window.location.search);
+  const requestedLang = params.get('lang');
+  const savedLang = localStorage.getItem('code4construct-language') || localStorage.getItem('kojipdf-language');
+  const browserLang = navigator.language || '';
+  const initialLang = requestedLang === 'en' || requestedLang === 'ja'
+    ? requestedLang
+    : savedLang === 'en' || savedLang === 'ja'
+      ? savedLang
+      : browserLang.toLowerCase().startsWith('en')
+        ? 'en'
+        : 'ja';
+  setLanguage(initialLang);
+</script>
+</body>
+</html>
