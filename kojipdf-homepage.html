@@ -285,6 +285,47 @@
     margin-top: 12px;
   }
 
+  .hero-mentions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 0 18px;
+  }
+
+  .hero-mention-link {
+    min-height: 38px;
+    padding: 0 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--hero-readable);
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.22);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.3px;
+    text-decoration: none;
+    text-transform: uppercase;
+    backdrop-filter: blur(10px);
+    transition: transform 0.2s, background 0.2s, border-color 0.2s;
+  }
+
+  .hero-mention-link::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 14px rgba(233,191,96,0.7);
+    flex: 0 0 auto;
+  }
+
+  .hero-mention-link:hover {
+    transform: translateY(-1px);
+    background: rgba(255,255,255,0.16);
+    border-color: rgba(233,191,96,0.5);
+  }
+
   .hero-feature-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1304,6 +1345,10 @@
           <p data-ja="数万枚に及ぶ工事関係書類の電子検査という、究極のペーパーレス会議を実現するために、工事関係者が個人で開発した、誰でも使えるオープンソースのPDFツールです。ソースコードも公開しています。" data-en="It is an open-source PDF tool developed personally by someone in the construction field to support electronic inspections of tens of thousands of construction project documents, a demanding form of paperless meeting. The source code is also publicly available.">
             数万枚に及ぶ工事関係書類の電子検査という、究極のペーパーレス会議を実現するために、工事関係者が個人で開発した、誰でも使えるオープンソースのPDFツールです。ソースコードも公開しています。
           </p>
+        </div>
+        <div class="hero-mentions" aria-label="kojiPDF mentions and distribution">
+          <a href="https://forest.watch.impress.co.jp/docs/digest/2115745.html" class="hero-mention-link" target="_blank" rel="noopener">Featured by Impress 窓の杜</a>
+          <a href="https://www.vector.co.jp/soft/winnt/writing/se527459.html" class="hero-mention-link" target="_blank" rel="noopener">Available on Vector</a>
         </div>
         <div class="download-options">
           <div class="download-options-label" data-ja="ダウンロード方法" data-en="Download Options">ダウンロード方法</div>

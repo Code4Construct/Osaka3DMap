@@ -195,18 +195,14 @@
   .hero {
     min-height: 520px;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 360px;
-    gap: 32px;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
+    gap: 44px;
     align-items: center;
     padding: 34px 0 56px;
   }
 
-  .eyebrow {
-    font-size: 12px;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--accent-deep);
-    margin-bottom: 18px;
+  .hero-main {
+    min-width: 0;
   }
 
   h1 {
@@ -222,76 +218,14 @@
     color: var(--muted);
     font-size: 17px;
     line-height: 1.9;
-    margin-bottom: 28px;
+    margin-bottom: 0;
   }
 
-  .actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .btn {
-    min-height: 46px;
-    padding: 0 20px;
-    border-radius: 999px;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .btn:hover { transform: translateY(-2px); }
-
-  .btn-primary {
-    color: white;
-    background: rgba(47, 109, 145, 0.92);
-    box-shadow: 0 14px 30px rgba(47, 109, 145, 0.24);
-  }
-
-  .btn-secondary {
-    color: var(--ink);
-    background: rgba(255,255,255,0.5);
-    border: 1px solid var(--line);
-    backdrop-filter: blur(14px);
-  }
-
-  .profile-card,
   .glass-card {
     background: var(--glass);
     border: 1px solid rgba(255,255,255,0.72);
     backdrop-filter: blur(18px);
     box-shadow: var(--shadow);
-  }
-
-  .profile-card {
-    padding: 26px;
-    border-radius: 28px;
-  }
-
-  .profile-orb {
-    width: 88px;
-    height: 88px;
-    border-radius: 50%;
-    margin-bottom: 24px;
-    background:
-      radial-gradient(circle at 30% 30%, rgba(255,255,255,0.98), transparent 34%),
-      linear-gradient(135deg, rgba(97,173,207,0.82), rgba(187,224,213,0.92));
-    box-shadow: inset 0 0 24px rgba(255,255,255,0.8), 0 18px 34px rgba(71,126,151,0.2);
-  }
-
-  .profile-card h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
-    margin-bottom: 10px;
-  }
-
-  .profile-card p {
-    color: var(--muted);
-    line-height: 1.8;
-    font-size: 14px;
   }
 
   .developer-section {
@@ -312,6 +246,7 @@
     font-family: 'Playfair Display', serif;
     font-size: clamp(30px, 4vw, 44px);
     line-height: 1.08;
+    margin-top: 2px;
     margin-bottom: 14px;
   }
 
@@ -342,37 +277,15 @@
 
   section { margin-bottom: 28px; }
 
-  .section-heading {
-    margin-bottom: 16px;
-  }
-
-  .section-heading h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(30px, 4vw, 44px);
-    line-height: 1.08;
-    margin-top: 6px;
-  }
-
-  .section-heading p {
-    max-width: 620px;
-    color: var(--muted);
-    line-height: 1.8;
-    font-size: 14px;
-    margin-top: 10px;
-  }
-
-  .section-grid {
+  .hero-projects {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
-  }
-
-  .section-grid.two-column {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .section-grid.single-column {
     grid-template-columns: 1fr;
+    gap: 16px;
+    align-self: center;
+  }
+
+  .hero-projects .glass-card {
+    min-height: 150px;
   }
 
   .glass-card {
@@ -421,34 +334,6 @@
     font-weight: 700;
   }
 
-  .project-card {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 20px;
-    align-items: center;
-    margin-top: 18px;
-  }
-
-  .status-pill {
-    display: inline-flex;
-    align-items: center;
-    min-height: 28px;
-    padding: 0 12px;
-    border-radius: 999px;
-    border: 1px solid var(--line);
-    color: var(--accent-deep);
-    background: rgba(255,255,255,0.42);
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .project-link {
-    color: var(--accent-deep);
-    text-decoration: none;
-    font-weight: 500;
-  }
-
   footer {
     padding: 36px 0 42px;
     color: var(--muted);
@@ -456,7 +341,11 @@
   }
 
   @media (max-width: 860px) {
-    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero {
+      grid-template-columns: 1fr;
+      min-height: auto;
+      gap: 24px;
+    }
     .developer-section { grid-template-columns: 1fr; }
     .developer-side {
       padding: 24px 0;
@@ -464,9 +353,7 @@
       border-bottom: 1px solid var(--line);
     }
     .ai-note { padding: 24px 0 0; }
-    .section-grid,
-    .section-grid.two-column { grid-template-columns: 1fr; }
-    .project-card { grid-template-columns: 1fr; }
+    .hero-projects { align-self: stretch; }
   }
 
   @media (max-width: 640px) {
@@ -481,7 +368,7 @@
   <div class="bubbles" aria-hidden="true"></div>
   <div class="page">
     <nav>
-      <a href="#about" class="brand">Code<span>4</span>Construct</a>
+      <a href="#about" class="brand" data-ja="開発紹介" data-en="Developer Profile">Developer Profile</a>
       <div class="nav-right">
         <ul class="nav-links">
           <li><a href="#about" data-ja="ホーム" data-en="Home">Home</a></li>
@@ -500,37 +387,14 @@
     </nav>
 
     <header class="hero" id="about">
-      <div>
-        <div class="eyebrow" data-ja="個人ホームページ" data-en="Personal homepage">Personal homepage</div>
+      <div class="hero-main">
         <h1>Code4Construct</h1>
         <p class="hero-copy" data-ja="日々の仕事や学びの中で生まれた、小さなツールと実験をまとめた個人ページです。" data-en="A personal page for small tools and experiments shaped by everyday work and learning.">
           A personal page for small tools and experiments shaped by everyday work and learning.
         </p>
-        <div class="actions">
-          <a href="#vibe-coding" class="btn btn-primary" data-ja="プロジェクトを見る" data-en="View projects">View projects</a>
-          <a href="#developer" class="btn btn-secondary" data-ja="開発者紹介" data-en="Developer introduction">Developer introduction</a>
-          <a href="kojipdf-homepage.html" class="btn btn-secondary" data-ja="kojiPDFを開く" data-en="Open kojiPDF">Open kojiPDF</a>
-        </div>
       </div>
 
-      <aside class="profile-card">
-        <div class="profile-orb"></div>
-        <h2 data-ja="こんにちは。" data-en="Hello.">Hello.</h2>
-        <p data-ja="現場で見つけた小さな不便を、コーディングで解決し、シェアしています。もし、お役にたてば幸いです。" data-en="I use coding to solve and share small frustrations found in the field. I hope something here is useful to you.">
-          I use coding to solve and share small frustrations found in the field. I hope something here is useful to you.
-        </p>
-      </aside>
-    </header>
-
-    <section id="vibe-coding">
-      <div class="section-heading">
-        <div class="card-label" data-ja="制作" data-en="Making">Making</div>
-        <h2 data-ja="Vibe Coding" data-en="Vibe Coding">Vibe Coding</h2>
-        <p data-ja="仕事や学びの中で見つけた不便を、小さな道具や実験として形にしています。" data-en="Small tools and experiments shaped from everyday work, learning, and practical needs.">
-          Small tools and experiments shaped from everyday work, learning, and practical needs.
-        </p>
-      </div>
-      <div class="section-grid two-column">
+      <div class="hero-projects" id="vibe-coding">
         <a href="kojipdf-homepage.html" class="glass-card linked-card">
           <div class="card-label" data-ja="主なプロジェクト" data-en="Featured project">Featured project</div>
           <h3>kojiPDF</h3>
@@ -544,12 +408,11 @@
           <span class="card-inline-link" data-ja="kojiGISを開く" data-en="Open kojiGIS">Open kojiGIS</span>
         </a>
       </div>
-    </section>
+    </header>
 
     <section id="developer">
       <div class="glass-card developer-section">
         <article class="developer-main">
-          <div class="card-label" data-ja="開発者紹介" data-en="Developer introduction">Developer introduction</div>
           <h2 data-ja-html="小さな「あったらいい」を、道具にする。" data-en-html="Turning small wishes into tools.">Turning small wishes into tools.</h2>
           <p data-ja-html="地方自治体の技術職員として働く中で、日々の業務には「もう少しこうできたら楽になるのに」と感じる場面がたくさんあります。そうした気づきを、仕事そのものとは少し距離を置き、<strong>ひとりの市民開発者</strong>として小さなアプリやツールにしています。" data-en-html="Working as a technical staff member in local government, I often encounter small moments where I think, “this would be easier if only there were a tool for it.” I take those observations slightly outside my official work and turn them into small apps and tools as <strong>an individual civic developer</strong>.">
             Working as a technical staff member in local government, I often encounter small moments where I think, “this would be easier if only there were a tool for it.” I take those observations slightly outside my official work and turn them into small apps and tools as <strong>an individual civic developer</strong>.
