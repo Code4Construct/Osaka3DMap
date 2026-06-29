@@ -4,6 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Developer Introduction - Code4Construct</title>
+<script>
+  (() => {
+    const params = new URLSearchParams(window.location.search);
+    const requestedLang = params.get('lang');
+    const savedLang = localStorage.getItem('code4construct-language') || localStorage.getItem('kojipdf-language');
+    const lang = requestedLang === 'en' || requestedLang === 'ja'
+      ? requestedLang
+      : savedLang === 'en' || savedLang === 'ja'
+        ? savedLang
+        : 'ja';
+    window.location.replace(`index.html?lang=${lang}#developer`);
+  })();
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=DM+Mono:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -466,6 +479,32 @@
     en: 'Developer Introduction - Code4Construct'
   };
 
+  const localizedPages = new Set([
+    'index.html',
+    'developer_introduction.html',
+    'kojipdf-homepage.html',
+    'kojipdf-download.html',
+    'kojiPDF-tutorial.html',
+    'kojigis-homepage.html',
+    'koji_geotools.html'
+  ]);
+
+  const updateLocalizedLinks = (lang) => {
+    document.querySelectorAll('a[href]').forEach((link) => {
+      const rawHref = link.getAttribute('href');
+      if (!rawHref || rawHref.startsWith('#') || /^[a-z][a-z0-9+.-]*:/i.test(rawHref)) return;
+
+      const [pathAndQuery, hash] = rawHref.split('#');
+      const [path, query = ''] = pathAndQuery.split('?');
+      const pageName = path.split('/').pop();
+      if (!localizedPages.has(pageName)) return;
+
+      const params = new URLSearchParams(query);
+      params.set('lang', lang);
+      link.setAttribute('href', `${path}?${params.toString()}${hash ? `#${hash}` : ''}`);
+    });
+  };
+
   const setLanguage = (lang) => {
     document.documentElement.lang = lang;
     document.title = titles[lang];
@@ -489,6 +528,8 @@
     });
 
     localStorage.setItem('code4construct-language', lang);
+    localStorage.setItem('kojipdf-language', lang);
+    updateLocalizedLinks(lang);
   };
 
   document.querySelectorAll('.lang-btn').forEach((button) => {

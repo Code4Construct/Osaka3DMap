@@ -722,6 +722,7 @@
   <div class="nav-right">
     <ul class="nav-links">
       <li><a href="index.html" data-ja="ホーム" data-en="Home">ホーム</a></li>
+      <li><a href="index.html#developer" data-ja="開発者" data-en="Developer">開発者</a></li>
       <li><a href="#plugins" class="active" data-ja="プラグイン" data-en="Plugins">プラグイン</a></li>
       <li><a href="kojipdf-homepage.html">kojiPDF</a></li>
       <li><a href="#construction" data-ja="状況" data-en="Status">状況</a></li>
@@ -934,6 +935,7 @@
   <a href="index.html" class="footer-logo">koji<span>GIS</span></a>
   <div class="footer-nav">
     <a href="index.html" data-ja="ホーム" data-en="Home">ホーム</a>
+    <a href="index.html#developer" data-ja="開発者" data-en="Developer">開発者</a>
     <a href="kojipdf-homepage.html">kojiPDF</a>
     <a href="#plugins" data-ja="プラグイン" data-en="Plugins">プラグイン</a>
   </div>
@@ -942,6 +944,32 @@
   const titles = {
     ja: 'kojiGIS - QGISプラグイン構想',
     en: 'kojiGIS - QGIS Plugin Concepts'
+  };
+
+  const localizedPages = new Set([
+    'index.html',
+    'developer_introduction.html',
+    'kojipdf-homepage.html',
+    'kojipdf-download.html',
+    'kojiPDF-tutorial.html',
+    'kojigis-homepage.html',
+    'koji_geotools.html'
+  ]);
+
+  const updateLocalizedLinks = (lang) => {
+    document.querySelectorAll('a[href]').forEach((link) => {
+      const rawHref = link.getAttribute('href');
+      if (!rawHref || rawHref.startsWith('#') || /^[a-z][a-z0-9+.-]*:/i.test(rawHref)) return;
+
+      const [pathAndQuery, hash] = rawHref.split('#');
+      const [path, query = ''] = pathAndQuery.split('?');
+      const pageName = path.split('/').pop();
+      if (!localizedPages.has(pageName)) return;
+
+      const params = new URLSearchParams(query);
+      params.set('lang', lang);
+      link.setAttribute('href', `${path}?${params.toString()}${hash ? `#${hash}` : ''}`);
+    });
   };
 
   const setLanguage = (lang) => {
@@ -967,6 +995,8 @@
     });
 
     localStorage.setItem('code4construct-language', lang);
+    localStorage.setItem('kojipdf-language', lang);
+    updateLocalizedLinks(lang);
   };
 
   document.querySelectorAll('.lang-btn').forEach((button) => {

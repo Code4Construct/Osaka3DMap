@@ -134,8 +134,25 @@
   nav {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
+    gap: 24px;
     padding: 28px 0;
+  }
+
+  .brand {
+    color: var(--ink);
+    text-decoration: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 23px;
+    font-weight: 700;
+  }
+
+  .brand span { color: var(--accent-deep); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
   }
 
   .nav-links {
@@ -148,6 +165,38 @@
     color: var(--muted);
     text-decoration: none;
     font-size: 14px;
+  }
+
+  .language-toggle {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .lang-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,0.54);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    opacity: 0.62;
+    transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .lang-btn.active {
+    opacity: 1;
+    border-color: rgba(79, 143, 180, 0.44);
+    transform: translateY(-1px);
+  }
+
+  .lang-btn img {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: block;
   }
 
   .hero {
@@ -250,6 +299,49 @@
     color: var(--muted);
     line-height: 1.8;
     font-size: 14px;
+  }
+
+  .developer-section {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+    gap: 18px;
+    align-items: stretch;
+  }
+
+  .developer-main {
+    padding: 30px;
+  }
+
+  .developer-main h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4.5vw, 52px);
+    line-height: 1.08;
+    margin-bottom: 18px;
+  }
+
+  .developer-main p,
+  .developer-side p,
+  .ai-note p {
+    color: var(--muted);
+    line-height: 1.9;
+    font-size: 15px;
+  }
+
+  .developer-side {
+    padding: 26px;
+  }
+
+  .developer-side h3,
+  .ai-note h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    line-height: 1.18;
+    margin-bottom: 12px;
+  }
+
+  .ai-note {
+    padding: 26px;
+    margin-top: 18px;
   }
 
   section { margin-bottom: 28px; }
@@ -374,6 +466,7 @@
 
   @media (max-width: 860px) {
     .hero { grid-template-columns: 1fr; min-height: auto; }
+    .developer-section { grid-template-columns: 1fr; }
     .section-grid,
     .section-grid.two-column { grid-template-columns: 1fr; }
     .project-card { grid-template-columns: 1fr; }
@@ -381,7 +474,8 @@
 
   @media (max-width: 640px) {
     .page { width: min(100% - 32px, 1120px); }
-    nav { align-items: flex-start; gap: 16px; }
+    nav { align-items: flex-start; gap: 16px; flex-direction: column; }
+    .nav-right { align-items: flex-start; flex-direction: column; }
     .nav-links { gap: 16px; flex-wrap: wrap; }
   }
 </style>
@@ -390,102 +484,149 @@
   <div class="bubbles" aria-hidden="true"></div>
   <div class="page">
     <nav>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#vibe-coding">Vibe Coding</a></li>
-        <li><a href="#wide-roaming">Wide Roaming</a></li>
-        <li><a href="#projects">Projects</a></li>
-      </ul>
+      <a href="#about" class="brand">Code<span>4</span>Construct</a>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="#about" data-ja="ホーム" data-en="Home">Home</a></li>
+          <li><a href="#developer" data-ja="開発者" data-en="Developer">Developer</a></li>
+          <li><a href="#vibe-coding" data-ja="制作" data-en="Making">Making</a></li>
+          <li><a href="#wide-roaming" data-ja="散策" data-en="Roaming">Roaming</a></li>
+          <li><a href="#projects" data-ja="プロジェクト" data-en="Projects">Projects</a></li>
+        </ul>
+        <div class="language-toggle" aria-label="Language selector">
+          <button type="button" class="lang-btn ja active" data-lang="ja" aria-label="日本語">
+            <img src="images/flag_jp.svg" alt="">
+          </button>
+          <button type="button" class="lang-btn en" data-lang="en" aria-label="English">
+            <img src="images/flag_gb.svg" alt="">
+          </button>
+        </div>
+      </div>
     </nav>
 
     <header class="hero" id="about">
       <div>
-        <div class="eyebrow">Personal homepage</div>
+        <div class="eyebrow" data-ja="個人ホームページ" data-en="Personal homepage">Personal homepage</div>
         <h1>Code4Construct</h1>
-        <p class="hero-copy">
+        <p class="hero-copy" data-ja="趣味、小さな実験、日々の仕事から生まれた道具をまとめた個人ページです。学びながら作り、毎日の作業を少しだけ楽にするアイデアを形にしています。" data-en="A quiet personal space for hobbies, small experiments, and things made along the way. I enjoy learning, building useful tools, and collecting ideas that make everyday work a little smoother.">
           A quiet personal space for hobbies, small experiments, and things made along the way.
           I enjoy learning, building useful tools, and collecting ideas that make everyday work a little smoother.
         </p>
         <div class="actions">
-          <a href="#projects" class="btn btn-primary">View projects</a>
-          <a href="kojipdf-homepage.html" class="btn btn-secondary">Open kojiPDF</a>
+          <a href="#projects" class="btn btn-primary" data-ja="プロジェクトを見る" data-en="View projects">View projects</a>
+          <a href="#developer" class="btn btn-secondary" data-ja="開発者紹介" data-en="Developer introduction">Developer introduction</a>
+          <a href="kojipdf-homepage.html" class="btn btn-secondary" data-ja="kojiPDFを開く" data-en="Open kojiPDF">Open kojiPDF</a>
         </div>
       </div>
 
       <aside class="profile-card">
         <div class="profile-orb"></div>
-        <h2>Hello.</h2>
-        <p>
+        <h2 data-ja="こんにちは。" data-en="Hello.">Hello.</h2>
+        <p data-ja="小さなツール、実験、個人開発、選んだプロジェクトを紹介するためのページです。" data-en="This page is a simple introduction to small tools, experiments, personal work, and selected projects.">
           This page is a simple introduction to small tools,
           experiments, personal work, and selected projects.
         </p>
       </aside>
     </header>
 
+    <section id="developer">
+      <div class="developer-section">
+        <article class="glass-card developer-main">
+          <div class="card-label" data-ja="開発者紹介" data-en="Developer introduction">Developer introduction</div>
+          <h2 data-ja-html="仕事の中で見えた、<br>小さな「あったらいい」を形に。" data-en="Turning small everyday wishes from work into tools.">Turning small everyday wishes from work into tools.</h2>
+          <p data-ja-html="地方自治体の技術職員として働く中で、日々の業務には「もう少しこうできたら楽になるのに」と感じる場面がたくさんあります。そうした気づきを、仕事そのものとは少し距離を置き、<strong>ひとりの市民開発者</strong>として小さなアプリやツールにしています。" data-en-html="Working as a technical staff member in local government, I often encounter small moments where I think, “this would be easier if only there were a tool for it.” I take those observations slightly outside my official work and turn them into small apps and tools as <strong>an individual civic developer</strong>.">
+            Working as a technical staff member in local government, I often encounter small moments where I think, “this would be easier if only there were a tool for it.” I take those observations slightly outside my official work and turn them into small apps and tools as <strong>an individual civic developer</strong>.
+          </p>
+          <p data-ja-html="公共工事、資料整理、地図、検査、会議。現場に近いところで生まれた道具を、必要な人が見つけられる形で残しておきたい。その思いから、個人開発の活動名として <strong>Code4Construct</strong> を使い、GitHubでも一部の成果を公開しています。" data-en-html="Public works, document organization, maps, inspections, and meetings. I want to leave tools born close to the field in a form that people who need them can find. That is why I use <strong>Code4Construct</strong> as the name for this personal development work and publish some of it on GitHub.">
+            Public works, document organization, maps, inspections, and meetings. I want to leave tools born close to the field in a form that people who need them can find. That is why I use <strong>Code4Construct</strong> as the name for this personal development work and publish some of it on GitHub.
+          </p>
+        </article>
+
+        <aside class="glass-card developer-side">
+          <div class="card-label" data-ja="市民開発者として" data-en="Civic developer">Civic developer</div>
+          <h3 data-ja="所属ではなく、個人として。" data-en="Personal, not official.">Personal, not official.</h3>
+          <p data-ja="所属や職務を代表するものではなく、個人として試作し、学びながら育てているページです。大きな仕組みを語るより、目の前の作業が少し軽くなる道具を大切にしています。" data-en="This page does not represent my organization or official duties. It is a personal space for prototyping, learning, and growing tools. Rather than speaking about grand systems, I care about tools that make the work in front of us a little lighter.">
+            This page does not represent my organization or official duties. It is a personal space for prototyping, learning, and growing tools. Rather than speaking about grand systems, I care about tools that make the work in front of us a little lighter.
+          </p>
+        </aside>
+      </div>
+
+      <article class="glass-card ai-note">
+        <div class="card-label" data-ja="生成AI" data-en="Generative AI">Generative AI</div>
+        <h3 data-ja="あきらめていた個人開発が、もう一度手の届くところへ。" data-en="Personal development, once out of reach, became possible again.">Personal development, once out of reach, became possible again.</h3>
+        <p data-ja="生成AIの登場によって、誰もが自分のためのアプリを作れる時代が来ました。若い頃は、Excel VBAの属人化問題などを見ながら、コーディングで仕事を効率化することには限界があると感じ、どこかであきらめていました。" data-en="With the arrival of generative AI, we have entered an age where anyone can build apps for their own needs. When I was younger, seeing issues such as Excel VBA tools becoming dependent on one person made me feel that using code to improve work had hard limits, and I had almost given up on it.">
+          With the arrival of generative AI, we have entered an age where anyone can build apps for their own needs. When I was younger, seeing issues such as Excel VBA tools becoming dependent on one person made me feel that using code to improve work had hard limits, and I had almost given up on it.
+        </p>
+        <p data-ja="けれども技術革新によって、還暦を前にして、自分の手でアプリを作れるようになりました。長く仕事の中で感じてきた不便を、少しずつ形にできる。まるで、遅れて魔法の杖を手にしたような気分です。" data-en="But technological change has made it possible for me to build apps with my own hands before reaching sixty. I can now give shape, little by little, to inconveniences I have felt through years of work. It feels as if I have finally been handed a magic wand, a little later in life.">
+          But technological change has made it possible for me to build apps with my own hands before reaching sixty. I can now give shape, little by little, to inconveniences I have felt through years of work. It feels as if I have finally been handed a magic wand, a little later in life.
+        </p>
+      </article>
+    </section>
+
     <section id="vibe-coding">
       <div class="section-heading">
-        <div class="card-label">Making</div>
+        <div class="card-label" data-ja="制作" data-en="Making">Making</div>
         <h2>Vibe Coding</h2>
-        <p>
+        <p data-ja="思いついたことを動く形へ。素早い実験、AIを使った反復、小さな業務改善ツールを作っています。" data-en="Ideas into working shapes: quick experiments, AI-assisted iteration, and small tools that make everyday work a little smoother.">
           Ideas into working shapes: quick experiments, AI-assisted iteration,
           and small tools that make everyday work a little smoother.
         </p>
       </div>
       <div class="section-grid two-column">
         <article class="glass-card">
-          <div class="card-label">Small tools</div>
+          <div class="card-label" data-ja="小さなツール" data-en="Small tools">Small tools</div>
           <h3>Vibe Coding</h3>
-          <p>Turning small observations into working tools through quick experiments and iterative building.</p>
+          <p data-ja="小さな気づきを、素早い実験と反復で動く道具に変えていきます。" data-en="Turning small observations into working tools through quick experiments and iterative building.">Turning small observations into working tools through quick experiments and iterative building.</p>
         </article>
         <a href="kojigis-homepage.html" class="glass-card linked-card">
-          <div class="card-label">Mapping</div>
+          <div class="card-label" data-ja="地図" data-en="Mapping">Mapping</div>
           <h3>kojiGIS</h3>
-          <p>A QGIS plugin concept for map drawing, spatial data organization, and tools I wished existed in daily technical work.</p>
-          <span class="card-inline-link">Open kojiGIS</span>
+          <p data-ja="QGISでの作図、地図データ整理、日々の技術系業務で欲しかった道具をまとめるプラグイン構想です。" data-en="A QGIS plugin concept for map drawing, spatial data organization, and tools I wished existed in daily technical work.">A QGIS plugin concept for map drawing, spatial data organization, and tools I wished existed in daily technical work.</p>
+          <span class="card-inline-link" data-ja="kojiGISを開く" data-en="Open kojiGIS">Open kojiGIS</span>
         </a>
       </div>
 
       <div class="project-list" id="projects">
         <article class="glass-card project-card">
           <div>
-            <div class="card-label">Featured project</div>
+            <div class="card-label" data-ja="主なプロジェクト" data-en="Featured project">Featured project</div>
             <h3>kojiPDF</h3>
-            <p>
+            <p data-ja="資料の結合、フォルダ構成からのしおり作成、電子検査やペーパーレス会議で扱いやすいPDF作成のためのツールです。" data-en="A PDF tool for merging documents, creating bookmarks from folder structures, and preparing easier-to-browse materials for inspection work and paperless meetings.">
               A PDF tool for merging documents, creating bookmarks from folder structures,
               and preparing easier-to-browse materials for inspection work and paperless meetings.
             </p>
           </div>
-          <a href="kojipdf-homepage.html" class="btn btn-primary">Visit project</a>
+          <a href="kojipdf-homepage.html" class="btn btn-primary" data-ja="プロジェクトを見る" data-en="Visit project">Visit project</a>
         </article>
 
         <article class="glass-card project-card">
           <div>
-            <div class="card-label">Upcoming project</div>
+            <div class="card-label" data-ja="今後のプロジェクト" data-en="Upcoming project">Upcoming project</div>
             <h3>Schliemann's Tongue</h3>
-            <p>
+            <p data-ja="言語、学習、まだ形になりつつある実験のために残している将来のプロジェクトページです。" data-en="A future project page reserved for language, learning, and other experiments still taking shape.">
               A future project page reserved for language, learning, and other experiments still taking shape.
             </p>
           </div>
-          <span class="status-pill">Under construction</span>
+          <span class="status-pill" data-ja="作成中" data-en="Under construction">Under construction</span>
         </article>
       </div>
     </section>
 
     <section id="wide-roaming">
       <div class="section-heading">
-        <div class="card-label">Outside</div>
-        <h2>Wide Roaming</h2>
+        <div class="card-label" data-ja="外へ" data-en="Outside">Outside</div>
+        <h2 data-ja="Wide Roaming" data-en="Wide Roaming">Wide Roaming</h2>
       </div>
       <div class="section-grid two-column">
         <article class="glass-card">
-          <div class="card-label">Local travel</div>
-          <h3>Discover Local. Meet the World.</h3>
-          <p>Travel through Japan's local towns where the world has arrived. Experience familiar places through fresh eyes&mdash;and enjoy the feeling of traveling abroad without ever leaving Japan.</p>
+          <div class="card-label" data-ja="ローカル旅" data-en="Local travel">Local travel</div>
+          <h3 data-ja="Discover Local. Meet the World." data-en="Discover Local. Meet the World.">Discover Local. Meet the World.</h3>
+          <p data-ja="世界が訪れている日本のローカルなまちを歩き、身近な場所を新しい目で楽しむ旅のメモです。" data-en="Travel through Japan's local towns where the world has arrived. Experience familiar places through fresh eyes-and enjoy the feeling of traveling abroad without ever leaving Japan.">Travel through Japan's local towns where the world has arrived. Experience familiar places through fresh eyes-and enjoy the feeling of traveling abroad without ever leaving Japan.</p>
         </article>
         <article class="glass-card">
-          <div class="card-label">Historic Roads</div>
+          <div class="card-label" data-ja="歴史の道" data-en="Historic Roads">Historic Roads</div>
           <h3>Historic Roads</h3>
-          <p>Walking old routes, tracing history through landscapes, towns, and the roads between them.</p>
+          <p data-ja="古い道を歩き、風景やまち、その間をつなぐ道から歴史をたどります。" data-en="Walking old routes, tracing history through landscapes, towns, and the roads between them.">Walking old routes, tracing history through landscapes, towns, and the roads between them.</p>
         </article>
       </div>
     </section>
@@ -495,6 +636,79 @@
     </footer>
   </div>
   <script>
+    const titles = {
+      ja: 'Code4Construct',
+      en: 'Code4Construct'
+    };
+
+    const localizedPages = new Set([
+      'index.html',
+      'developer_introduction.html',
+      'kojipdf-homepage.html',
+      'kojipdf-download.html',
+      'kojiPDF-tutorial.html',
+      'kojigis-homepage.html',
+      'koji_geotools.html'
+    ]);
+
+    const updateLocalizedLinks = (lang) => {
+      document.querySelectorAll('a[href]').forEach((link) => {
+        const rawHref = link.getAttribute('href');
+        if (!rawHref || /^[a-z][a-z0-9+.-]*:/i.test(rawHref)) return;
+
+        if (rawHref.startsWith('#')) return;
+
+        const [pathAndQuery, hash] = rawHref.split('#');
+        const [path, query = ''] = pathAndQuery.split('?');
+        const pageName = path.split('/').pop();
+        if (!localizedPages.has(pageName)) return;
+
+        const params = new URLSearchParams(query);
+        params.set('lang', lang);
+        link.setAttribute('href', `${path}?${params.toString()}${hash ? `#${hash}` : ''}`);
+      });
+    };
+
+    const setLanguage = (lang) => {
+      document.documentElement.lang = lang;
+      document.title = titles[lang];
+
+      document.querySelectorAll('[data-ja][data-en]').forEach((element) => {
+        element.textContent = element.dataset[lang];
+      });
+
+      document.querySelectorAll('[data-ja-html][data-en-html]').forEach((element) => {
+        element.innerHTML = lang === 'ja' ? element.dataset.jaHtml : element.dataset.enHtml;
+      });
+
+      document.querySelectorAll('.lang-btn').forEach((button) => {
+        const isActive = button.dataset.lang === lang;
+        button.classList.toggle('active', isActive);
+        button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+
+      localStorage.setItem('code4construct-language', lang);
+      localStorage.setItem('kojipdf-language', lang);
+      updateLocalizedLinks(lang);
+    };
+
+    document.querySelectorAll('.lang-btn').forEach((button) => {
+      button.addEventListener('click', () => setLanguage(button.dataset.lang));
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    const requestedLang = params.get('lang');
+    const savedLang = localStorage.getItem('code4construct-language') || localStorage.getItem('kojipdf-language');
+    const browserLang = navigator.language || '';
+    const initialLang = requestedLang === 'en' || requestedLang === 'ja'
+      ? requestedLang
+      : savedLang === 'en' || savedLang === 'ja'
+        ? savedLang
+        : browserLang.toLowerCase().startsWith('en')
+          ? 'en'
+          : 'ja';
+    setLanguage(initialLang);
+
     const bubbleLayer = document.querySelector('.bubbles');
     const bubbleCount = 18;
 

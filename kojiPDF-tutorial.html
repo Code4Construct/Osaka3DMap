@@ -572,6 +572,7 @@
   <div class="nav-right">
     <ul class="nav-links">
       <li><a href="kojipdf-homepage.html" data-ja="ホーム" data-en="Home">ホーム</a></li>
+      <li><a href="index.html#developer" data-ja="開発者" data-en="Developer">開発者</a></li>
       <li><a href="#" class="active" data-ja="チュートリアル（作成中）" data-en="Tutorial (Under Construction)">チュートリアル（作成中）</a></li>
       <li><a href="https://github.com/Code4Construct/kojiPDFv210" target="_blank">GitHub</a></li>
     </ul>
@@ -684,6 +685,7 @@
   <a href="kojipdf-homepage.html" class="footer-logo">Koji<span>PDF</span></a>
   <div class="footer-nav">
     <a href="kojipdf-homepage.html" data-ja="ホーム" data-en="Home">ホーム</a>
+    <a href="index.html#developer" data-ja="開発者" data-en="Developer">開発者</a>
     <a href="https://github.com/Code4Construct/kojiPDFv210" target="_blank">GitHub</a>
     <a href="https://github.com/Code4Construct/kojiPDFv210/releases/tag/v2.1.0" data-ja="ダウンロード" data-en="Download">ダウンロード</a>
   </div>
@@ -693,6 +695,32 @@
   const titles = {
     ja: 'kojiPDF - チュートリアル（作成中）',
     en: 'kojiPDF - Tutorial (Under Construction)'
+  };
+
+  const localizedPages = new Set([
+    'index.html',
+    'developer_introduction.html',
+    'kojipdf-homepage.html',
+    'kojipdf-download.html',
+    'kojiPDF-tutorial.html',
+    'kojigis-homepage.html',
+    'koji_geotools.html'
+  ]);
+
+  const updateLocalizedLinks = (lang) => {
+    document.querySelectorAll('a[href]').forEach((link) => {
+      const rawHref = link.getAttribute('href');
+      if (!rawHref || rawHref.startsWith('#') || /^[a-z][a-z0-9+.-]*:/i.test(rawHref)) return;
+
+      const [pathAndQuery, hash] = rawHref.split('#');
+      const [path, query = ''] = pathAndQuery.split('?');
+      const pageName = path.split('/').pop();
+      if (!localizedPages.has(pageName)) return;
+
+      const params = new URLSearchParams(query);
+      params.set('lang', lang);
+      link.setAttribute('href', `${path}?${params.toString()}${hash ? `#${hash}` : ''}`);
+    });
   };
 
   const setLanguage = (lang) => {
@@ -710,10 +738,8 @@
     });
 
     localStorage.setItem('kojipdf-language', lang);
-
-    document.querySelectorAll('a[href^="kojipdf-homepage.html"]').forEach((link) => {
-      link.href = `kojipdf-homepage.html?lang=${lang}`;
-    });
+    localStorage.setItem('code4construct-language', lang);
+    updateLocalizedLinks(lang);
   };
 
   document.querySelectorAll('.lang-btn').forEach((button) => {
