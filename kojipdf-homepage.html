@@ -285,45 +285,66 @@
     margin-top: 12px;
   }
 
-  .hero-mentions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+  .hero-topic {
     margin: 0 0 18px;
+    padding: 15px 16px 16px;
+    border-left: 3px solid var(--gold);
+    border-radius: 2px 8px 8px 2px;
+    color: var(--hero-readable);
+    background:
+      linear-gradient(135deg, rgba(233,191,96,0.14), rgba(255,255,255,0.07));
+    border-top: 1px solid rgba(255,255,255,0.18);
+    border-right: 1px solid rgba(255,255,255,0.14);
+    border-bottom: 1px solid rgba(255,255,255,0.14);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 14px 32px rgba(0,0,0,0.16);
   }
 
-  .hero-mention-link {
-    min-height: 38px;
-    padding: 0 14px;
+  .topic-label {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    color: var(--hero-readable);
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.22);
+    margin-bottom: 7px;
+    color: var(--gold);
     font-family: 'DM Mono', monospace;
     font-size: 10px;
-    letter-spacing: 1.3px;
-    text-decoration: none;
+    letter-spacing: 1.6px;
     text-transform: uppercase;
-    backdrop-filter: blur(10px);
-    transition: transform 0.2s, background 0.2s, border-color 0.2s;
   }
 
-  .hero-mention-link::before {
+  .topic-label::before {
     content: '';
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
+    width: 18px;
+    height: 1px;
     background: var(--gold);
     box-shadow: 0 0 14px rgba(233,191,96,0.7);
-    flex: 0 0 auto;
   }
 
-  .hero-mention-link:hover {
-    transform: translateY(-1px);
-    background: rgba(255,255,255,0.16);
-    border-color: rgba(233,191,96,0.5);
+  .hero-topic p {
+    color: var(--hero-readable);
+    font-size: 14px;
+    line-height: 1.75;
+  }
+
+  .hero-topic-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  .hero-topic-link {
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.2px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s ease, opacity 0.2s ease;
+  }
+
+  .hero-topic-link:hover {
+    color: #ffe2a0;
   }
 
   .hero-feature-grid {
@@ -1346,9 +1367,15 @@
             数万枚に及ぶ工事関係書類の電子検査という、究極のペーパーレス会議を実現するために、工事関係者が個人で開発した、誰でも使えるオープンソースのPDFツールです。ソースコードも公開しています。
           </p>
         </div>
-        <div class="hero-mentions" aria-label="kojiPDF mentions and distribution">
-          <a href="https://forest.watch.impress.co.jp/docs/digest/2115745.html" class="hero-mention-link" target="_blank" rel="noopener">Featured by Impress 窓の杜</a>
-          <a href="https://www.vector.co.jp/soft/winnt/writing/se527459.html" class="hero-mention-link" target="_blank" rel="noopener">Available on Vector</a>
+        <div class="hero-topic" aria-label="kojiPDF topic">
+          <div class="topic-label" data-ja="TOPIC" data-en="TOPIC">TOPIC</div>
+          <p data-ja="窓の杜のダイジェストニュースに取り上げられました。" data-en="kojiPDF was featured in Impress Watch's Madonomori Digest News.">
+            窓の杜のダイジェストニュースに取り上げられました。
+          </p>
+          <div class="hero-topic-actions">
+            <a href="https://forest.watch.impress.co.jp/docs/digest/2115745.html" class="hero-topic-link" target="_blank" rel="noopener" data-ja="掲載記事を見る" data-en="Read the article">掲載記事を見る</a>
+            <a href="https://www.vector.co.jp/soft/winnt/writing/se527459.html" class="hero-topic-link" target="_blank" rel="noopener" data-ja="Vectorで見る" data-en="View on Vector">Vectorで見る</a>
+          </div>
         </div>
         <div class="download-options">
           <div class="download-options-label" data-ja="ダウンロード方法" data-en="Download Options">ダウンロード方法</div>
