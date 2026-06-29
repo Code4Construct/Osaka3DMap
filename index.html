@@ -296,18 +296,19 @@
 
   .developer-section {
     display: grid;
-    grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 18px;
     align-items: stretch;
   }
 
   .developer-main {
     padding: 30px;
+    grid-column: 1 / -1;
   }
 
   .developer-main h2 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(32px, 4.5vw, 52px);
+    font-size: clamp(34px, 5vw, 64px);
     line-height: 1.08;
     margin-bottom: 18px;
   }
@@ -334,7 +335,6 @@
 
   .ai-note {
     padding: 26px;
-    margin-top: 18px;
   }
 
   section { margin-bottom: 28px; }
@@ -599,18 +599,18 @@
             This page does not represent my organization or official duties. It is a personal space for prototyping, learning, and growing tools. Rather than speaking about grand systems, I care about tools that make the work in front of us a little lighter.
           </p>
         </aside>
-      </div>
 
-      <article class="glass-card ai-note">
-        <div class="card-label" data-ja="生成AI" data-en="Generative AI">Generative AI</div>
-        <h3 data-ja="あきらめていた個人開発が、もう一度手の届くところへ。" data-en="Personal development, once out of reach, became possible again.">Personal development, once out of reach, became possible again.</h3>
-        <p data-ja="生成AIの登場によって、誰もが自分のためのアプリを作れる時代が来ました。若い頃は、Excel VBAの属人化問題などを見ながら、コーディングで仕事を効率化することには限界があると感じ、どこかであきらめていました。" data-en="With the arrival of generative AI, we have entered an age where anyone can build apps for their own needs. When I was younger, seeing issues such as Excel VBA tools becoming dependent on one person made me feel that using code to improve work had hard limits, and I had almost given up on it.">
-          With the arrival of generative AI, we have entered an age where anyone can build apps for their own needs. When I was younger, seeing issues such as Excel VBA tools becoming dependent on one person made me feel that using code to improve work had hard limits, and I had almost given up on it.
-        </p>
-        <p data-ja="けれども技術革新によって、還暦を前にして、自分の手でアプリを作れるようになりました。長く仕事の中で感じてきた不便を、少しずつ形にできる。まるで、遅れて魔法の杖を手にしたような気分です。" data-en="But technological change has made it possible for me to build apps with my own hands before reaching sixty. I can now give shape, little by little, to inconveniences I have felt through years of work. It feels as if I have finally been handed a magic wand, a little later in life.">
-          But technological change has made it possible for me to build apps with my own hands before reaching sixty. I can now give shape, little by little, to inconveniences I have felt through years of work. It feels as if I have finally been handed a magic wand, a little later in life.
-        </p>
-      </article>
+        <article class="glass-card ai-note">
+          <div class="card-label" data-ja="生成AI" data-en="Generative AI">Generative AI</div>
+          <h3 data-ja="あきらめていた個人開発が、もう一度手の届くところへ。" data-en="Personal development, once out of reach, became possible again.">Personal development, once out of reach, became possible again.</h3>
+          <p data-ja="生成AIの登場によって、誰もが自分のためのアプリを作れる時代が来ました。若い頃は、Excel VBAの属人化問題などを見ながら、コーディングで仕事を効率化することには限界があると感じ、どこかであきらめていました。" data-en="With the arrival of generative AI, we have entered an age where anyone can build apps for their own needs. When I was younger, seeing issues such as Excel VBA tools becoming dependent on one person made me feel that using code to improve work had hard limits, and I had almost given up on it.">
+            With the arrival of generative AI, we have entered an age where anyone can build apps for their own needs. When I was younger, seeing issues such as Excel VBA tools becoming dependent on one person made me feel that using code to improve work had hard limits, and I had almost given up on it.
+          </p>
+          <p data-ja="けれども技術革新によって、還暦を前にして、自分の手でアプリを作れるようになりました。長く仕事の中で感じてきた不便を、少しずつ形にできる。まるで、遅れて魔法の杖を手にしたような気分です。" data-en="But technological change has made it possible for me to build apps with my own hands before reaching sixty. I can now give shape, little by little, to inconveniences I have felt through years of work. It feels as if I have finally been handed a magic wand, a little later in life.">
+            But technological change has made it possible for me to build apps with my own hands before reaching sixty. I can now give shape, little by little, to inconveniences I have felt through years of work. It feels as if I have finally been handed a magic wand, a little later in life.
+          </p>
+        </article>
+      </div>
     </section>
 
     <footer>
