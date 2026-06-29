@@ -297,13 +297,15 @@
   .developer-section {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 18px;
+    gap: 0;
     align-items: stretch;
+    padding: 30px;
   }
 
   .developer-main {
-    padding: 30px;
     grid-column: 1 / -1;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
   }
 
   .developer-main h2 {
@@ -322,7 +324,8 @@
   }
 
   .developer-side {
-    padding: 26px;
+    padding: 24px 26px 0 0;
+    border-right: 1px solid var(--line);
   }
 
   .developer-side h3,
@@ -334,7 +337,7 @@
   }
 
   .ai-note {
-    padding: 26px;
+    padding: 24px 0 0 26px;
   }
 
   section { margin-bottom: 28px; }
@@ -465,6 +468,12 @@
   @media (max-width: 860px) {
     .hero { grid-template-columns: 1fr; min-height: auto; }
     .developer-section { grid-template-columns: 1fr; }
+    .developer-side {
+      padding: 24px 0;
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .ai-note { padding: 24px 0 0; }
     .section-grid,
     .section-grid.two-column { grid-template-columns: 1fr; }
     .project-card { grid-template-columns: 1fr; }
@@ -562,8 +571,8 @@
     </section>
 
     <section id="developer">
-      <div class="developer-section">
-        <article class="glass-card developer-main">
+      <div class="glass-card developer-section">
+        <article class="developer-main">
           <div class="card-label" data-ja="開発者紹介" data-en="Developer introduction">Developer introduction</div>
           <h2 data-ja-html="小さな「あったらいい」を、<br>道具にする。" data-en-html="Turning small wishes into tools.">Turning small wishes into tools.</h2>
           <p data-ja-html="地方自治体の技術職員として働く中で、日々の業務には「もう少しこうできたら楽になるのに」と感じる場面がたくさんあります。そうした気づきを、仕事そのものとは少し距離を置き、<strong>ひとりの市民開発者</strong>として小さなアプリやツールにしています。" data-en-html="Working as a technical staff member in local government, I often encounter small moments where I think, “this would be easier if only there were a tool for it.” I take those observations slightly outside my official work and turn them into small apps and tools as <strong>an individual civic developer</strong>.">
@@ -574,7 +583,7 @@
           </p>
         </article>
 
-        <aside class="glass-card developer-side">
+        <aside class="developer-side">
           <div class="card-label" data-ja="市民開発者として" data-en="Civic developer">Civic developer</div>
           <h3 data-ja="所属ではなく、個人として。" data-en="Personal, not official.">Personal, not official.</h3>
           <p data-ja="所属や職務を代表するものではなく、個人として試作し、学びながら育てているページです。大きな仕組みを語るより、目の前の作業が少し軽くなる道具を大切にしています。" data-en="This page does not represent my organization or official duties. It is a personal space for prototyping, learning, and growing tools. Rather than speaking about grand systems, I care about tools that make the work in front of us a little lighter.">
@@ -582,7 +591,7 @@
           </p>
         </aside>
 
-        <article class="glass-card ai-note">
+        <article class="ai-note">
           <div class="card-label" data-ja="生成AI" data-en="Generative AI">Generative AI</div>
           <h3 data-ja="個人開発が、もう一度手の届くところへ。" data-en="Personal development within reach again.">Personal development within reach again.</h3>
           <p data-ja="生成AIの登場で、長く仕事の中で感じてきた不便を、自分の手で少しずつ形にできるようになりました。" data-en="Generative AI has made it possible to give shape, little by little, to inconveniences I have noticed through years of work.">
