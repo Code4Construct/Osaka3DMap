@@ -426,6 +426,11 @@
     margin-top: 18px;
   }
 
+  .project-card.upcoming {
+    opacity: 0.84;
+    box-shadow: 0 14px 42px rgba(52, 88, 112, 0.1);
+  }
+
   .project-list {
     display: grid;
     gap: 18px;
@@ -481,10 +486,9 @@
       <div class="nav-right">
         <ul class="nav-links">
           <li><a href="#about" data-ja="ホーム" data-en="Home">Home</a></li>
+          <li><a href="#vibe-coding" data-ja="制作" data-en="Projects">Projects</a></li>
           <li><a href="#developer" data-ja="開発者" data-en="Developer">Developer</a></li>
-          <li><a href="#vibe-coding" data-ja="制作" data-en="Making">Making</a></li>
           <li><a href="#wide-roaming" data-ja="散策" data-en="Roaming">Roaming</a></li>
-          <li><a href="#projects" data-ja="プロジェクト" data-en="Projects">Projects</a></li>
         </ul>
         <div class="language-toggle" aria-label="Language selector">
           <button type="button" class="lang-btn ja active" data-lang="ja" aria-label="日本語">
@@ -501,9 +505,8 @@
       <div>
         <div class="eyebrow" data-ja="個人ホームページ" data-en="Personal homepage">Personal homepage</div>
         <h1>Code4Construct</h1>
-        <p class="hero-copy" data-ja="趣味、小さな実験、日々の仕事から生まれた道具をまとめた個人ページです。学びながら作り、毎日の作業を少しだけ楽にするアイデアを形にしています。" data-en="A quiet personal space for hobbies, small experiments, and things made along the way. I enjoy learning, building useful tools, and collecting ideas that make everyday work a little smoother.">
-          A quiet personal space for hobbies, small experiments, and things made along the way.
-          I enjoy learning, building useful tools, and collecting ideas that make everyday work a little smoother.
+        <p class="hero-copy" data-ja="日々の仕事や学びの中で生まれた、小さなツールと実験をまとめた個人ページです。" data-en="A personal page for small tools and experiments shaped by everyday work and learning.">
+          A personal page for small tools and experiments shaped by everyday work and learning.
         </p>
         <div class="actions">
           <a href="#projects" class="btn btn-primary" data-ja="プロジェクトを見る" data-en="View projects">View projects</a>
@@ -515,9 +518,8 @@
       <aside class="profile-card">
         <div class="profile-orb"></div>
         <h2 data-ja="こんにちは。" data-en="Hello.">Hello.</h2>
-        <p data-ja="小さなツール、実験、個人開発、選んだプロジェクトを紹介するためのページです。" data-en="This page is a simple introduction to small tools, experiments, personal work, and selected projects.">
-          This page is a simple introduction to small tools,
-          experiments, personal work, and selected projects.
+        <p data-ja="kojiPDF、kojiGIS、そのほか育てているアイデアを置いています。" data-en="Home for kojiPDF, kojiGIS, and other ideas in progress.">
+          Home for kojiPDF, kojiGIS, and other ideas in progress.
         </p>
       </aside>
     </header>
@@ -525,34 +527,33 @@
     <section id="vibe-coding">
       <div class="section-heading">
         <div class="card-label" data-ja="制作" data-en="Making">Making</div>
-        <h2>Vibe Coding</h2>
-        <p data-ja="思いついたことを動く形へ。素早い実験、AIを使った反復、小さな業務改善ツールを作っています。" data-en="Ideas into working shapes: quick experiments, AI-assisted iteration, and small tools that make everyday work a little smoother.">
-          Ideas into working shapes: quick experiments, AI-assisted iteration,
-          and small tools that make everyday work a little smoother.
+        <h2 data-ja="ツールと実験" data-en="Tools & Experiments">Tools & Experiments</h2>
+        <p data-ja="仕事や学びの中で見つけた不便を、小さな道具や実験として形にしています。" data-en="Small tools and experiments shaped from everyday work, learning, and practical needs.">
+          Small tools and experiments shaped from everyday work, learning, and practical needs.
         </p>
       </div>
       <div class="section-grid two-column">
         <a href="kojipdf-homepage.html" class="glass-card linked-card">
           <div class="card-label" data-ja="主なプロジェクト" data-en="Featured project">Featured project</div>
           <h3>kojiPDF</h3>
-          <p data-ja="資料の結合、フォルダ構成からのしおり作成、電子検査やペーパーレス会議で扱いやすいPDF作成のためのツールです。" data-en="A PDF tool for merging documents, creating bookmarks from folder structures, and preparing easier-to-browse materials for inspection work and paperless meetings.">A PDF tool for merging documents, creating bookmarks from folder structures, and preparing easier-to-browse materials for inspection work and paperless meetings.</p>
+          <p data-ja="資料をまとめ、しおり付きPDFとして扱いやすくするツールです。" data-en="A tool for turning grouped documents into an easier-to-browse bookmarked PDF.">A tool for turning grouped documents into an easier-to-browse bookmarked PDF.</p>
           <span class="card-inline-link" data-ja="kojiPDFを開く" data-en="Open kojiPDF">Open kojiPDF</span>
         </a>
         <a href="kojigis-homepage.html" class="glass-card linked-card">
           <div class="card-label" data-ja="地図" data-en="Mapping">Mapping</div>
           <h3>kojiGIS</h3>
-          <p data-ja="QGISでの作図、地図データ整理、日々の技術系業務で欲しかった道具をまとめるプラグイン構想です。" data-en="A QGIS plugin concept for map drawing, spatial data organization, and tools I wished existed in daily technical work.">A QGIS plugin concept for map drawing, spatial data organization, and tools I wished existed in daily technical work.</p>
+          <p data-ja="QGISでの作図や地図データ整理を支えるプラグイン構想です。" data-en="A QGIS plugin concept for drawing maps and organizing spatial data.">A QGIS plugin concept for drawing maps and organizing spatial data.</p>
           <span class="card-inline-link" data-ja="kojiGISを開く" data-en="Open kojiGIS">Open kojiGIS</span>
         </a>
       </div>
 
       <div class="project-list" id="projects">
-        <article class="glass-card project-card">
+        <article class="glass-card project-card upcoming">
           <div>
-            <div class="card-label" data-ja="今後のプロジェクト" data-en="Upcoming project">Upcoming project</div>
+            <div class="card-label" data-ja="今後の小さな実験" data-en="Coming soon">Coming soon</div>
             <h3>Schliemann's Tongue</h3>
-            <p data-ja="言語、学習、まだ形になりつつある実験のために残している将来のプロジェクトページです。" data-en="A future project page reserved for language, learning, and other experiments still taking shape.">
-              A future project page reserved for language, learning, and other experiments still taking shape.
+            <p data-ja="言語や学習まわりのアイデアを、少しずつ形にしていく予定です。" data-en="A small future space for language, learning, and ideas still taking shape.">
+              A small future space for language, learning, and ideas still taking shape.
             </p>
           </div>
           <span class="status-pill" data-ja="作成中" data-en="Under construction">Under construction</span>
@@ -564,7 +565,7 @@
       <div class="developer-section">
         <article class="glass-card developer-main">
           <div class="card-label" data-ja="開発者紹介" data-en="Developer introduction">Developer introduction</div>
-          <h2 data-ja-html="仕事の中で見えた、<br>小さな「あったらいい」を形に。" data-en-html="Turning small everyday wishes from work into tools.">Turning small everyday wishes from work into tools.</h2>
+          <h2 data-ja-html="小さな「あったらいい」を、<br>道具にする。" data-en-html="Turning small wishes into tools.">Turning small wishes into tools.</h2>
           <p data-ja-html="地方自治体の技術職員として働く中で、日々の業務には「もう少しこうできたら楽になるのに」と感じる場面がたくさんあります。そうした気づきを、仕事そのものとは少し距離を置き、<strong>ひとりの市民開発者</strong>として小さなアプリやツールにしています。" data-en-html="Working as a technical staff member in local government, I often encounter small moments where I think, “this would be easier if only there were a tool for it.” I take those observations slightly outside my official work and turn them into small apps and tools as <strong>an individual civic developer</strong>.">
             Working as a technical staff member in local government, I often encounter small moments where I think, “this would be easier if only there were a tool for it.” I take those observations slightly outside my official work and turn them into small apps and tools as <strong>an individual civic developer</strong>.
           </p>
@@ -583,12 +584,9 @@
 
         <article class="glass-card ai-note">
           <div class="card-label" data-ja="生成AI" data-en="Generative AI">Generative AI</div>
-          <h3 data-ja="あきらめていた個人開発が、もう一度手の届くところへ。" data-en="Personal development, once out of reach, became possible again.">Personal development, once out of reach, became possible again.</h3>
-          <p data-ja="生成AIの登場によって、誰もが自分のためのアプリを作れる時代が来ました。若い頃は、Excel VBAの属人化問題などを見ながら、コーディングで仕事を効率化することには限界があると感じ、どこかであきらめていました。" data-en="With the arrival of generative AI, we have entered an age where anyone can build apps for their own needs. When I was younger, seeing issues such as Excel VBA tools becoming dependent on one person made me feel that using code to improve work had hard limits, and I had almost given up on it.">
-            With the arrival of generative AI, we have entered an age where anyone can build apps for their own needs. When I was younger, seeing issues such as Excel VBA tools becoming dependent on one person made me feel that using code to improve work had hard limits, and I had almost given up on it.
-          </p>
-          <p data-ja="けれども技術革新によって、還暦を前にして、自分の手でアプリを作れるようになりました。長く仕事の中で感じてきた不便を、少しずつ形にできる。まるで、遅れて魔法の杖を手にしたような気分です。" data-en="But technological change has made it possible for me to build apps with my own hands before reaching sixty. I can now give shape, little by little, to inconveniences I have felt through years of work. It feels as if I have finally been handed a magic wand, a little later in life.">
-            But technological change has made it possible for me to build apps with my own hands before reaching sixty. I can now give shape, little by little, to inconveniences I have felt through years of work. It feels as if I have finally been handed a magic wand, a little later in life.
+          <h3 data-ja="個人開発が、もう一度手の届くところへ。" data-en="Personal development within reach again.">Personal development within reach again.</h3>
+          <p data-ja="生成AIの登場で、長く仕事の中で感じてきた不便を、自分の手で少しずつ形にできるようになりました。" data-en="Generative AI has made it possible to give shape, little by little, to inconveniences I have noticed through years of work.">
+            Generative AI has made it possible to give shape, little by little, to inconveniences I have noticed through years of work.
           </p>
         </article>
       </div>
