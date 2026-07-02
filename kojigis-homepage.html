@@ -187,7 +187,13 @@
 
   .aerial-tiles {
     position: absolute;
-    inset: 0;
+    left: 50%;
+    top: 50%;
+    width: max(100%, calc(100vh * 1.25));
+    min-width: 100%;
+    min-height: 100%;
+    aspect-ratio: 5 / 4;
+    transform: translate(-50%, -50%);
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(4, 1fr);
@@ -325,6 +331,7 @@
     min-height: 470px;
     display: grid;
     place-items: center;
+    min-width: 0;
   }
 
   .map-panel {
@@ -685,7 +692,7 @@
     }
     .photo-credit { left: 24px; }
     .hero-board { min-height: auto; }
-    .map-panel { max-width: 420px; }
+    .map-panel { width: min(100%, 420px); }
     .section { padding: 56px 24px; }
     .section-heading { grid-template-columns: 1fr; }
     .plugin-grid { grid-template-columns: repeat(2, minmax(160px, 1fr)); }
@@ -707,6 +714,11 @@
     .nav-right { align-items: flex-start; flex-direction: column; }
     .nav-links { justify-content: flex-start; }
     h1 { font-size: 52px; }
+    .aerial-tiles {
+      width: max(100%, calc(100vh * 1.25));
+      height: auto;
+    }
+    .map-panel { width: min(100%, 340px); }
     .plugin-grid { grid-template-columns: 1fr; }
     .plugin-card { min-height: auto; }
     .badge { width: 160px; }
@@ -801,11 +813,11 @@
       </div>
     </div>
     <div class="photo-credit">
-      <span data-ja-html="航空写真: <a href=&quot;https://maps.gsi.go.jp/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>GSI Maps</a> / 大阪市役所・大阪湾周辺" data-en-html="Aerial photo: <a href=&quot;https://maps.gsi.go.jp/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>GSI Maps</a> / Osaka City Hall and Osaka Bay area">航空写真: <a href="https://maps.gsi.go.jp/" target="_blank" rel="noopener">GSI Maps</a> / 大阪市役所・大阪湾周辺</span>
+      <span data-ja-html="航空写真: <a href=&quot;https://maps.gsi.go.jp/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>GSI Maps</a> / 大阪市・大阪湾周辺" data-en-html="Aerial photo: <a href=&quot;https://maps.gsi.go.jp/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>GSI Maps</a> / Osaka City and Osaka Bay area">航空写真: <a href="https://maps.gsi.go.jp/" target="_blank" rel="noopener">GSI Maps</a> / 大阪市・大阪湾周辺</span>
     </div>
     <div class="map-context">
-      <span data-ja="大阪市役所 / 大阪湾" data-en="Osaka City Hall / Osaka Bay">大阪市役所 / 大阪湾</span>
-      <span data-ja="国土地理院タイルによる広域航空写真" data-en="Wide aerial photo from GSI tiles">国土地理院タイルによる広域航空写真</span>
+      <span data-ja="大阪市・大阪湾周辺" data-en="Osaka City and Osaka Bay area">大阪市・大阪湾周辺</span>
+      <span data-ja="国土地理院タイルによる大阪市・大阪湾周辺の航空写真" data-en="Aerial photo of the Osaka City and Osaka Bay area from GSI tiles">国土地理院タイルによる大阪市・大阪湾周辺の航空写真</span>
     </div>
   </section>
 

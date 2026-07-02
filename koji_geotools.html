@@ -77,15 +77,20 @@
   .nav-mark {
     width: 42px;
     height: 42px;
-    border-radius: 50%;
-    border: 3px double var(--gold);
-    background: var(--green);
-    color: #fff;
+    border-radius: 8px;
+    border: 1px solid rgba(255,244,214,0.45);
+    background: var(--white);
     display: grid;
     place-items: center;
-    font-family: 'Shippori Mincho', serif;
-    font-weight: 800;
-    font-size: 18px;
+    padding: 4px;
+    overflow: hidden;
+  }
+
+  .nav-mark img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
   }
 
   .nav-logo {
@@ -592,7 +597,7 @@
 <body>
 <nav>
   <a href="kojigis-homepage.html" class="nav-brand" aria-label="Back to kojiGIS">
-    <span class="nav-mark">G</span>
+    <span class="nav-mark"><img src="images/koji-geotools-icon.png" alt=""></span>
     <span class="nav-logo">koji<span>GeoTools</span></span>
   </a>
   <div class="nav-right">
