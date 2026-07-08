@@ -562,6 +562,14 @@
       0 12px 24px rgba(6,42,70,0.15);
   }
 
+  .plugin-icon-image {
+    width: 148px;
+    height: 148px;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 12px 24px rgba(6,42,70,0.15));
+  }
+
   .badge-koji {
     font-family: 'Shippori Mincho', serif;
     font-weight: 800;
@@ -835,16 +843,7 @@
 
       <div class="plugin-grid">
         <article class="plugin-card geotools">
-          <div class="badge" aria-label="koji GeoTools icon concept">
-            <div class="badge-koji">koji</div>
-            <svg class="badge-symbol" viewBox="0 0 84 66" aria-hidden="true">
-              <circle cx="25" cy="31" r="18" fill="#8cc3d7" stroke="#062a46" stroke-width="4"/>
-              <path d="M46 13 L74 27 L64 55 L36 48 Z" fill="#9bcf88" stroke="#062a46" stroke-width="4"/>
-              <path d="M28 52 L63 17" stroke="#20825f" stroke-width="8" stroke-linecap="round"/>
-              <path d="M61 14 L72 7 L68 20 Z" fill="#fffaf0" stroke="#062a46" stroke-width="3"/>
-            </svg>
-            <div class="tool-bar">GeoTools</div>
-          </div>
+          <img class="plugin-icon-image" src="images/koji-geotools-icon.png" alt="koji GeoTools icon">
           <h3>koji GeoTools</h3>
           <p class="tool-summary" data-ja="地図を作るための作図・編集ツール。CSVからのレイヤセット作成、選択地点や地図上の座標を中心にした調査エリア設定、ポリゴン内の地物抽出を扱います。" data-en="A drawing and editing tool for making maps. It handles layer-set creation from CSV, study-area setup from selected points or clicked map coordinates, and extracting features inside polygons.">地図を作るための作図・編集ツール。CSVからのレイヤセット作成、選択地点や地図上の座標を中心にした調査エリア設定、ポリゴン内の地物抽出を扱います。</p>
           <a href="koji_GeoTools.html" class="detail-link">Detail</a>
