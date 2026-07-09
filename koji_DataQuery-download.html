@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>koji DataQuery - ダウンロード</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=DM+Mono:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #062a46;
+    --ink-2: #0b4268;
+    --paper: #fff4d6;
+    --surface: #fffaf0;
+    --gold: #e9bf60;
+    --teal: #9b7cf0;
+    --mid: #466172;
+    --light-mid: #93a9b6;
+    --line: #d7b865;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans JP', sans-serif; font-weight: 300; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; }
+  nav { background: var(--ink); border-bottom: 1px solid var(--ink-2); padding: 0 60px; display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 64px; position: sticky; top: 0; z-index: 100; }
+  .nav-brand { display: flex; align-items: center; gap: 10px; color: var(--paper); text-decoration: none; flex-shrink: 0; }
+  .nav-icon { width: 46px; height: 46px; max-width: 46px; max-height: 46px; object-fit: contain; display: block; }
+  .nav-logo { font-family: 'Shippori Mincho', serif; font-size: 22px; font-weight: 800; letter-spacing: -1px; }
+  .nav-logo span { color: var(--teal); }
+  .nav-version { margin-left: 6px; color: var(--paper) !important; font-size: 0.78em; letter-spacing: -0.04em; }
+  .nav-right, .nav-links, .language-toggle { display: flex; align-items: center; }
+  .nav-right { gap: 28px; }
+  .nav-links { gap: 30px; list-style: none; }
+  .nav-links a { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--light-mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+  .language-toggle { gap: 8px; }
+  .lang-btn { width: 40px; height: 40px; border-radius: 50%; border: 2px solid rgba(255,244,214,0.35); background: #f6fbff; color: var(--ink); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; line-height: 1; overflow: hidden; }
+  .lang-btn.active { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(233,191,96,0.18); }
+  .lang-btn img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
+  .page-hero { background: linear-gradient(120deg, rgba(6,42,70,0.96), rgba(6,42,70,0.88)), radial-gradient(circle at 78% 22%, rgba(15,139,141,0.34), transparent 34%), var(--ink); color: var(--paper); border-bottom: 4px solid var(--gold); padding: 64px 60px 58px; position: relative; overflow: hidden; }
+  .page-hero::after { content: 'Download'; position: absolute; right: 36px; bottom: -20px; font-family: 'Shippori Mincho', serif; font-size: clamp(74px, 12vw, 150px); font-weight: 800; color: rgba(255,255,255,0.05); letter-spacing: -4px; pointer-events: none; }
+  .page-hero-inner, .section-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+  .eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; display: flex; align-items: center; gap: 12px; }
+  .eyebrow::before { content: ''; width: 26px; height: 2px; background: var(--gold); }
+  h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(48px, 7vw, 84px); line-height: 1; letter-spacing: -2px; margin-bottom: 20px; }
+  .page-hero p { max-width: 760px; color: #dbe8ee; font-size: 15px; line-height: 2; }
+  .hero-actions, .trust-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .hero-actions { margin-top: 24px; }
+  .btn { min-height: 44px; padding: 0 20px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid transparent; border-radius: 4px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; transition: transform 0.2s, background 0.2s, color 0.2s, border-color 0.2s; }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: var(--gold); color: var(--ink); box-shadow: 0 10px 28px rgba(233,191,96,0.22); font-weight: 700; }
+  .btn-secondary { border-color: rgba(233,191,96,0.7); color: var(--gold); background: rgba(233,191,96,0.08); }
+  .section { padding: 82px 60px; }
+  .trust { background: linear-gradient(rgba(255,250,240,0.7), rgba(255,250,240,0.88)), var(--surface); border-bottom: 1px solid rgba(6,42,70,0.08); }
+  .section-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--mid); margin-bottom: 28px; display: flex; align-items: center; gap: 16px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+  .trust-layout { display: grid; grid-template-columns: 1fr; gap: 28px; align-items: start; max-width: 860px; }
+  .trust h2 { font-family: 'Shippori Mincho', serif; font-size: clamp(30px, 4vw, 48px); line-height: 1.25; letter-spacing: -1px; margin-bottom: 18px; }
+  .trust-subtitle { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; color: #7a520f; font-size: 13px; font-weight: 700; }
+  .trust-subtitle::before, .trust-subtitle::after { content: ''; flex: 1; height: 1px; background: #c49731; }
+  .trust p { color: #0f344d; line-height: 2; font-size: 15px; }
+  .trust p + p { margin-top: 16px; }
+  .trust-card, .trust-verification, .install-guide { border-top: 1px solid #c49731; background: transparent; padding-top: 24px; }
+  .trust-card h3, .trust-verification h3, .install-guide h3 { font-size: 17px; margin-bottom: 12px; }
+  .trust-release-meta { display: grid; gap: 6px; margin: 14px 0 16px; padding: 14px 16px; border: 1px solid rgba(180,125,22,0.28); background: rgba(255,255,255,0.34); color: #0f344d; font-family: 'DM Mono', monospace; font-size: 12px; line-height: 1.7; }
+  .trust-release-meta code { white-space: normal; overflow-wrap: anywhere; }
+  .install-steps { display: grid; gap: 10px; margin-top: 16px; counter-reset: install; }
+  .install-step { counter-increment: install; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border: 1px solid rgba(180,125,22,0.28); background: rgba(255,255,255,0.34); }
+  .install-step::before { content: counter(install, decimal-leading-zero); width: 44px; height: 44px; display: grid; place-items: center; background: var(--teal); color: white; font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 700; }
+  .install-step strong { display: block; margin-bottom: 4px; font-size: 14px; }
+  .install-step span { display: block; color: var(--mid); font-size: 13px; line-height: 1.8; }
+  .trust-note { margin-top: 12px; font-size: 12px; line-height: 1.8; color: #5d7180; }
+  .trust-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; list-style: none; margin-bottom: 20px; }
+  .trust-list a { display: block; color: #0f344d; font-size: 13px; line-height: 1.7; padding: 10px 12px 10px 34px; position: relative; text-decoration: none; border: 1px solid rgba(180,125,22,0.24); background: rgba(255,255,255,0.34); transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease; }
+  .trust-list a:hover { transform: translateY(-1px); border-color: #b47d16; background: rgba(180,125,22,0.1); }
+  .trust-list a::before { content: '>'; position: absolute; left: 12px; top: 10px; color: var(--teal); font-weight: 700; }
+  .trust-actions .btn { min-width: 190px; }
+  .trust .btn-secondary { border-color: #b47d16; color: #7a520f; background: rgba(255,255,255,0.42); }
+  footer { background: var(--ink); padding: 28px 60px; color: var(--light-mid); display: flex; justify-content: space-between; align-items: center; }
+  .footer-logo { color: var(--paper); text-decoration: none; font-family: 'Shippori Mincho', serif; font-size: 20px; font-weight: 800; }
+  .footer-logo span { color: var(--teal); }
+  .footer-nav { display: flex; gap: 26px; }
+  .footer-nav a { color: var(--light-mid); text-decoration: none; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; }
+  .footer-nav a:hover { color: var(--gold); }
+  @media (max-width: 960px) {
+    nav { padding: 12px 24px; align-items: flex-start; flex-direction: column; }
+    .nav-right { width: 100%; justify-content: space-between; gap: 18px; }
+    .nav-links { gap: 18px; flex-wrap: wrap; }
+    .page-hero, .section { padding-left: 24px; padding-right: 24px; }
+    .trust-list { grid-template-columns: 1fr; }
+    footer { padding: 24px; flex-direction: column; gap: 16px; }
+  }
+  @media (max-width: 560px) {
+    nav { padding: 10px 18px; }
+    .nav-links { gap: 14px; }
+    .page-hero, .section { padding-left: 18px; padding-right: 18px; }
+    .hero-actions .btn, .trust-actions .btn { width: 100%; }
+    .footer-nav { flex-wrap: wrap; justify-content: center; }
+    .install-step { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="koji_DataQuery.html" class="nav-brand">
+    <img src="images/koji-dataquery-icon.png" alt="koji DataQuery" class="nav-icon">
+    <span class="nav-logo">koji<span>DataQuery</span><span class="nav-version">v0.1</span></span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="kojigis-homepage.html" data-ja="kojiGIS" data-en="kojiGIS">kojiGIS</a></li>
+      <li><a href="index.html#developer" data-ja="開発者" data-en="Developer">開発者</a></li>
+      <li><a href="koji_DataQuery.html" data-ja="概要" data-en="Overview">概要</a></li>
+      <li><a href="koji_DataQuery-download.html" class="active" data-ja="ダウンロード" data-en="Download">ダウンロード</a></li>
+      <li><a href="https://github.com/Code4Construct/koji_DataQuery" target="_blank">GitHub</a></li>
+    </ul>
+    <div class="language-toggle" aria-label="Language selector">
+      <button type="button" class="lang-btn ja active" data-lang="ja" aria-label="日本語"><img src="images/flag_jp.svg" alt=""></button>
+      <button type="button" class="lang-btn en" data-lang="en" aria-label="English"><img src="images/flag_gb.svg" alt=""></button>
+    </div>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <div class="page-hero-inner">
+    <div class="eyebrow" data-ja="ダウンロード" data-en="Download">ダウンロード</div>
+    <h1 data-ja="ダウンロード" data-en="Download">ダウンロード</h1>
+    <p data-ja="koji DataQuery v0.1.0 のQGISプラグインZIPと、配布元を確認するためのリンクを掲載しています。GitHubのReleaseアセットを利用し、ZIPは展開せずにQGISのプラグイン管理画面からインストールしてください。" data-en="Download the koji DataQuery v0.1.0 QGIS plugin ZIP and review links for checking the distribution source. Use the GitHub Release asset and install the ZIP through the QGIS Plugin Manager without unzipping it first.">koji DataQuery v0.1.0 のQGISプラグインZIPと、配布元を確認するためのリンクを掲載しています。GitHubのReleaseアセットを利用し、ZIPは展開せずにQGISのプラグイン管理画面からインストールしてください。</p>
+    <div class="hero-actions">
+      <a href="https://github.com/Code4Construct/koji_DataQuery/releases/download/v0.1.0/koji_DataQuery.zip" class="btn btn-primary" target="_blank" data-ja="ZIPをダウンロードする" data-en="Download ZIP">ZIPをダウンロードする</a>
+      <a href="https://github.com/Code4Construct/koji_DataQuery/releases/tag/v0.1.0" class="btn btn-secondary" target="_blank" data-ja="GitHubからダウンロードする" data-en="Download from GitHub">GitHubからダウンロードする</a>
+      <a href="koji_DataQuery.html" class="btn btn-secondary" data-ja="紹介ページを見る" data-en="View overview">紹介ページを見る</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="section trust">
+    <div class="section-inner">
+      <div class="section-label" data-ja="安全性と透明性" data-en="Safety and Transparency">安全性と透明性</div>
+      <div class="trust-layout">
+        <div>
+          <h2 data-ja="QGISのZIPプラグインとしてインストールできます。" data-en="Install it as a QGIS ZIP plugin.">QGISのZIPプラグインとしてインストールできます。</h2>
+          <div class="trust-subtitle" data-ja="Release v0.1.0" data-en="Release v0.1.0">Release v0.1.0</div>
+          <p data-ja="koji DataQueryは、CSVとGeoPackageの前処理、CSV集計、CSV/GeoPackageのLEFT JOINとUNIONを扱うQGISプラグインです。QGIS版のPower Queryのような操作感を目指して開発されています。" data-en="koji DataQuery is a QGIS plugin for CSV and GeoPackage preprocessing, CSV aggregation, and CSV/GeoPackage LEFT JOIN and UNION workflows. It is being developed toward a Power Query-like experience inside QGIS.">koji DataQueryは、CSVとGeoPackageの前処理、CSV集計、CSV/GeoPackageのLEFT JOINとUNIONを扱うQGISプラグインです。QGIS版のPower Queryのような操作感を目指して開発されています。</p>
+          <p data-ja="配布ファイルはGitHub Releasesの `koji_DataQuery.zip` を想定しています。ZIPは展開せず、QGISのプラグイン管理画面から「ZIPからインストール」を選んで指定してください。" data-en="The distributed file is expected to be koji_DataQuery.zip on GitHub Releases. Do not unzip it first; select it from QGIS Plugin Manager using Install from ZIP.">配布ファイルはGitHub Releasesの `koji_DataQuery.zip` を想定しています。ZIPは展開せず、QGISのプラグイン管理画面から「ZIPからインストール」を選んで指定してください。</p>
+          <p data-ja="このページでは、Releaseページ、GitHub Actions、公開ソースコードへのリンクをまとめています。SHA256やVirusTotalの検査結果は、Releaseアセットを公開する際にGitHub側へ追記して確認材料として扱う想定です。" data-en="This page links to the Release page, GitHub Actions, and the public source code. SHA256 and VirusTotal results should be added to the GitHub Release when the asset is published so users can verify the file.">このページでは、Releaseページ、GitHub Actions、公開ソースコードへのリンクをまとめています。SHA256やVirusTotalの検査結果は、Releaseアセットを公開する際にGitHub側へ追記して確認材料として扱う想定です。</p>
+        </div>
+
+        <aside class="trust-verification">
+          <h3 data-ja="配布ファイルの検証情報" data-en="Release Verification">配布ファイルの検証情報</h3>
+          <p data-ja="ローカルのmetadata.txtではバージョンは0.1.0、最小QGISは3.0、experimental=Trueです。SHA256とVirusTotal結果はこの作業時点のローカル情報からは確認できないため、未確認の値は掲載していません。" data-en="The local metadata.txt lists version 0.1.0, minimum QGIS 3.0, and experimental=True. SHA256 and VirusTotal results are not available from the local project state, so no unverified values are shown here.">ローカルのmetadata.txtではバージョンは0.1.0、最小QGISは3.0、experimental=Trueです。SHA256とVirusTotal結果はこの作業時点のローカル情報からは確認できないため、未確認の値は掲載していません。</p>
+          <div class="trust-release-meta" aria-label="koji DataQuery v0.1.0 verification details">
+            <div><strong>koji DataQuery v0.1.0</strong></div>
+            <div>ZIP: <code>koji_DataQuery.zip</code></div>
+            <div>Minimum QGIS: <code>3.0</code></div>
+            <div>Status: <code>experimental=True</code></div>
+            <div>Repository: <code>Code4Construct/koji_DataQuery</code></div>
+            <div>SHA256: <code>add after publishing the Release asset</code></div>
+          </div>
+          <p class="trust-note" data-ja="SHA256が公開されたら、ダウンロードしたZIPのハッシュとReleaseに掲載された値が一致するかを確認できます。" data-en="Once SHA256 is published, users can compare the downloaded ZIP hash with the value shown in the Release.">SHA256が公開されたら、ダウンロードしたZIPのハッシュとReleaseに掲載された値が一致するかを確認できます。</p>
+        </aside>
+
+        <aside class="install-guide">
+          <h3 data-ja="インストール手順" data-en="Installation Steps">インストール手順</h3>
+          <p data-ja="QGISプラグインとして使う場合は、通常のZIPプラグインと同じ手順でインストールします。" data-en="Install it using the usual QGIS ZIP-plugin workflow.">QGISプラグインとして使う場合は、通常のZIPプラグインと同じ手順でインストールします。</p>
+          <div class="install-steps">
+            <div class="install-step"><div><strong data-ja="ZIPをダウンロード" data-en="Download the ZIP">ZIPをダウンロード</strong><span data-ja="GitHub Release v0.1.0 から `koji_DataQuery.zip` をダウンロードします。ZIPは展開しません。" data-en="Download koji_DataQuery.zip from GitHub Release v0.1.0. Do not unzip it.">GitHub Release v0.1.0 から `koji_DataQuery.zip` をダウンロードします。ZIPは展開しません。</span></div></div>
+            <div class="install-step"><div><strong data-ja="QGISのプラグイン管理を開く" data-en="Open QGIS Plugin Manager">QGISのプラグイン管理を開く</strong><span data-ja="QGISで「プラグイン」メニューから「プラグインの管理とインストール」を開きます。" data-en="In QGIS, open Manage and Install Plugins from the Plugins menu.">QGISで「プラグイン」メニューから「プラグインの管理とインストール」を開きます。</span></div></div>
+            <div class="install-step"><div><strong data-ja="ZIPからインストール" data-en="Install from ZIP">ZIPからインストール</strong><span data-ja="「ZIPからインストール」を選び、ダウンロードした `koji_DataQuery.zip` を指定します。" data-en="Choose Install from ZIP and select the downloaded koji_DataQuery.zip.">「ZIPからインストール」を選び、ダウンロードした `koji_DataQuery.zip` を指定します。</span></div></div>
+          </div>
+        </aside>
+
+        <aside class="trust-card">
+          <h3 data-ja="確認できること" data-en="What you can verify">確認できること</h3>
+          <ul class="trust-list">
+            <li><a href="https://github.com/Code4Construct/koji_DataQuery/releases/tag/v0.1.0" target="_blank" data-ja="GitHub Releasesで配布ファイルを確認できます" data-en="Check the distributed file on GitHub Releases">GitHub Releasesで配布ファイルを確認できます</a></li>
+            <li><a href="https://github.com/Code4Construct/koji_DataQuery/releases/tag/v0.1.0" target="_blank" data-ja="Release本文でSHA256を確認できます" data-en="Check SHA256 in the Release notes">Release本文でSHA256を確認できます</a></li>
+            <li><a href="https://github.com/Code4Construct/koji_DataQuery/actions" target="_blank" data-ja="GitHub Actionsでビルド履歴を確認できます" data-en="Review the build history in GitHub Actions">GitHub Actionsでビルド履歴を確認できます</a></li>
+            <li><a href="https://github.com/Code4Construct/koji_DataQuery" target="_blank" data-ja="GitHubでソースコードを確認できます" data-en="Read the source code on GitHub">GitHubでソースコードを確認できます</a></li>
+          </ul>
+          <p class="trust-note" data-ja="このページのダウンロードボタンは、Release v0.1.0 のGitHubアセットに直接リンクしています。Releaseが未公開の場合は、GitHub側でタグとアセットを公開してから利用してください。" data-en="The download buttons on this page link directly to the GitHub asset for Release v0.1.0. If the Release has not been published yet, publish the tag and asset on GitHub before using the link.">このページのダウンロードボタンは、Release v0.1.0 のGitHubアセットに直接リンクしています。Releaseが未公開の場合は、GitHub側でタグとアセットを公開してから利用してください。</p>
+          <div class="trust-actions">
+            <a href="https://github.com/Code4Construct/koji_DataQuery/releases/download/v0.1.0/koji_DataQuery.zip" class="btn btn-primary" target="_blank" data-ja="ZIPをダウンロード" data-en="Download ZIP">ZIPをダウンロード</a>
+            <a href="https://github.com/Code4Construct/koji_DataQuery" class="btn btn-secondary" target="_blank" data-ja="GitHubで確認する" data-en="Check on GitHub">GitHubで確認する</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <a href="koji_DataQuery.html" class="footer-logo">koji<span>DataQuery</span></a>
+  <div class="footer-nav">
+    <a href="kojigis-homepage.html" data-ja="kojiGIS" data-en="kojiGIS">kojiGIS</a>
+    <a href="index.html#developer" data-ja="開発者" data-en="Developer">開発者</a>
+    <a href="https://github.com/Code4Construct/koji_DataQuery/releases/tag/v0.1.0" target="_blank">Release</a>
+    <a href="https://github.com/Code4Construct/koji_DataQuery" target="_blank">GitHub</a>
+  </div>
+</footer>
+
+<script>
+  const titles = {
+    ja: 'koji DataQuery - ダウンロード',
+    en: 'koji DataQuery - Download'
+  };
+  const localizedPages = new Set([
+    'index.html',
+    'developer_introduction.html',
+    'kojipdf-homepage.html',
+    'kojipdf-download.html',
+    'kojiPDF-tutorial.html',
+    'kojigis-homepage.html',
+    'koji_GeoTools.html',
+    'koji_geotools-download.html',
+    'koji_MapBundle.html',
+    'koji_MapBundle-download.html',
+    'koji_DataQuery.html',
+    'koji_DataQuery-download.html'
+  ]);
+  const updateLocalizedLinks = (lang) => {
+    document.querySelectorAll('a[href]').forEach((link) => {
+      const rawHref = link.getAttribute('href');
+      if (!rawHref || rawHref.startsWith('#') || /^[a-z][a-z0-9+.-]*:/i.test(rawHref)) return;
+      const [pathAndQuery, hash] = rawHref.split('#');
+      const [path, query = ''] = pathAndQuery.split('?');
+      const pageName = path.split('/').pop();
+      if (!localizedPages.has(pageName)) return;
+      const params = new URLSearchParams(query);
+      params.set('lang', lang);
+      link.setAttribute('href', `${path}?${params.toString()}${hash ? `#${hash}` : ''}`);
+    });
+  };
+  const setLanguage = (lang) => {
+    document.documentElement.lang = lang;
+    document.title = titles[lang];
+    document.querySelectorAll('[data-ja][data-en]').forEach((element) => {
+      element.textContent = element.dataset[lang];
+    });
+    document.querySelectorAll('.lang-btn').forEach((button) => {
+      const isActive = button.dataset.lang === lang;
+      button.classList.toggle('active', isActive);
+      button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+    localStorage.setItem('code4construct-language', lang);
+    localStorage.setItem('kojipdf-language', lang);
+    updateLocalizedLinks(lang);
+  };
+  document.querySelectorAll('.lang-btn').forEach((button) => {
+    button.addEventListener('click', () => setLanguage(button.dataset.lang));
+  });
+  const params = new URLSearchParams(window.location.search);
+  const requestedLang = params.get('lang');
+  const savedLang = localStorage.getItem('code4construct-language') || localStorage.getItem('kojipdf-language');
+  const browserLang = navigator.language || '';
+  const initialLang = requestedLang === 'en' || requestedLang === 'ja'
+    ? requestedLang
+    : savedLang === 'en' || savedLang === 'ja'
+      ? savedLang
+      : browserLang.toLowerCase().startsWith('en')
+        ? 'en'
+        : 'ja';
+  setLanguage(initialLang);
+</script>
+</body>
+</html>
