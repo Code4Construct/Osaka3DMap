@@ -14,7 +14,7 @@
     --surface: #fffaf0;
     --gold: #e9bf60;
     --line: #d7b865;
-    --green: #23824E;
+    --green: #23824e;
     --red: #b5143f;
     --mid: #466172;
     --light-mid: #93a9b6;
@@ -57,7 +57,7 @@
   }
   .nav-brand { color: var(--paper); text-decoration: none; display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
   .nav-mark { width: 42px; height: 42px; display: grid; place-items: center; overflow: hidden; flex: 0 0 42px; }
-  .nav-mark img, .feature-icon img, .product-head img { width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+  .nav-mark img, .feature-icon img, .product-head img { width: 100%; height: 100%; object-fit: contain; display: block; }
   .nav-logo { font-family: 'Shippori Mincho', serif; font-size: 22px; font-weight: 800; }
   .nav-logo span { color: var(--green); }
   .nav-right, .nav-links, .language-toggle { display: flex; align-items: center; }
@@ -133,6 +133,8 @@
     border: 1px solid rgba(233,191,96,0.65);
     box-shadow: 0 26px 64px rgba(0,0,0,0.26);
     padding: 24px;
+    position: relative;
+    z-index: 1;
   }
   .product-head { display: flex; align-items: center; gap: 16px; padding-bottom: 20px; border-bottom: 1px solid rgba(6,42,70,0.13); }
   .product-head img { width: 76px; height: 76px; }
@@ -214,26 +216,28 @@
 <main>
   <header class="hero">
     <div>
-      <div class="kicker" data-ja="QGIS portable map package" data-en="QGIS portable map package">QGIS portable map package</div>
+      <div class="kicker" data-ja="QGIS reusable map bundles" data-en="QGIS reusable map bundles">QGIS reusable map bundles</div>
       <h1>koji <span class="brand-accent">MapBundle</span></h1>
-      <p class="hero-lead" data-ja="選択したQGISレイヤ、スタイル、SVGシンボル、印刷レイアウトを、再利用しやすいZIP形式の地図バンドルとして書き出し・読み込みするプラグインです。別のプロジェクトへ地図表現を渡すときに、データと見た目をまとめて扱えます。" data-en="A QGIS plugin for exporting and importing selected layers, layer styles, SVG symbols, and print layouts as reusable ZIP-based map bundles. It keeps map data and visual settings together when you move them into another project.">選択したQGISレイヤ、スタイル、SVGシンボル、印刷レイアウトを、再利用しやすいZIP形式の地図バンドルとして書き出し・読み込みするプラグインです。別のプロジェクトへ地図表現を渡すときに、データと見た目をまとめて扱えます。</p>
+      <p class="hero-lead" data-ja="QGISのレイヤ、スタイル、シンボル、レイアウトを再利用しやすい地図バンドルとして書き出し・読み込みするプラグインです。公式QGISプラグインリポジトリで公開され、最新安定版は v1.0.1 です。" data-en="A QGIS plugin for exporting and importing layers, styles, symbols, and layouts as reusable map bundles. It is published in the official QGIS Python Plugins Repository, with v1.0.1 as the latest stable version.">
+        QGISのレイヤ、スタイル、シンボル、レイアウトを再利用しやすい地図バンドルとして書き出し・読み込みするプラグインです。公式QGISプラグインリポジトリで公開され、最新安定版は v1.0.1 です。
+      </p>
       <div class="hero-actions">
         <a class="button" href="koji_MapBundle-download.html" data-ja="ダウンロードページへ" data-en="Go to Download">ダウンロードページへ</a>
-        <a class="button secondary" href="#features" data-ja="機能を見る" data-en="View Features">機能を見る</a>
+        <a class="button secondary" href="https://plugins.qgis.org/plugins/koji_MapBundle/#plugin-details" target="_blank" rel="noopener" data-ja="QGIS公式ページ" data-en="QGIS Plugin Page">QGIS公式ページ</a>
       </div>
     </div>
     <aside class="hero-product" aria-label="koji MapBundle plugin summary">
       <div class="product-head">
         <img src="images/koji-mapbundle-icon.png" alt="koji MapBundle icon">
         <div>
-          <strong>Koji MapBundle</strong>
-          <span data-ja="QGIS 3.28以上 / Pythonプラグイン" data-en="QGIS 3.28+ / Python plugin">QGIS 3.28以上 / Pythonプラグイン</span>
+          <strong>koji MapBundle</strong>
+          <span data-ja="QGIS 3.28.0 以上 / Pythonプラグイン" data-en="QGIS 3.28.0+ / Python plugin">QGIS 3.28.0 以上 / Pythonプラグイン</span>
         </div>
       </div>
       <div class="spec-grid">
-        <div class="spec"><span>Version</span><strong>1.0.0</strong></div>
-        <div class="spec"><span>Category</span><strong>Vector</strong></div>
-        <div class="spec"><span>License</span><strong>GPL-2.0-or-later</strong></div>
+        <div class="spec"><span>Version</span><strong>1.0.1</strong></div>
+        <div class="spec"><span>QGIS</span><strong>3.28.0 - 3.99.0</strong></div>
+        <div class="spec"><span>Tags</span><strong>python / project / style / qgis</strong></div>
         <div class="spec"><span>Author</span><strong>Code4Construct</strong></div>
       </div>
     </aside>
@@ -243,23 +247,31 @@
     <div class="section-head">
       <div class="kicker" data-ja="Included tools" data-en="Included tools">Included tools</div>
       <h2 data-ja="地図表現を、プロジェクト間で受け渡せる形にまとめます。" data-en="Package map assets so they can move between projects.">地図表現を、プロジェクト間で受け渡せる形にまとめます。</h2>
-      <p data-ja="ツールバーまたはプラグインメニューから起動し、地図バンドルを書き出し・読み込みできます。対象レイヤやレイアウトを選び、GeoPackage、QMLスタイル、SVGシンボル、QPTレイアウトテンプレートをひとつのZIPとして扱います。" data-en="Launch it from the toolbar or plugin menu to export or import map bundles. Select the layers and layouts you need, then handle GeoPackage data, QML styles, SVG symbols, and QPT layout templates as one ZIP package.">ツールバーまたはプラグインメニューから起動し、地図バンドルを書き出し・読み込みできます。対象レイヤやレイアウトを選び、GeoPackage、QMLスタイル、SVGシンボル、QPTレイアウトテンプレートをひとつのZIPとして扱います。</p>
+      <p data-ja="ツールバーまたはプラグインメニューから起動し、地図バンドルの書き出し・読み込みを行えます。対象レイヤやレイアウトを選び、GeoPackageデータ、QMLスタイル、SVGシンボル、QPTレイアウトテンプレートをひとつのZIPとして扱えます。" data-en="Launch it from the toolbar or plugin menu to export or import map bundles. Select the layers and layouts you need, then handle GeoPackage data, QML styles, SVG symbols, and QPT layout templates as one ZIP package.">
+        ツールバーまたはプラグインメニューから起動し、地図バンドルの書き出し・読み込みを行えます。対象レイヤやレイアウトを選び、GeoPackageデータ、QMLスタイル、SVGシンボル、QPTレイアウトテンプレートをひとつのZIPとして扱えます。
+      </p>
     </div>
     <div class="feature-grid">
       <article class="feature-card">
         <div class="feature-icon"><img src="images/koji-mapbundle-export.png" alt=""></div>
         <h3 data-ja="地図バンドルを書き出し" data-en="Export Map Bundle">地図バンドルを書き出し</h3>
-        <p data-ja="選択したベクタ・ラスタレイヤと印刷レイアウトを、ZIP形式の地図バンドルとして保存します。ベクタデータはバンドル内のGeoPackageへまとめられます。" data-en="Saves selected vector and raster layers plus print layouts as a ZIP map bundle. Vector data is preserved in a GeoPackage inside the bundle.">選択したベクタ・ラスタレイヤと印刷レイアウトを、ZIP形式の地図バンドルとして保存します。ベクタデータはバンドル内のGeoPackageへまとめられます。</p>
+        <p data-ja="選択したベクタ・ラスタレイヤと印刷レイアウトを、ZIP形式の地図バンドルとして保存します。ベクタデータはバンドル内のGeoPackageにまとめられます。" data-en="Saves selected vector and raster layers plus print layouts as a ZIP map bundle. Vector data is preserved in a GeoPackage inside the bundle.">
+          選択したベクタ・ラスタレイヤと印刷レイアウトを、ZIP形式の地図バンドルとして保存します。ベクタデータはバンドル内のGeoPackageにまとめられます。
+        </p>
       </article>
       <article class="feature-card">
         <div class="feature-icon"><img src="images/koji-mapbundle-icon.png" alt=""></div>
         <h3 data-ja="スタイルとシンボルを保持" data-en="Preserve Styles and Symbols">スタイルとシンボルを保持</h3>
-        <p data-ja="レイヤスタイルをQMLとして保存し、参照されているSVGシンボルも一緒にバンドルへ格納します。地物の見た目を崩さずに共有できます。" data-en="Stores layer styles as QML and includes referenced SVG symbol assets, helping shared layers keep their appearance.">レイヤスタイルをQMLとして保存し、参照されているSVGシンボルも一緒にバンドルへ格納します。地物の見た目を崩さずに共有できます。</p>
+        <p data-ja="レイヤスタイルをQMLとして保存し、参照されているSVGシンボルもバンドルに含めます。共有先でも地物の見た目を保ちやすくなります。" data-en="Stores layer styles as QML and includes referenced SVG symbol assets, helping shared layers keep their appearance.">
+          レイヤスタイルをQMLとして保存し、参照されているSVGシンボルもバンドルに含めます。共有先でも地物の見た目を保ちやすくなります。
+        </p>
       </article>
       <article class="feature-card">
         <div class="feature-icon"><img src="images/koji-mapbundle-import.png" alt=""></div>
         <h3 data-ja="地図バンドルを読み込み" data-en="Import Map Bundle">地図バンドルを読み込み</h3>
-        <p data-ja="受け取ったZIPを展開し、読み込むレイヤとレイアウトを選択できます。GeoPackageデータは現在のQGISプロジェクトの近くへ保存され、安定したローカルデータソースとして追加されます。" data-en="Extracts a received ZIP and lets you choose which layers and layouts to import. GeoPackage data is copied near the current QGIS project and added as stable local data sources.">受け取ったZIPを展開し、読み込むレイヤとレイアウトを選択できます。GeoPackageデータは現在のQGISプロジェクトの近くへ保存され、安定したローカルデータソースとして追加されます。</p>
+        <p data-ja="受け取ったZIPを展開し、読み込むレイヤとレイアウトを選択できます。GeoPackageデータは現在のQGISプロジェクトの近くへ保存され、安定したローカルデータソースとして追加されます。" data-en="Extracts a received ZIP and lets you choose which layers and layouts to import. GeoPackage data is copied near the current QGIS project and added as stable local data sources.">
+          受け取ったZIPを展開し、読み込むレイヤとレイアウトを選択できます。GeoPackageデータは現在のQGISプロジェクトの近くへ保存され、安定したローカルデータソースとして追加されます。
+        </p>
       </article>
     </div>
   </section>
@@ -267,14 +279,16 @@
   <div class="workflow-band">
     <div class="workflow-inner">
       <div class="section-head">
-        <div class="kicker" data-ja="Bundle workflow" data-en="Bundle workflow">Bundle workflow</div>
-        <h2 data-ja="ZIPを開かずに、QGISの画面から受け渡しできます。" data-en="Move map assets from inside QGIS without unpacking by hand.">ZIPを開かずに、QGISの画面から受け渡しできます。</h2>
-        <p data-ja="書き出し時はバンドルへ入れるものを選択し、読み込み時はバンドル内のレイヤ・レイアウトを確認してから取り込めます。未保存プロジェクトでは保存先フォルダを指定できます。" data-en="When exporting, choose what goes into the bundle. When importing, review the layers and layouts before adding them. If the current project has not been saved, you can choose a destination folder.">書き出し時はバンドルへ入れるものを選択し、読み込み時はバンドル内のレイヤ・レイアウトを確認してから取り込めます。未保存プロジェクトでは保存先フォルダを指定できます。</p>
+        <div class="kicker" data-ja="Plugin details" data-en="Plugin details">Plugin details</div>
+        <h2 data-ja="公式リポジトリの公開情報に合わせています。" data-en="Aligned with the official plugin repository.">公式リポジトリの公開情報に合わせています。</h2>
+        <p data-ja="QGIS公式ページでは、最新安定版 1.0.1、対応QGIS 3.28.0 - 3.99.0、タグ python / project / style / qgis / geopackage / layout / map bundle として掲載されています。" data-en="The official QGIS page lists latest stable version 1.0.1, QGIS compatibility 3.28.0 - 3.99.0, and the tags python, project, style, qgis, geopackage, layout, and map bundle.">
+          QGIS公式ページでは、最新安定版 1.0.1、対応QGIS 3.28.0 - 3.99.0、タグ python / project / style / qgis / geopackage / layout / map bundle として掲載されています。
+        </p>
       </div>
       <div class="timeline">
         <div class="step"><div><strong data-ja="レイヤとレイアウトを選択" data-en="Select layers and layouts">レイヤとレイアウトを選択</strong><span data-ja="地図バンドルに入れるレイヤ、印刷レイアウトだけをチェックします。" data-en="Check only the layers and print layouts to include in the map bundle.">地図バンドルに入れるレイヤ、印刷レイアウトだけをチェックします。</span></div></div>
         <div class="step"><div><strong data-ja="ZIPとして書き出し" data-en="Export as ZIP">ZIPとして書き出し</strong><span data-ja="データ、スタイル、シンボル、レイアウト、manifest.jsonをひとつのZIPにまとめます。" data-en="Package data, styles, symbols, layouts, and manifest.json into one ZIP file.">データ、スタイル、シンボル、レイアウト、manifest.jsonをひとつのZIPにまとめます。</span></div></div>
-        <div class="step"><div><strong data-ja="別プロジェクトへ読み込み" data-en="Import into another project">別プロジェクトへ読み込み</strong><span data-ja="GeoPackageをプロジェクト側へ保存し、スタイルとレイアウト設定を現在のQGISプロジェクトへ取り込みます。" data-en="Save GeoPackage data next to the project and import style and layout settings into the current QGIS project.">GeoPackageをプロジェクト側へ保存し、スタイルとレイアウト設定を現在のQGISプロジェクトへ取り込みます。</span></div></div>
+        <div class="step"><div><strong data-ja="別プロジェクトへ読み込み" data-en="Import into another project">別プロジェクトへ読み込み</strong><span data-ja="GeoPackageをプロジェクト近くへ保存し、スタイルとレイアウト設定を現在のQGISプロジェクトへ取り込みます。" data-en="Save GeoPackage data next to the project and import style and layout settings into the current QGIS project.">GeoPackageをプロジェクト近くへ保存し、スタイルとレイアウト設定を現在のQGISプロジェクトへ取り込みます。</span></div></div>
       </div>
     </div>
   </div>
@@ -283,17 +297,19 @@
     <div class="download-panel">
       <div>
         <div class="kicker" data-ja="Download" data-en="Download">Download</div>
-        <h2 data-ja="配布ファイルと検証情報は、専用ページで確認できます。" data-en="Download and verification details are on a separate page.">配布ファイルと検証情報は、専用ページで確認できます。</h2>
-        <p data-ja="koji MapBundle v1.0.0 のZIP、SHA256、VirusTotal確認リンク、インストール手順をダウンロードページにまとめています。" data-en="The download page includes the koji MapBundle v1.0.0 ZIP, SHA256, VirusTotal check link, and installation steps.">koji MapBundle v1.0.0 のZIP、SHA256、VirusTotal確認リンク、インストール手順をダウンロードページにまとめています。</p>
+        <h2 data-ja="最新版 v1.0.1 のダウンロードと検証情報。" data-en="Download and verification details for v1.0.1.">最新版 v1.0.1 のダウンロードと検証情報。</h2>
+        <p data-ja="koji MapBundle v1.0.1 のZIP、SHA256、VirusTotal確認結果、QGISでのインストール手順をダウンロードページにまとめています。" data-en="The download page includes the koji MapBundle v1.0.1 ZIP, SHA256, VirusTotal check, and QGIS installation steps.">
+          koji MapBundle v1.0.1 のZIP、SHA256、VirusTotal確認結果、QGISでのインストール手順をダウンロードページにまとめています。
+        </p>
         <div class="download-actions">
           <a class="button" href="koji_MapBundle-download.html" data-ja="ダウンロードページへ" data-en="Open Download Page">ダウンロードページへ</a>
-          <a class="button secondary" href="https://github.com/Code4Construct/koji_MapBundle" data-ja="GitHubを開く" data-en="Open GitHub">GitHubを開く</a>
+          <a class="button secondary" href="https://github.com/Code4Construct/koji_MapBundle/releases/tag/v1.0.1" target="_blank" rel="noopener" data-ja="GitHub Release" data-en="GitHub Release">GitHub Release</a>
         </div>
       </div>
       <div class="download-meta" aria-label="Download details">
         <div><span data-ja="ファイル" data-en="File">ファイル</span><strong>koji_MapBundle.zip</strong></div>
-        <div><span data-ja="バージョン" data-en="Version">バージョン</span><strong>1.0.0</strong></div>
-        <div><span data-ja="最小QGIS" data-en="Minimum QGIS">最小QGIS</span><strong>3.28</strong></div>
+        <div><span data-ja="バージョン" data-en="Version">バージョン</span><strong>1.0.1</strong></div>
+        <div><span data-ja="最小QGIS" data-en="Minimum QGIS">最小QGIS</span><strong>3.28.0</strong></div>
         <div><span data-ja="形式" data-en="Format">形式</span><strong>QGIS ZIP plugin</strong></div>
       </div>
     </div>
@@ -303,7 +319,7 @@
 <footer>
   <a href="index.html#developer" data-ja="開発者紹介" data-en="Developer introduction">開発者紹介</a>
   <a href="kojigis-homepage.html" data-ja="kojiGISへ戻る" data-en="Back to kojiGIS">kojiGISへ戻る</a>
-  <span data-ja="Koji MapBundle v1.0.0" data-en="Koji MapBundle v1.0.0">Koji MapBundle v1.0.0</span>
+  <span>koji MapBundle v1.0.1</span>
 </footer>
 
 <script>

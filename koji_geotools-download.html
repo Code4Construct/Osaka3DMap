@@ -7,7 +7,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=DM+Mono:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;700;900&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
     --ink: #062a46;
     --ink-2: #0b4268;
@@ -22,9 +21,7 @@
     --line: #d7b865;
     --white: #fffdf7;
   }
-
   html { scroll-behavior: smooth; }
-
   body {
     background: var(--paper);
     color: var(--ink);
@@ -32,7 +29,6 @@
     font-weight: 300;
     overflow-x: hidden;
   }
-
   body::before {
     content: '';
     position: fixed;
@@ -41,7 +37,6 @@
     pointer-events: none;
     z-index: 1000;
   }
-
   nav {
     background: var(--ink);
     border-bottom: 1px solid var(--ink-2);
@@ -55,50 +50,13 @@
     top: 0;
     z-index: 100;
   }
-
-  .nav-brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: var(--paper);
-    text-decoration: none;
-    flex-shrink: 0;
-  }
-
-  .nav-icon {
-    width: 46px;
-    height: 46px;
-    object-fit: contain;
-  }
-
-  .nav-logo {
-    font-family: 'Shippori Mincho', serif;
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: -1px;
-  }
-
+  .nav-brand { display: flex; align-items: center; gap: 10px; color: var(--paper); text-decoration: none; flex-shrink: 0; }
+  .nav-icon { width: 46px; height: 46px; object-fit: contain; }
+  .nav-logo { font-family: 'Shippori Mincho', serif; font-size: 22px; font-weight: 800; letter-spacing: -1px; }
   .nav-logo span { color: var(--gold); }
-  .nav-version {
-    margin-left: 6px;
-    color: var(--paper) !important;
-    font-size: 0.78em;
-    letter-spacing: -0.04em;
-  }
-
-  .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 28px;
-  }
-
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    list-style: none;
-  }
-
+  .nav-version { margin-left: 6px; color: var(--paper) !important; font-size: 0.78em; letter-spacing: -0.04em; }
+  .nav-right { display: flex; align-items: center; gap: 28px; }
+  .nav-links { display: flex; align-items: center; gap: 30px; list-style: none; }
   .nav-links a {
     font-family: 'DM Mono', monospace;
     font-size: 11px;
@@ -108,16 +66,8 @@
     text-decoration: none;
     transition: color 0.2s;
   }
-
-  .nav-links a:hover,
-  .nav-links a.active { color: var(--gold); }
-
-  .language-toggle {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+  .language-toggle { display: flex; align-items: center; gap: 8px; }
   .lang-btn {
     width: 40px;
     height: 40px;
@@ -133,11 +83,9 @@
     transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     overflow: hidden;
   }
-
   .lang-btn:hover { transform: translateY(-1px); }
   .lang-btn.active { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(233,191,96,0.18); }
   .lang-btn img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
-
   .page-hero {
     background:
       linear-gradient(120deg, rgba(6,42,70,0.96), rgba(6,42,70,0.88)),
@@ -149,7 +97,6 @@
     position: relative;
     overflow: hidden;
   }
-
   .page-hero::after {
     content: 'Download';
     position: absolute;
@@ -162,15 +109,7 @@
     letter-spacing: -4px;
     pointer-events: none;
   }
-
-  .page-hero-inner,
-  .section-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
-
+  .page-hero-inner, .section-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
   .eyebrow {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
@@ -182,14 +121,7 @@
     align-items: center;
     gap: 12px;
   }
-
-  .eyebrow::before {
-    content: '';
-    width: 26px;
-    height: 2px;
-    background: var(--gold);
-  }
-
+  .eyebrow::before { content: ''; width: 26px; height: 2px; background: var(--gold); }
   h1 {
     font-family: 'Shippori Mincho', serif;
     font-size: clamp(48px, 7vw, 84px);
@@ -197,26 +129,10 @@
     letter-spacing: -2px;
     margin-bottom: 20px;
   }
-
   h1 span { color: var(--gold); }
-
-  .page-hero p {
-    max-width: 760px;
-    color: #dbe8ee;
-    font-size: 15px;
-    line-height: 2;
-  }
-
-  .hero-actions,
-  .trust-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    align-items: center;
-  }
-
+  .page-hero p { max-width: 760px; color: #dbe8ee; font-size: 15px; line-height: 2; }
+  .hero-actions, .trust-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
   .hero-actions { margin-top: 24px; }
-
   .btn {
     min-height: 44px;
     padding: 0 20px;
@@ -232,31 +148,16 @@
     text-decoration: none;
     transition: transform 0.2s, background 0.2s, color 0.2s, border-color 0.2s;
   }
-
   .btn:hover { transform: translateY(-1px); }
-
-  .btn-primary {
-    background: var(--gold);
-    color: var(--ink);
-    box-shadow: 0 10px 28px rgba(233,191,96,0.22);
-    font-weight: 700;
-  }
-
-  .btn-secondary {
-    border-color: rgba(233,191,96,0.7);
-    color: var(--gold);
-    background: rgba(233,191,96,0.08);
-  }
-
+  .btn-primary { background: var(--gold); color: var(--ink); box-shadow: 0 10px 28px rgba(233,191,96,0.22); font-weight: 700; }
+  .btn-secondary { border-color: rgba(233,191,96,0.7); color: var(--gold); background: rgba(233,191,96,0.08); }
   .section { padding: 82px 60px; }
-
   .trust {
     background:
-      linear-gradient(rgba(255,250,240,0.7), rgba(255,250,240,0.88)),
+      linear-gradient(rgba(255,250,240,0.72), rgba(255,250,240,0.9)),
       var(--surface);
     border-bottom: 1px solid rgba(6,42,70,0.08);
   }
-
   .section-label {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
@@ -268,22 +169,8 @@
     align-items: center;
     gap: 16px;
   }
-
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--line);
-  }
-
-  .trust-layout {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 28px;
-    align-items: start;
-    max-width: 860px;
-  }
-
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+  .trust-layout { display: grid; grid-template-columns: 1fr; gap: 28px; align-items: start; max-width: 880px; }
   .trust h2 {
     font-family: 'Shippori Mincho', serif;
     font-size: clamp(30px, 4vw, 48px);
@@ -291,7 +178,6 @@
     letter-spacing: -1px;
     margin-bottom: 18px;
   }
-
   .trust-subtitle {
     display: flex;
     align-items: center;
@@ -301,38 +187,11 @@
     font-size: 13px;
     font-weight: 700;
   }
-
-  .trust-subtitle::before,
-  .trust-subtitle::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: #c49731;
-  }
-
-  .trust p {
-    color: #0f344d;
-    line-height: 2;
-    font-size: 15px;
-  }
-
+  .trust-subtitle::before, .trust-subtitle::after { content: ''; flex: 1; height: 1px; background: #c49731; }
+  .trust p { color: #0f344d; line-height: 2; font-size: 15px; }
   .trust p + p { margin-top: 16px; }
-
-  .trust-card,
-  .trust-verification,
-  .install-guide {
-    border-top: 1px solid #c49731;
-    background: transparent;
-    padding-top: 24px;
-  }
-
-  .trust-card h3,
-  .trust-verification h3,
-  .install-guide h3 {
-    font-size: 17px;
-    margin-bottom: 12px;
-  }
-
+  .trust-card, .trust-verification, .install-guide { border-top: 1px solid #c49731; background: transparent; padding-top: 24px; }
+  .trust-card h3, .trust-verification h3, .install-guide h3 { font-size: 17px; margin-bottom: 12px; }
   .trust-release-meta {
     display: grid;
     gap: 6px;
@@ -345,33 +204,8 @@
     font-size: 12px;
     line-height: 1.7;
   }
-
-  .trust-release-meta code {
-    white-space: normal;
-    overflow-wrap: anywhere;
-  }
-
-  .trust-vt-window {
-    max-height: 420px;
-    overflow-y: auto;
-    border: 1px solid rgba(6,42,70,0.22);
-    border-radius: 6px;
-    background: #111424;
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04), 0 16px 38px rgba(6,42,70,0.14);
-  }
-
-  .trust-vt-window img {
-    width: 100%;
-    display: block;
-  }
-
-  .install-steps {
-    display: grid;
-    gap: 10px;
-    margin-top: 16px;
-    counter-reset: install;
-  }
-
+  .trust-release-meta code { white-space: normal; overflow-wrap: anywhere; }
+  .install-steps { display: grid; gap: 10px; margin-top: 16px; counter-reset: install; }
   .install-step {
     counter-increment: install;
     display: grid;
@@ -382,7 +216,6 @@
     border: 1px solid rgba(180,125,22,0.28);
     background: rgba(255,255,255,0.34);
   }
-
   .install-step::before {
     content: counter(install, decimal-leading-zero);
     width: 44px;
@@ -395,35 +228,10 @@
     font-size: 12px;
     font-weight: 700;
   }
-
-  .install-step strong {
-    display: block;
-    margin-bottom: 4px;
-    font-size: 14px;
-  }
-
-  .install-step span {
-    display: block;
-    color: var(--mid);
-    font-size: 13px;
-    line-height: 1.8;
-  }
-
-  .trust-note {
-    margin-top: 12px;
-    font-size: 12px;
-    line-height: 1.8;
-    color: #5d7180;
-  }
-
-  .trust-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-    list-style: none;
-    margin-bottom: 20px;
-  }
-
+  .install-step strong { display: block; margin-bottom: 4px; font-size: 14px; }
+  .install-step span { display: block; color: var(--mid); font-size: 13px; line-height: 1.8; }
+  .trust-note { margin-top: 12px; font-size: 12px; line-height: 1.8; color: #5d7180; }
+  .trust-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; list-style: none; margin-bottom: 20px; }
   .trust-list a {
     display: block;
     color: #0f344d;
@@ -436,29 +244,10 @@
     background: rgba(255,255,255,0.34);
     transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
   }
-
-  .trust-list a:hover {
-    transform: translateY(-1px);
-    border-color: #b47d16;
-    background: rgba(180,125,22,0.1);
-  }
-
-  .trust-list a::before {
-    content: '✓';
-    position: absolute;
-    left: 12px;
-    top: 10px;
-    color: var(--green);
-    font-weight: 700;
-  }
-
+  .trust-list a:hover { transform: translateY(-1px); border-color: #b47d16; background: rgba(180,125,22,0.1); }
+  .trust-list a::before { content: '✓'; position: absolute; left: 12px; top: 10px; color: var(--green); font-weight: 700; }
   .trust-actions .btn { min-width: 190px; }
-  .trust .btn-secondary {
-    border-color: #b47d16;
-    color: #7a520f;
-    background: rgba(255,255,255,0.42);
-  }
-
+  .trust .btn-secondary { border-color: #b47d16; color: #7a520f; background: rgba(255,255,255,0.42); }
   footer {
     background: var(--ink);
     padding: 28px 60px;
@@ -467,22 +256,9 @@
     justify-content: space-between;
     align-items: center;
   }
-
-  .footer-logo {
-    color: var(--paper);
-    text-decoration: none;
-    font-family: 'Shippori Mincho', serif;
-    font-size: 20px;
-    font-weight: 800;
-  }
-
+  .footer-logo { color: var(--paper); text-decoration: none; font-family: 'Shippori Mincho', serif; font-size: 20px; font-weight: 800; }
   .footer-logo span { color: var(--gold); }
-
-  .footer-nav {
-    display: flex;
-    gap: 26px;
-  }
-
+  .footer-nav { display: flex; gap: 26px; }
   .footer-nav a {
     color: var(--light-mid);
     text-decoration: none;
@@ -491,9 +267,7 @@
     letter-spacing: 1.5px;
     text-transform: uppercase;
   }
-
   .footer-nav a:hover { color: var(--gold); }
-
   @media (max-width: 960px) {
     nav { padding: 12px 24px; align-items: flex-start; flex-direction: column; }
     .nav-right { width: 100%; justify-content: space-between; gap: 18px; }
@@ -502,13 +276,11 @@
     .trust-list { grid-template-columns: 1fr; }
     footer { padding: 24px; flex-direction: column; gap: 16px; }
   }
-
   @media (max-width: 560px) {
     nav { padding: 10px 18px; }
     .nav-links { gap: 14px; }
     .page-hero, .section { padding-left: 18px; padding-right: 18px; }
-    .hero-actions .btn,
-    .trust-actions .btn { width: 100%; }
+    .hero-actions .btn, .trust-actions .btn { width: 100%; }
     .footer-nav { flex-wrap: wrap; justify-content: center; }
     .install-step { grid-template-columns: 1fr; }
   }
@@ -519,23 +291,19 @@
 <nav>
   <a href="koji_GeoTools.html" class="nav-brand">
     <img src="images/koji-geotools-icon.png" alt="koji GeoTools" class="nav-icon">
-    <span class="nav-logo">koji<span>GeoTools</span><span class="nav-version">v1</span></span>
+    <span class="nav-logo">koji<span>GeoTools</span><span class="nav-version">v1.0.1</span></span>
   </a>
   <div class="nav-right">
     <ul class="nav-links">
-      <li><a href="kojigis-homepage.html" data-ja="kojiGIS" data-en="kojiGIS">kojiGIS</a></li>
+      <li><a href="kojigis-homepage.html">kojiGIS</a></li>
       <li><a href="index.html#developer" data-ja="開発者" data-en="Developer">開発者</a></li>
       <li><a href="koji_GeoTools.html" data-ja="概要" data-en="Overview">概要</a></li>
       <li><a href="koji_geotools-download.html" class="active" data-ja="ダウンロード" data-en="Download">ダウンロード</a></li>
-      <li><a href="https://github.com/Code4Construct/koji_GeoTools" target="_blank">GitHub</a></li>
+      <li><a href="https://github.com/Code4Construct/koji_GeoTools" target="_blank" rel="noopener">GitHub</a></li>
     </ul>
     <div class="language-toggle" aria-label="Language selector">
-      <button type="button" class="lang-btn ja active" data-lang="ja" aria-label="日本語">
-        <img src="images/flag_jp.svg" alt="">
-      </button>
-      <button type="button" class="lang-btn en" data-lang="en" aria-label="English">
-        <img src="images/flag_gb.svg" alt="">
-      </button>
+      <button type="button" class="lang-btn ja active" data-lang="ja" aria-label="日本語"><img src="images/flag_jp.svg" alt=""></button>
+      <button type="button" class="lang-btn en" data-lang="en" aria-label="English"><img src="images/flag_gb.svg" alt=""></button>
     </div>
   </div>
 </nav>
@@ -543,14 +311,14 @@
 <header class="page-hero">
   <div class="page-hero-inner">
     <div class="eyebrow" data-ja="ダウンロード" data-en="Download">ダウンロード</div>
-    <h1 data-ja="ダウンロード" data-en="Download">ダウンロード</h1>
-    <p data-ja="koji GeoTools v1.0.0 のQGISプラグインZIPと、配布ファイルを確認するための情報を掲載しています。GitHub ActionsでビルドされたReleaseアセットをそのまま利用してください。" data-en="Download the koji GeoTools v1.0.0 QGIS plugin ZIP and review information for verifying the distributed file. Use the Release asset built by GitHub Actions.">
-      koji GeoTools v1.0.0 のQGISプラグインZIPと、配布ファイルを確認するための情報を掲載しています。GitHub ActionsでビルドされたReleaseアセットをそのまま利用してください。
+    <h1 data-ja="最新版 v1.0.1" data-en="Latest v1.0.1">最新版 v1.0.1</h1>
+    <p data-ja="koji GeoTools v1.0.1 のQGISプラグインZIPと、配布ファイルを確認するための情報を掲載しています。QGIS公式プラグインリポジトリからのインストール、またはGitHub ReleaseのZIPを利用できます。" data-en="Download the koji GeoTools v1.0.1 QGIS plugin ZIP and review information for verifying the distributed file. You can install it from the official QGIS plugin repository or use the ZIP from GitHub Releases.">
+      koji GeoTools v1.0.1 のQGISプラグインZIPと、配布ファイルを確認するための情報を掲載しています。QGIS公式プラグインリポジトリからのインストール、またはGitHub ReleaseのZIPを利用できます。
     </p>
     <div class="hero-actions">
-      <a href="https://github.com/Code4Construct/koji_GeoTools/releases/download/v1.0.0/koji_GeoTools.zip" class="btn btn-primary" target="_blank" data-ja="ZIPをダウンロードする" data-en="Download ZIP">ZIPをダウンロードする</a>
-      <a href="https://github.com/Code4Construct/koji_GeoTools/releases/tag/v1.0.0" class="btn btn-secondary" target="_blank" data-ja="GitHubからダウンロードする" data-en="Download from GitHub">GitHubからダウンロードする</a>
-      <a href="koji_GeoTools.html" class="btn btn-secondary" data-ja="紹介ページを見る" data-en="View overview">紹介ページを見る</a>
+      <a href="https://github.com/Code4Construct/koji_GeoTools/releases/download/v1.0.1/koji_GeoTools.zip" class="btn btn-primary" target="_blank" rel="noopener" data-ja="ZIPをダウンロード" data-en="Download ZIP">ZIPをダウンロード</a>
+      <a href="https://github.com/Code4Construct/koji_GeoTools/releases/tag/v1.0.1" class="btn btn-secondary" target="_blank" rel="noopener" data-ja="GitHub Release" data-en="GitHub Release">GitHub Release</a>
+      <a href="https://plugins.qgis.org/plugins/koji_GeoTools/#plugin-details" class="btn btn-secondary" target="_blank" rel="noopener" data-ja="QGIS公式ページ" data-en="QGIS Plugin Page">QGIS公式ページ</a>
     </div>
   </div>
 </header>
@@ -562,33 +330,30 @@
       <div class="trust-layout">
         <div>
           <h2 data-ja="QGISのZIPプラグインとしてインストールできます。" data-en="Install it as a QGIS ZIP plugin.">QGISのZIPプラグインとしてインストールできます。</h2>
-          <div class="trust-subtitle" data-ja="Release v1.0.0" data-en="Release v1.0.0">Release v1.0.0</div>
-          <p data-ja="koji GeoToolsは、施設配置や調査エリア検討でよく使うベクター処理をQGISから呼び出すためのプラグインです。CSVからのレイヤセット作成、調査エリア設定、ポリゴン内の地物抽出を扱います。" data-en="koji GeoTools is a QGIS plugin for common vector workflows used in facility-placement and study-area planning. It handles layer-set creation from CSV, study-area setup, and extracting features inside polygons.">
-            koji GeoToolsは、施設配置や調査エリア検討でよく使うベクター処理をQGISから呼び出すためのプラグインです。CSVからのレイヤセット作成、調査エリア設定、ポリゴン内の地物抽出を扱います。
+          <div class="trust-subtitle">Release v1.0.1</div>
+          <p data-ja="koji GeoToolsは、レイヤセット作成、調査エリア設定、選択ポリゴン内の地物抽出をQGISから呼び出すためのプラグインです。QGIS公式プラグインリポジトリでは、最新安定版 1.0.1、対応QGIS 3.28.0 - 3.99.0 として掲載されています。" data-en="koji GeoTools is a QGIS plugin for layer-set creation, study-area setup, and feature extraction inside selected polygons. The official QGIS plugin repository lists latest stable version 1.0.1 and compatibility with QGIS 3.28.0 - 3.99.0.">
+            koji GeoToolsは、レイヤセット作成、調査エリア設定、選択ポリゴン内の地物抽出をQGISから呼び出すためのプラグインです。QGIS公式プラグインリポジトリでは、最新安定版 1.0.1、対応QGIS 3.28.0 - 3.99.0 として掲載されています。
           </p>
-          <p data-ja="配布ファイルはGitHub Releasesの `koji_GeoTools.zip` です。ZIPは展開せず、QGISのプラグイン管理画面から「ZIPからインストール」を選んで指定してください。" data-en="The distributed file is koji_GeoTools.zip on GitHub Releases. Do not unzip it first; select it from QGIS Plugin Manager using Install from ZIP.">
-            配布ファイルはGitHub Releasesの `koji_GeoTools.zip` です。ZIPは展開せず、QGISのプラグイン管理画面から「ZIPからインストール」を選んで指定してください。
+          <p data-ja="配布ファイルはGitHub Release v1.0.1 の koji_GeoTools.zip です。ZIPは展開せず、QGISのプラグイン管理画面から「ZIPからインストール」を選んで指定してください。" data-en="The distributed file is koji_GeoTools.zip on GitHub Release v1.0.1. Do not unzip it first; select it from QGIS Plugin Manager using Install from ZIP.">
+            配布ファイルはGitHub Release v1.0.1 の koji_GeoTools.zip です。ZIPは展開せず、QGISのプラグイン管理画面から「ZIPからインストール」を選んで指定してください。
           </p>
-          <p data-ja="このページでは、Releaseページ、SHA256、VirusTotalの検査結果、GitHub Actionsで作成されたReleaseアセットへのリンクをまとめています。これらは安全性を完全に保証するものではありませんが、配布ファイルの確認材料として利用できます。" data-en="This page links to the Release page, SHA256, VirusTotal scan result, and the Release asset produced by GitHub Actions. These do not completely guarantee safety, but they provide useful information for checking the distributed file.">
-            このページでは、Releaseページ、SHA256、VirusTotalの検査結果、GitHub Actionsで作成されたReleaseアセットへのリンクをまとめています。これらは安全性を完全に保証するものではありませんが、配布ファイルの確認材料として利用できます。
+          <p data-ja="GitHub ReleaseにはZIPのSHA256とVirusTotal確認リンクが掲載されています。これらは安全性を完全に保証するものではありませんが、配布ファイルを確認するための参考情報として利用できます。" data-en="The GitHub Release publishes the ZIP SHA256 and VirusTotal check link. These do not completely guarantee safety, but they provide useful information for checking the distributed file.">
+            GitHub ReleaseにはZIPのSHA256とVirusTotal確認リンクが掲載されています。これらは安全性を完全に保証するものではありませんが、配布ファイルを確認するための参考情報として利用できます。
           </p>
         </div>
 
         <aside class="trust-verification">
           <h3 data-ja="配布ファイルの検証情報" data-en="Release Verification">配布ファイルの検証情報</h3>
-          <p data-ja="GitHub Release v1.0.0 のアセット情報では、配布ZIPのSHA256とVirusTotal検査結果が公開されています。VirusTotalでは 0/59 ベンダー検出、malicious=0 / suspicious=0 です。" data-en="The GitHub Release v1.0.0 asset information publishes the ZIP SHA256 and VirusTotal scan result. VirusTotal shows 0/59 vendor detections, with malicious=0 / suspicious=0.">
-            GitHub Release v1.0.0 のアセット情報では、配布ZIPのSHA256とVirusTotal検査結果が公開されています。VirusTotalでは 0/59 ベンダー検出、malicious=0 / suspicious=0 です。
+          <p data-ja="Release v1.0.1 のZIPは GitHub Actions によって作成され、VirusTotal確認結果は malicious=0 / suspicious=0 と公開されています。" data-en="The Release v1.0.1 ZIP was built by GitHub Actions, and the published VirusTotal check reports malicious=0 / suspicious=0.">
+            Release v1.0.1 のZIPは GitHub Actions によって作成され、VirusTotal確認結果は malicious=0 / suspicious=0 と公開されています。
           </p>
-          <div class="trust-release-meta" aria-label="koji GeoTools v1.0.0 verification details">
-            <div><strong>koji GeoTools v1.0.0</strong></div>
+          <div class="trust-release-meta" aria-label="koji GeoTools v1.0.1 verification details">
+            <div><strong>koji GeoTools v1.0.1</strong></div>
             <div>ZIP: <code>koji_GeoTools.zip</code></div>
-            <div>Size: <code>2,864,423 bytes</code></div>
-            <div>Published: <code>2026-07-04 02:21:02 UTC</code></div>
-            <div>SHA256: <code>72026d4e28f9ed12ae1848a8e5898c0007782d1e246f28ae49af9b90d3cadc21</code></div>
-            <div>VirusTotal: <code>0/59 flagged; malicious=0 suspicious=0</code></div>
-          </div>
-          <div class="trust-vt-window" aria-label="VirusTotal scan result screenshot">
-            <img src="images/virustotal-koji_GeoTools-1.0.0.png" alt="VirusTotal scan result for koji_GeoTools.zip showing no security vendors flagged the file as malicious" loading="lazy">
+            <div>Size: <code>2,864,421 bytes</code></div>
+            <div>Published: <code>2026-07-08 13:47:08 UTC</code></div>
+            <div>SHA256: <code>4d749e7a7793cf41afd5ff7b8d5a3f818819aa425100ecdd729508ae70a1d759</code></div>
+            <div>VirusTotal: <code>malicious=0 suspicious=0</code></div>
           </div>
           <p class="trust-note" data-ja="SHA256が一致するかを確認すると、ダウンロードしたZIPがReleaseに掲載されたファイルと同一かどうかを確認できます。" data-en="Checking the SHA256 lets you confirm whether the downloaded ZIP is identical to the file published in the Release.">
             SHA256が一致するかを確認すると、ダウンロードしたZIPがReleaseに掲載されたファイルと同一かどうかを確認できます。
@@ -597,14 +362,14 @@
 
         <aside class="install-guide">
           <h3 data-ja="インストール手順" data-en="Installation Steps">インストール手順</h3>
-          <p data-ja="QGISプラグインとして使う場合は、通常のZIPプラグインと同じ手順でインストールします。" data-en="Install it using the usual QGIS ZIP-plugin workflow.">
-            QGISプラグインとして使う場合は、通常のZIPプラグインと同じ手順でインストールします。
+          <p data-ja="QGIS公式リポジトリからインストールする場合は、プラグイン管理画面で Koji GeoTools を検索してください。ZIPで入れる場合は以下の手順です。" data-en="To install from the official QGIS repository, search for Koji GeoTools in Plugin Manager. To install from ZIP, use the steps below.">
+            QGIS公式リポジトリからインストールする場合は、プラグイン管理画面で Koji GeoTools を検索してください。ZIPで入れる場合は以下の手順です。
           </p>
           <div class="install-steps">
             <div class="install-step">
               <div>
                 <strong data-ja="ZIPをダウンロード" data-en="Download the ZIP">ZIPをダウンロード</strong>
-                <span data-ja="GitHub Release v1.0.0 から `koji_GeoTools.zip` をダウンロードします。ZIPは展開しません。" data-en="Download koji_GeoTools.zip from GitHub Release v1.0.0. Do not unzip it.">GitHub Release v1.0.0 から `koji_GeoTools.zip` をダウンロードします。ZIPは展開しません。</span>
+                <span data-ja="GitHub Release v1.0.1 から koji_GeoTools.zip をダウンロードします。ZIPは展開しません。" data-en="Download koji_GeoTools.zip from GitHub Release v1.0.1. Do not unzip it.">GitHub Release v1.0.1 から koji_GeoTools.zip をダウンロードします。ZIPは展開しません。</span>
               </div>
             </div>
             <div class="install-step">
@@ -616,7 +381,7 @@
             <div class="install-step">
               <div>
                 <strong data-ja="ZIPからインストール" data-en="Install from ZIP">ZIPからインストール</strong>
-                <span data-ja="「ZIPからインストール」を選び、ダウンロードした `koji_GeoTools.zip` を指定します。" data-en="Choose Install from ZIP and select the downloaded koji_GeoTools.zip.">「ZIPからインストール」を選び、ダウンロードした `koji_GeoTools.zip` を指定します。</span>
+                <span data-ja="「ZIPからインストール」を選び、ダウンロードした koji_GeoTools.zip を指定します。" data-en="Choose Install from ZIP and select the downloaded koji_GeoTools.zip.">「ZIPからインストール」を選び、ダウンロードした koji_GeoTools.zip を指定します。</span>
               </div>
             </div>
           </div>
@@ -625,18 +390,18 @@
         <aside class="trust-card">
           <h3 data-ja="確認できること" data-en="What you can verify">確認できること</h3>
           <ul class="trust-list">
-            <li><a href="https://github.com/Code4Construct/koji_GeoTools/releases/tag/v1.0.0" target="_blank" data-ja="GitHub Releasesで配布ファイルを確認できます" data-en="Check the distributed file on GitHub Releases">GitHub Releasesで配布ファイルを確認できます</a></li>
-            <li><a href="https://github.com/Code4Construct/koji_GeoTools/releases/tag/v1.0.0" target="_blank" data-ja="SHA256でファイルの同一性を確認できます" data-en="Verify the file identity with SHA256">SHA256でファイルの同一性を確認できます</a></li>
-            <li><a href="https://github.com/Code4Construct/koji_GeoTools/actions" target="_blank" data-ja="GitHub Actionsでビルド履歴を確認できます" data-en="Review the build history in GitHub Actions">GitHub Actionsでビルド履歴を確認できます</a></li>
-            <li><a href="https://github.com/Code4Construct/koji_GeoTools" target="_blank" data-ja="GitHubでソースコードを確認できます" data-en="Read the source code on GitHub">GitHubでソースコードを確認できます</a></li>
-            <li><a href="https://www.virustotal.com/gui/file/72026d4e28f9ed12ae1848a8e5898c0007782d1e246f28ae49af9b90d3cadc21/detection" target="_blank" data-ja="VirusTotalで検査時点の検出状況を確認できます" data-en="Check detection status at the time of the scan on VirusTotal">VirusTotalで検査時点の検出状況を確認できます</a></li>
+            <li><a href="https://plugins.qgis.org/plugins/koji_GeoTools/#plugin-details" target="_blank" rel="noopener" data-ja="QGIS公式プラグインページで公開情報を確認" data-en="Check the public listing in the QGIS plugin repository">QGIS公式プラグインページで公開情報を確認</a></li>
+            <li><a href="https://github.com/Code4Construct/koji_GeoTools/releases/tag/v1.0.1" target="_blank" rel="noopener" data-ja="GitHub Releasesで配布ファイルを確認" data-en="Check the distributed file on GitHub Releases">GitHub Releasesで配布ファイルを確認</a></li>
+            <li><a href="https://github.com/Code4Construct/koji_GeoTools/actions" target="_blank" rel="noopener" data-ja="GitHub Actionsでビルド履歴を確認" data-en="Review the build history in GitHub Actions">GitHub Actionsでビルド履歴を確認</a></li>
+            <li><a href="https://github.com/Code4Construct/koji_GeoTools" target="_blank" rel="noopener" data-ja="GitHubでソースコードを確認" data-en="Read the source code on GitHub">GitHubでソースコードを確認</a></li>
+            <li><a href="https://www.virustotal.com/gui/file/4d749e7a7793cf41afd5ff7b8d5a3f818819aa425100ecdd729508ae70a1d759/detection" target="_blank" rel="noopener" data-ja="VirusTotalで確認結果を見る" data-en="Check the scan result on VirusTotal">VirusTotalで確認結果を見る</a></li>
           </ul>
-          <p class="trust-note" data-ja="このページのダウンロードボタンは、Release v1.0.0 のGitHubアセットに直接リンクしています。表示しているSHA256は、その配布ファイルを確認するための値です。" data-en="The download buttons on this page link directly to the GitHub asset for Release v1.0.0. The SHA256 shown here is the value for verifying that distributed file.">
-            このページのダウンロードボタンは、Release v1.0.0 のGitHubアセットに直接リンクしています。表示しているSHA256は、その配布ファイルを確認するための値です。
+          <p class="trust-note" data-ja="このページのダウンロードボタンは、Release v1.0.1 のGitHubアセットに直接リンクしています。表示しているSHA256は、その配布ファイルを確認するための値です。" data-en="The download buttons on this page link directly to the GitHub asset for Release v1.0.1. The SHA256 shown here is the value for verifying that distributed file.">
+            このページのダウンロードボタンは、Release v1.0.1 のGitHubアセットに直接リンクしています。表示しているSHA256は、その配布ファイルを確認するための値です。
           </p>
           <div class="trust-actions">
-            <a href="https://github.com/Code4Construct/koji_GeoTools/releases/download/v1.0.0/koji_GeoTools.zip" class="btn btn-primary" target="_blank" data-ja="ZIPをダウンロード" data-en="Download ZIP">ZIPをダウンロード</a>
-            <a href="https://github.com/Code4Construct/koji_GeoTools" class="btn btn-secondary" target="_blank" data-ja="GitHubで確認する" data-en="Check on GitHub">GitHubで確認する</a>
+            <a href="https://github.com/Code4Construct/koji_GeoTools/releases/download/v1.0.1/koji_GeoTools.zip" class="btn btn-primary" target="_blank" rel="noopener" data-ja="ZIPをダウンロード" data-en="Download ZIP">ZIPをダウンロード</a>
+            <a href="koji_GeoTools.html" class="btn btn-secondary" data-ja="概要ページへ" data-en="Overview page">概要ページへ</a>
           </div>
         </aside>
       </div>
@@ -647,10 +412,10 @@
 <footer>
   <a href="koji_GeoTools.html" class="footer-logo">koji<span>GeoTools</span></a>
   <div class="footer-nav">
-    <a href="kojigis-homepage.html" data-ja="kojiGIS" data-en="kojiGIS">kojiGIS</a>
+    <a href="kojigis-homepage.html">kojiGIS</a>
     <a href="index.html#developer" data-ja="開発者" data-en="Developer">開発者</a>
-    <a href="https://github.com/Code4Construct/koji_GeoTools/releases/tag/v1.0.0" target="_blank">Release</a>
-    <a href="https://github.com/Code4Construct/koji_GeoTools" target="_blank">GitHub</a>
+    <a href="https://github.com/Code4Construct/koji_GeoTools/releases/tag/v1.0.1" target="_blank" rel="noopener">Release</a>
+    <a href="https://plugins.qgis.org/plugins/koji_GeoTools/#plugin-details" target="_blank" rel="noopener">QGIS</a>
   </div>
 </footer>
 
@@ -723,6 +488,5 @@
         : 'ja';
   setLanguage(initialLang);
 </script>
-
 </body>
 </html>

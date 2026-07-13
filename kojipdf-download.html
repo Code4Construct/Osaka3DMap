@@ -539,8 +539,8 @@
       kojiPDF v2.1.0 のインストーラーと、配布ファイルを確認するための情報を掲載しています。
     </p>
     <div class="hero-actions">
-      <a href="downloads/kojiPDF_Setup_2.1.0.msi" class="btn btn-primary" download data-ja="本サイトからダウンロードする" data-en="Download from this site">本サイトからダウンロードする</a>
-      <a href="downloads/kojiPDF_Portable_2.1.0.zip" class="btn btn-primary" download data-ja="ZIPをダウンロードする" data-en="Download ZIP">ZIPをダウンロードする</a>
+      <a href="https://github.com/Code4Construct/kojiPDFv210/releases/download/v2.1.0/kojiPDF_Setup_2.1.0.msi" class="btn btn-primary" target="_blank" rel="noopener" data-ja="MSIをダウンロードする" data-en="Download MSI">MSIをダウンロードする</a>
+      <a href="https://github.com/Code4Construct/kojiPDFv210/releases/download/v2.1.0/kojiPDF_Portable_2.1.0.zip" class="btn btn-primary" target="_blank" rel="noopener" data-ja="Portable ZIPをダウンロードする" data-en="Download Portable ZIP">Portable ZIPをダウンロードする</a>
       <a href="https://www.vector.co.jp/soft/winnt/writing/se527459.html" class="btn btn-secondary" target="_blank" data-ja="Vectorからダウンロードする" data-en="Download from Vector">Vectorからダウンロードする</a>
       <a href="https://github.com/Code4Construct/kojiPDFv210/releases/tag/v2.1.0" class="btn btn-secondary" target="_blank" data-ja="GitHubからダウンロードする" data-en="Download from GitHub">GitHubからダウンロードする</a>
     </div>
@@ -576,13 +576,14 @@
         </div>
         <aside class="trust-verification">
           <h3 data-ja="配布ファイルの検証情報" data-en="Release Verification">配布ファイルの検証情報</h3>
-          <p data-ja="kojiPDF v2.1.0 のMSIについて、VirusTotalで52件のセキュリティベンダーで検査した結果、malicious=0 / suspicious=0 でした。" data-en="For the kojiPDF v2.1.0 MSI, VirusTotal scanned it with 52 security vendors, and the result was malicious=0 / suspicious=0.">
-            kojiPDF v2.1.0 のMSIについて、VirusTotalで52件のセキュリティベンダーで検査した結果、malicious=0 / suspicious=0 でした。
+          <p data-ja="GitHub Release v2.1.0 では、MSIのVirusTotal確認結果として malicious=0 / suspicious=0 が公開されています。" data-en="GitHub Release v2.1.0 publishes the MSI VirusTotal check result as malicious=0 / suspicious=0.">
+            GitHub Release v2.1.0 では、MSIのVirusTotal確認結果として malicious=0 / suspicious=0 が公開されています。
           </p>
           <div class="trust-release-meta" aria-label="kojiPDF v2.1.0 verification details">
             <div><strong>kojiPDF v2.1.0</strong></div>
             <div>MSI: <code>kojiPDF_Setup_2.1.0.msi</code></div>
-            <div>SHA256: <code>f4be5b39c3f0357837b92b800bb35cec91087f86bc371ec30c80f7a7a925c3ef</code></div>
+            <div>MSI Size: <code>39,436,288 bytes</code></div>
+            <div>MSI SHA256: <code>a316c5db1cb3ba5ad646134ddd2b45a221c8bcfba4b29530488cc03cb57973ab</code></div>
             <div>VirusTotal: <code>malicious=0 suspicious=0</code></div>
           </div>
           <div class="trust-vt-window" aria-label="VirusTotal scan result screenshot">
@@ -619,7 +620,7 @@
             <li><a href="https://github.com/Code4Construct/kojiPDFv210/releases/tag/v2.1.0" target="_blank" data-ja="SHA256でファイルの同一性を確認できます" data-en="Verify the file identity with SHA256">SHA256でファイルの同一性を確認できます</a></li>
             <li><a href="https://github.com/Code4Construct/kojiPDFv210/actions" target="_blank" data-ja="GitHub Actionsでビルド履歴を確認できます" data-en="Review the build history in GitHub Actions">GitHub Actionsでビルド履歴を確認できます</a></li>
             <li><a href="https://github.com/Code4Construct/kojiPDFv210" target="_blank" data-ja="GitHubでソースコードを確認できます" data-en="Read the source code on GitHub">GitHubでソースコードを確認できます</a></li>
-            <li><a href="https://www.virustotal.com/gui/file/f4be5b39c3f0357837b92b800bb35cec91087f86bc371ec30c80f7a7a925c3ef/detection" target="_blank" data-ja="VirusTotalで検査時点の検出状況を確認できます" data-en="Check detection status at the time of the scan on VirusTotal">VirusTotalで検査時点の検出状況を確認できます</a></li>
+            <li><a href="https://www.virustotal.com/gui/file/a316c5db1cb3ba5ad646134ddd2b45a221c8bcfba4b29530488cc03cb57973ab/detection" target="_blank" data-ja="VirusTotalで検査時点の検出状況を確認できます" data-en="Check detection status at the time of the scan on VirusTotal">VirusTotalで検査時点の検出状況を確認できます</a></li>
           </ul>
           <p class="trust-note" data-ja="もしkojiPDFが役に立った場合は、GitHubスター、Vectorでの評価、感想や紹介などで応援していただけると、将来的なコード署名取得や信頼性向上につながります。" data-en="If kojiPDF helps you, a GitHub star, Vector rating, feedback, or a short introduction can help improve trust and support future code-signing efforts.">
             もしkojiPDFが役に立った場合は、GitHubスター、Vectorでの評価、感想や紹介などで応援していただけると、将来的なコード署名取得や信頼性向上につながります。
@@ -657,7 +658,12 @@
     'kojipdf-download.html',
     'kojiPDF-tutorial.html',
     'kojigis-homepage.html',
-    'koji_GeoTools.html'
+    'koji_GeoTools.html',
+    'koji_geotools-download.html',
+    'koji_MapBundle.html',
+    'koji_MapBundle-download.html',
+    'koji_DataQuery.html',
+    'koji_DataQuery-download.html'
   ]);
 
   const updateLocalizedLinks = (lang) => {

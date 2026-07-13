@@ -20,13 +20,11 @@
     --light-mid: #93a9b6;
     --white: #fffdf7;
   }
-
   html { scroll-behavior: smooth; }
-
   body {
     min-height: 100vh;
     background:
-      linear-gradient(rgba(255, 244, 214, 0.91), rgba(255, 244, 214, 0.96)),
+      linear-gradient(rgba(255, 244, 214, 0.92), rgba(255, 244, 214, 0.97)),
       linear-gradient(90deg, rgba(6, 42, 70, 0.05) 1px, transparent 1px),
       linear-gradient(rgba(6, 42, 70, 0.05) 1px, transparent 1px),
       var(--paper);
@@ -36,7 +34,6 @@
     font-weight: 300;
     overflow-x: hidden;
   }
-
   body::before {
     content: '';
     position: fixed;
@@ -45,7 +42,6 @@
     pointer-events: none;
     z-index: 1000;
   }
-
   nav {
     min-height: 64px;
     padding: 0 60px;
@@ -59,48 +55,15 @@
     top: 0;
     z-index: 100;
   }
-
-  .nav-brand {
-    color: var(--paper);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-  }
-
-  .nav-mark {
-    width: 42px;
-    height: 42px;
-    border: 0;
-    background: transparent;
-    display: grid;
-    place-items: center;
-    padding: 0;
-    overflow: hidden;
-  }
-
-  .nav-mark img,
-  .feature-icon img,
-  .product-head img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-  }
-
-  .nav-logo {
-    font-family: 'Shippori Mincho', serif;
-    font-size: 22px;
-    font-weight: 800;
-  }
-
+  .nav-brand, .nav-right, .nav-links, .language-toggle { display: flex; align-items: center; }
+  .nav-brand { color: var(--paper); text-decoration: none; gap: 10px; flex-shrink: 0; }
+  .nav-mark { width: 42px; height: 42px; display: grid; place-items: center; overflow: hidden; }
+  .nav-mark img, .feature-icon img, .product-head img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .nav-logo { font-family: 'Shippori Mincho', serif; font-size: 22px; font-weight: 800; }
   .nav-logo span { color: #942113; }
-  .nav-right, .nav-links, .language-toggle { display: flex; align-items: center; }
   .nav-right { gap: 28px; }
   .nav-links { gap: 28px; list-style: none; }
   .language-toggle { gap: 8px; }
-
   .nav-links a {
     color: var(--light-mid);
     font-family: 'DM Mono', monospace;
@@ -109,10 +72,7 @@
     text-transform: uppercase;
     text-decoration: none;
   }
-
-  .nav-links a:hover,
-  .nav-links a.active { color: var(--gold); }
-
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
   .lang-btn {
     width: 40px;
     height: 40px;
@@ -126,12 +86,10 @@
     overflow: hidden;
     transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
   }
-
   .lang-btn:hover { transform: translateY(-1px); }
   .lang-btn.active { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(233,191,96,0.18); }
   .lang-btn img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
   main { overflow: hidden; }
-
   .hero {
     min-height: calc(86vh - 64px);
     padding: 78px 60px 56px;
@@ -147,7 +105,6 @@
     gap: 54px;
     position: relative;
   }
-
   .hero::after {
     content: '';
     position: absolute;
@@ -156,7 +113,6 @@
     background: linear-gradient(180deg, transparent, rgba(255,244,214,0.11));
     pointer-events: none;
   }
-
   .kicker {
     font-family: 'DM Mono', monospace;
     font-size: 11px;
@@ -165,7 +121,6 @@
     text-transform: uppercase;
     margin-bottom: 18px;
   }
-
   h1 {
     font-family: 'Shippori Mincho', serif;
     font-size: clamp(42px, 7vw, 84px);
@@ -173,9 +128,7 @@
     font-weight: 800;
     margin-bottom: 22px;
   }
-
   h1 .brand-accent { color: #942113; }
-
   .hero-lead {
     max-width: 760px;
     color: rgba(255,244,214,0.88);
@@ -183,15 +136,7 @@
     line-height: 2;
     margin-bottom: 30px;
   }
-
-  .hero-actions,
-  .download-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    align-items: center;
-  }
-
+  .hero-actions, .download-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
   .button {
     min-height: 48px;
     border-radius: 4px;
@@ -208,58 +153,23 @@
     line-height: 1.25;
     transition: transform 0.18s, background 0.18s, border-color 0.18s;
   }
-
   .button:hover { transform: translateY(-2px); background: #f0ca72; }
   .button.secondary { background: transparent; color: var(--paper); border-color: rgba(255,244,214,0.45); }
   .button.secondary:hover { border-color: var(--gold); background: rgba(255,244,214,0.08); }
-
   .hero-product {
     background: rgba(255,250,240,0.96);
     color: var(--ink);
     border: 1px solid rgba(233,191,96,0.65);
     box-shadow: 0 26px 64px rgba(0,0,0,0.26);
     padding: 24px;
+    position: relative;
+    z-index: 1;
   }
-
-  .product-head {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(6,42,70,0.13);
-  }
-
-  .product-head img {
-    width: 76px;
-    height: 76px;
-    background: transparent;
-    border: 0;
-    padding: 0;
-  }
-
-  .product-head strong {
-    display: block;
-    font-family: 'Shippori Mincho', serif;
-    font-size: 26px;
-    line-height: 1.2;
-  }
-
-  .product-head span {
-    display: block;
-    margin-top: 5px;
-    color: var(--mid);
-    font-size: 13px;
-    line-height: 1.5;
-  }
-
-  .spec-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1px;
-    background: rgba(6,42,70,0.14);
-    margin-top: 20px;
-  }
-
+  .product-head { display: flex; align-items: center; gap: 16px; padding-bottom: 20px; border-bottom: 1px solid rgba(6,42,70,0.13); }
+  .product-head img { width: 76px; height: 76px; background: transparent; border: 0; padding: 0; }
+  .product-head strong { display: block; font-family: 'Shippori Mincho', serif; font-size: 26px; line-height: 1.2; }
+  .product-head span { display: block; margin-top: 5px; color: var(--mid); font-size: 13px; line-height: 1.5; }
+  .spec-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: rgba(6,42,70,0.14); margin-top: 20px; }
   .spec { min-height: 74px; background: var(--white); padding: 13px; }
   .spec span {
     display: block;
@@ -271,28 +181,11 @@
     margin-bottom: 6px;
   }
   .spec strong { display: block; font-size: 15px; line-height: 1.45; }
-
-  section {
-    width: min(1140px, calc(100% - 40px));
-    margin: 0 auto;
-    padding: 72px 0;
-  }
-
+  section { width: min(1140px, calc(100% - 40px)); margin: 0 auto; padding: 72px 0; }
   .section-head { max-width: 860px; margin-bottom: 30px; }
-  .section-head h2 {
-    font-family: 'Shippori Mincho', serif;
-    font-size: clamp(30px, 4vw, 48px);
-    line-height: 1.16;
-    margin-bottom: 14px;
-  }
+  .section-head h2 { font-family: 'Shippori Mincho', serif; font-size: clamp(30px, 4vw, 48px); line-height: 1.16; margin-bottom: 14px; }
   .section-head p { color: var(--mid); font-size: 15px; line-height: 1.9; }
-
-  .feature-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 14px;
-  }
-
+  .feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
   .feature-card {
     min-height: 300px;
     background: rgba(255,250,240,0.82);
@@ -303,29 +196,10 @@
     flex-direction: column;
     gap: 16px;
   }
-
-  .feature-icon {
-    width: 88px;
-    height: 88px;
-    display: grid;
-    place-items: center;
-    background: transparent;
-    border: 0;
-    padding: 0;
-    margin-bottom: 2px;
-    overflow: hidden;
-  }
-
-  .feature-icon.extra-large {
-    width: 118px;
-    height: 118px;
-    margin-top: -14px;
-    margin-bottom: -12px;
-  }
-
+  .feature-icon { width: 88px; height: 88px; display: grid; place-items: center; overflow: hidden; }
+  .feature-icon.extra-large { width: 118px; height: 118px; margin-top: -14px; margin-bottom: -12px; }
   .feature-card h3 { font-size: 20px; line-height: 1.45; }
   .feature-card p { color: var(--mid); font-size: 14px; line-height: 1.85; }
-
   .workflow-band {
     width: 100%;
     max-width: none;
@@ -335,7 +209,6 @@
     border-top: 4px solid var(--gold);
     border-bottom: 4px solid var(--gold);
   }
-
   .workflow-inner {
     width: min(1140px, calc(100% - 40px));
     margin: 0 auto;
@@ -344,11 +217,9 @@
     gap: 46px;
     align-items: start;
   }
-
   .workflow-inner .section-head { margin-bottom: 0; }
   .workflow-inner .section-head p { color: rgba(255,244,214,0.78); }
   .timeline { display: grid; gap: 12px; counter-reset: steps; }
-
   .step {
     counter-increment: steps;
     display: grid;
@@ -359,7 +230,6 @@
     border: 1px solid rgba(255,244,214,0.18);
     padding: 18px;
   }
-
   .step::before {
     content: counter(steps, decimal-leading-zero);
     width: 52px;
@@ -371,10 +241,8 @@
     font-family: 'DM Mono', monospace;
     font-weight: 500;
   }
-
   .step strong { display: block; margin-bottom: 5px; font-size: 16px; }
   .step span { display: block; color: rgba(255,244,214,0.78); font-size: 14px; line-height: 1.75; }
-
   .download-panel {
     background: linear-gradient(105deg, rgba(32,130,95,0.12), rgba(233,191,96,0.18)), var(--surface);
     border: 1px solid var(--line);
@@ -385,29 +253,14 @@
     align-items: center;
     box-shadow: 0 18px 44px rgba(70, 55, 20, 0.08);
   }
-
-  .download-panel h2 {
-    font-family: 'Shippori Mincho', serif;
-    font-size: clamp(30px, 4vw, 46px);
-    line-height: 1.18;
-    margin-bottom: 14px;
-  }
-
+  .download-panel h2 { font-family: 'Shippori Mincho', serif; font-size: clamp(30px, 4vw, 46px); line-height: 1.18; margin-bottom: 14px; }
   .download-panel p { color: var(--mid); font-size: 15px; line-height: 1.9; margin-bottom: 22px; }
   .download-panel .button.secondary { color: var(--ink); border-color: rgba(6,42,70,0.28); background: rgba(255,253,247,0.52); }
   .download-panel .button.secondary:hover { background: var(--white); border-color: var(--green); }
   .download-meta { display: grid; gap: 10px; }
-  .download-meta div {
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    background: var(--white);
-    border: 1px solid rgba(6,42,70,0.1);
-    padding: 12px 14px;
-  }
+  .download-meta div { display: flex; justify-content: space-between; gap: 16px; background: var(--white); border: 1px solid rgba(6,42,70,0.1); padding: 12px 14px; }
   .download-meta span { color: var(--mid); font-size: 13px; }
   .download-meta strong { text-align: right; font-size: 13px; }
-
   footer {
     width: min(1140px, calc(100% - 40px));
     margin: 0 auto;
@@ -421,34 +274,25 @@
     letter-spacing: 1.4px;
     text-transform: uppercase;
   }
-
   footer a { color: var(--ink); text-decoration: none; }
   footer a:hover { color: var(--green); }
-
   @media (max-width: 960px) {
     nav { padding: 0 24px; }
-    .hero,
-    .workflow-inner,
-    .download-panel { grid-template-columns: 1fr; }
+    .hero, .workflow-inner, .download-panel { grid-template-columns: 1fr; }
     .hero { padding: 56px 28px 48px; }
     .feature-grid { grid-template-columns: 1fr; }
   }
-
   @media (max-width: 680px) {
     nav { align-items: flex-start; flex-direction: column; padding: 14px 20px; }
     .nav-right { width: 100%; align-items: flex-start; flex-direction: column; gap: 16px; }
     .nav-links { flex-wrap: wrap; gap: 16px; }
     .hero { min-height: auto; }
-    .hero-actions,
-    .download-actions { align-items: stretch; flex-direction: column; }
+    .hero-actions, .download-actions { align-items: stretch; flex-direction: column; }
     .button { width: 100%; }
-    section,
-    .workflow-inner,
-    footer { width: min(100% - 28px, 1140px); }
+    section, .workflow-inner, footer { width: min(100% - 28px, 1140px); }
     section { padding: 54px 0; }
     .spec-grid { grid-template-columns: 1fr; }
-    .download-panel,
-    .hero-product { padding: 22px; }
+    .download-panel, .hero-product { padding: 22px; }
     footer { flex-direction: column; }
   }
 </style>
@@ -467,12 +311,8 @@
       <li><a href="koji_geotools-download.html" data-ja="ダウンロード" data-en="Download">ダウンロード</a></li>
     </ul>
     <div class="language-toggle" aria-label="Language selector">
-      <button type="button" class="lang-btn ja active" data-lang="ja" aria-label="日本語">
-        <img src="images/flag_jp.svg" alt="">
-      </button>
-      <button type="button" class="lang-btn en" data-lang="en" aria-label="English">
-        <img src="images/flag_gb.svg" alt="">
-      </button>
+      <button type="button" class="lang-btn ja active" data-lang="ja" aria-label="日本語"><img src="images/flag_jp.svg" alt=""></button>
+      <button type="button" class="lang-btn en" data-lang="en" aria-label="English"><img src="images/flag_gb.svg" alt=""></button>
     </div>
   </div>
 </nav>
@@ -482,12 +322,12 @@
     <div>
       <div class="kicker" data-ja="QGIS vector workflow launcher" data-en="QGIS vector workflow launcher">QGIS vector workflow launcher</div>
       <h1>koji <span class="brand-accent">GeoTools</span></h1>
-      <p class="hero-lead" data-ja="施設配置や調査エリア検討でよく使うベクター処理を、QGISのツールバーから呼び出せるプラグインです。レイヤセット作成、調査エリア設定、選択ポリゴン内の地物抽出を、プロジェクトごとの設定保存とあわせて扱えます。" data-en="A QGIS plugin that gathers common vector workflows into one toolbar launcher: layer-set creation, study-area setup, and extraction of visible features inside selected polygons, with settings saved per project.">
-        施設配置や調査エリア検討でよく使うベクター処理を、QGISのツールバーから呼び出せるプラグインです。レイヤセット作成、調査エリア設定、選択ポリゴン内の地物抽出を、プロジェクトごとの設定保存とあわせて扱えます。
+      <p class="hero-lead" data-ja="レイヤセット作成、調査エリア設定、選択ポリゴン内の地物抽出をQGISのツールバーから呼び出せるプラグインです。公式QGISプラグインリポジトリで公開され、最新安定版は v1.0.1 です。" data-en="A QGIS toolbar launcher for layer-set creation, study-area setup, and feature extraction inside selected polygons. It is published in the official QGIS Python Plugins Repository, with v1.0.1 as the latest stable version.">
+        レイヤセット作成、調査エリア設定、選択ポリゴン内の地物抽出をQGISのツールバーから呼び出せるプラグインです。公式QGISプラグインリポジトリで公開され、最新安定版は v1.0.1 です。
       </p>
       <div class="hero-actions">
         <a class="button" href="koji_geotools-download.html" data-ja="ダウンロードページへ" data-en="Go to Download">ダウンロードページへ</a>
-        <a class="button secondary" href="#features" data-ja="機能を見る" data-en="View Features">機能を見る</a>
+        <a class="button secondary" href="https://plugins.qgis.org/plugins/koji_GeoTools/#plugin-details" target="_blank" rel="noopener" data-ja="QGIS公式ページ" data-en="QGIS Plugin Page">QGIS公式ページ</a>
       </div>
     </div>
     <aside class="hero-product" aria-label="koji GeoTools plugin summary">
@@ -495,14 +335,14 @@
         <img src="images/koji-geotools-icon.png" alt="koji GeoTools icon">
         <div>
           <strong>Koji GeoTools</strong>
-          <span data-ja="QGIS 3.28以降 / Pythonプラグイン" data-en="QGIS 3.28+ / Python plugin">QGIS 3.28以降 / Pythonプラグイン</span>
+          <span data-ja="QGIS 3.28.0 以上 / Pythonプラグイン" data-en="QGIS 3.28.0+ / Python plugin">QGIS 3.28.0 以上 / Pythonプラグイン</span>
         </div>
       </div>
       <div class="spec-grid">
-        <div class="spec"><span data-ja="Version" data-en="Version">Version</span><strong>1.0.0</strong></div>
-        <div class="spec"><span data-ja="Category" data-en="Category">Category</span><strong>Vector</strong></div>
-        <div class="spec"><span data-ja="License" data-en="License">License</span><strong>GPL-2.0-or-later</strong></div>
-        <div class="spec"><span data-ja="Author" data-en="Author">Author</span><strong>Code4Construct</strong></div>
+        <div class="spec"><span>Version</span><strong>1.0.1</strong></div>
+        <div class="spec"><span>QGIS</span><strong>3.28.0 - 3.99.0</strong></div>
+        <div class="spec"><span>Tags</span><strong>vector / python / polygon / buffer</strong></div>
+        <div class="spec"><span>Author</span><strong>Code4Construct</strong></div>
       </div>
     </aside>
   </header>
@@ -510,32 +350,31 @@
   <section id="features">
     <div class="section-head">
       <div class="kicker" data-ja="Included tools" data-en="Included tools">Included tools</div>
-      <h2 data-ja="日常的なGIS作業を、扱いやすい3つの処理に整理。" data-en="Three practical tools for recurring GIS work.">日常的なGIS作業を、扱いやすい3つの処理に整理。</h2>
-      <p data-ja="プラグイン本体はQGISのツールバーとプラグインメニューに追加されるランチャーです。必要な処理を選び、各ツールのダイアログから出力先、CRS、レイヤ名、スタイル、プロジェクトごとの設定を指定できます。" data-en="The plugin appears in the QGIS toolbar and plugin menu as a single launcher. Open it, choose a workflow, and set output paths, CRS, layer names, styles, and project-specific settings from each tool dialog.">
-        プラグイン本体はQGISのツールバーとプラグインメニューに追加されるランチャーです。必要な処理を選び、各ツールのダイアログから出力先、CRS、レイヤ名、スタイル、プロジェクトごとの設定を指定できます。
+      <h2 data-ja="日常的なGIS作業を、3つの実用ツールに整理。" data-en="Three practical tools for recurring GIS work.">日常的なGIS作業を、3つの実用ツールに整理。</h2>
+      <p data-ja="プラグインはQGISのツールバーとプラグインメニューにランチャーとして追加されます。出力先、CRS、レイヤ名、スタイル、プロジェクトごとの設定を各ツールのダイアログで指定できます。" data-en="The plugin appears in the QGIS toolbar and plugin menu as a launcher. Open a tool dialog to set output paths, CRS, layer names, styles, and project-specific settings.">
+        プラグインはQGISのツールバーとプラグインメニューにランチャーとして追加されます。出力先、CRS、レイヤ名、スタイル、プロジェクトごとの設定を各ツールのダイアログで指定できます。
       </p>
     </div>
-
     <div class="feature-grid">
       <article class="feature-card">
         <div class="feature-icon"><img src="images/koji-geotools-layer-sets-icon.png" alt=""></div>
         <h3 data-ja="レイヤセット作成" data-en="Layer Set Creation">レイヤセット作成</h3>
-        <p data-ja="CSVデータから施設配置検討用のレイヤセットを作成します。座標フィールド、CRS、GeoPackage出力、プロジェクトへの追加、表示・階層・ラベル・シンボル設定をまとめて扱えます。" data-en="Creates layer sets from CSV data for facility-planning maps. It supports coordinate fields, CRS, GeoPackage output, adding results to the project, and display, hierarchy, label, and symbol settings.">
+        <p data-ja="CSVデータから施設配置検討用のレイヤセットを作成します。座標フィールド、CRS、GeoPackage出力、プロジェクトへの追加、表示・階層・ラベル・シンボル設定をまとめて扱えます。" data-en="Creates layer sets from CSV data for facility-planning maps, including coordinate fields, CRS, GeoPackage output, project loading, hierarchy, labels, and symbology.">
           CSVデータから施設配置検討用のレイヤセットを作成します。座標フィールド、CRS、GeoPackage出力、プロジェクトへの追加、表示・階層・ラベル・シンボル設定をまとめて扱えます。
         </p>
       </article>
       <article class="feature-card">
         <div class="feature-icon"><img src="images/koji-geotools-ward-buffer-icon.png" alt=""></div>
         <h3 data-ja="調査エリア設定" data-en="Study Area Setup">調査エリア設定</h3>
-        <p data-ja="選択したポイント地物、または地図上でクリックした座標を調査中心として保存し、任意半径の調査ポリゴン枠を作成します。行政区域ポリゴンと結合するか、円バッファ単体で保存するかを選べます。" data-en="Saves a study center from selected point features or a clicked map coordinate, then creates a study-area polygon outline with any radius. You can join it with an administrative polygon layer or save the circular buffer by itself.">
-          選択したポイント地物、または地図上でクリックした座標を調査中心として保存し、任意半径の調査ポリゴン枠を作成します。行政区域ポリゴンと結合するか、円バッファ単体で保存するかを選べます。
+        <p data-ja="選択したポイント地物、または地図上でクリックした座標を調査中心として保存し、任意半径の調査ポリゴン枠を作成します。行政区域ポリゴンとの結合、またはバッファ単体での保存を選べます。" data-en="Saves a study center from selected point features or a clicked map coordinate, then creates a study-area polygon outline with any radius. It can join with an administrative polygon layer or save the circular buffer by itself.">
+          選択したポイント地物、または地図上でクリックした座標を調査中心として保存し、任意半径の調査ポリゴン枠を作成します。行政区域ポリゴンとの結合、またはバッファ単体での保存を選べます。
         </p>
       </article>
       <article class="feature-card">
         <div class="feature-icon extra-large"><img src="images/koji-geotools-polygon-extract-icon.png" alt=""></div>
         <h3 data-ja="ポリゴン内の地物抽出" data-en="Features Inside Polygon">ポリゴン内の地物抽出</h3>
-        <p data-ja="選択ポリゴン内にある表示中のポイント地物・ポリゴン地物を抽出して統合します。スタイル継承、source FID付与、出力レイヤ名やグループ名の指定にも対応しています。" data-en="Extracts and merges visible point and polygon features inside selected polygons, with support for inherited styles, source FID fields, and custom output layer and group names.">
-          選択ポリゴン内にある表示中のポイント地物・ポリゴン地物を抽出して統合します。スタイル継承、source FID付与、出力レイヤ名やグループ名の指定にも対応しています。
+        <p data-ja="選択ポリゴン内にある表示中のポイント地物・ポリゴン地物を抽出して統合します。スタイル継承、Source FID付与、出力レイヤ名やグループ名の指定にも対応しています。" data-en="Extracts and merges visible point and polygon features inside selected polygons, with support for inherited styles, source FID fields, and custom output layer and group names.">
+          選択ポリゴン内にある表示中のポイント地物・ポリゴン地物を抽出して統合します。スタイル継承、Source FID付与、出力レイヤ名やグループ名の指定にも対応しています。
         </p>
       </article>
     </div>
@@ -544,29 +383,29 @@
   <div class="workflow-band">
     <div class="workflow-inner">
       <div class="section-head">
-        <div class="kicker" data-ja="Study area dialog" data-en="Study area dialog">Study area dialog</div>
-        <h2 data-ja="調査エリア設定は、現在のGUI文言に合わせています。" data-en="Study-area wording matches the current GUI.">調査エリア設定は、現在のGUI文言に合わせています。</h2>
-        <p data-ja="ダイアログでは「調査ポリゴン枠」と「調査中心」に分かれ、行政区域との結合、中心点の形、色、大きさ、枠線を画面上で指定できます。設定はプリセットやJSONとして呼び出し・保存できます。" data-en="The dialog is organized into Study Polygon Outline and Study Center sections. It lets you choose administrative-polygon joining, study-center shape, colors, size, and outline, and can load or save presets and JSON settings.">
-          ダイアログでは「調査ポリゴン枠」と「調査中心」に分かれ、行政区域との結合、中心点の形、色、大きさ、枠線を画面上で指定できます。設定はプリセットやJSONとして呼び出し・保存できます。
+        <div class="kicker" data-ja="Plugin details" data-en="Plugin details">Plugin details</div>
+        <h2 data-ja="公式リポジトリの公開情報に合わせています。" data-en="Aligned with the official plugin repository.">公式リポジトリの公開情報に合わせています。</h2>
+        <p data-ja="QGIS公式ページでは、最新安定版 1.0.1、対応QGIS 3.28.0 - 3.99.0、タグ vector / python / polygon / buffer / geoprocessing / qgis / study area として掲載されています。" data-en="The official QGIS page lists latest stable version 1.0.1, QGIS compatibility 3.28.0 - 3.99.0, and the tags vector, python, polygon, buffer, geoprocessing, qgis, and study area.">
+          QGIS公式ページでは、最新安定版 1.0.1、対応QGIS 3.28.0 - 3.99.0、タグ vector / python / polygon / buffer / geoprocessing / qgis / study area として掲載されています。
         </p>
       </div>
       <div class="timeline">
         <div class="step">
           <div>
-            <strong data-ja="出力先と保存先CRSを指定" data-en="Set output and CRS">出力先と保存先CRSを指定</strong>
-            <span data-ja="出力GeoPackage、保存先CRS、レイヤフォルダ名を最初に指定します。" data-en="Choose the output GeoPackage, target CRS, and layer-folder name first.">出力GeoPackage、保存先CRS、レイヤフォルダ名を最初に指定します。</span>
+            <strong data-ja="QGIS公式リポジトリからインストール" data-en="Install from the QGIS repository">QGIS公式リポジトリからインストール</strong>
+            <span data-ja="QGISのプラグイン管理画面で Koji GeoTools を検索して、安定版をインストールできます。" data-en="Search for Koji GeoTools in QGIS Plugin Manager and install the stable release.">QGISのプラグイン管理画面で Koji GeoTools を検索して、安定版をインストールできます。</span>
           </div>
         </div>
         <div class="step">
           <div>
-            <strong data-ja="調査ポリゴン枠を設定" data-en="Configure the study polygon outline">調査ポリゴン枠を設定</strong>
-            <span data-ja="円の中心は「ポイント地物を選択して描く」または「地図上をクリックして座標から描く」から選択できます。" data-en="The center can come from selected point features or a clicked map coordinate.">円の中心は「ポイント地物を選択して描く」または「地図上をクリックして座標から描く」から選択できます。</span>
+            <strong data-ja="GitHub Release ZIPも利用可能" data-en="GitHub Release ZIP is also available">GitHub Release ZIPも利用可能</strong>
+            <span data-ja="Release v1.0.1 には GitHub Actions で作成された koji_GeoTools.zip が公開されています。" data-en="Release v1.0.1 includes koji_GeoTools.zip built by GitHub Actions.">Release v1.0.1 には GitHub Actions で作成された koji_GeoTools.zip が公開されています。</span>
           </div>
         </div>
         <div class="step">
           <div>
-            <strong data-ja="行政区域結合と調査中心を調整" data-en="Adjust joining and study-center style">行政区域結合と調査中心を調整</strong>
-            <span data-ja="「行政区域ポリゴンと結合する」をONにすると、結合するポリゴンレイヤを選択します。調査中心は☆、〇、□、△、＋から形を選べます。" data-en="When Join with administrative polygon is enabled, choose the polygon layer to join. The study center can be styled as star, circle, square, triangle, or cross.">「行政区域ポリゴンと結合する」をONにすると、結合するポリゴンレイヤを選択します。調査中心は☆、〇、□、△、＋から形を選べます。</span>
+            <strong data-ja="SHA256で配布ファイルを確認" data-en="Verify the distributed file with SHA256">SHA256で配布ファイルを確認</strong>
+            <span data-ja="ダウンロードページには v1.0.1 のSHA256、VirusTotalリンク、インストール手順をまとめています。" data-en="The download page includes the v1.0.1 SHA256, VirusTotal link, and installation steps.">ダウンロードページには v1.0.1 のSHA256、VirusTotalリンク、インストール手順をまとめています。</span>
           </div>
         </div>
       </div>
@@ -577,19 +416,19 @@
     <div class="download-panel">
       <div>
         <div class="kicker" data-ja="Download" data-en="Download">Download</div>
-        <h2 data-ja="配布ファイルと検証情報は、専用ページで確認できます。" data-en="Download and verification details are on a separate page.">配布ファイルと検証情報は、専用ページで確認できます。</h2>
-        <p data-ja="koji GeoTools V1.0.0 のZIP、SHA256、VirusTotal検査結果、インストール手順をダウンロードページにまとめています。" data-en="The download page includes the koji GeoTools V1.0.0 ZIP, SHA256, VirusTotal scan result, and installation steps.">
-          koji GeoTools V1.0.0 のZIP、SHA256、VirusTotal検査結果、インストール手順をダウンロードページにまとめています。
+        <h2 data-ja="最新版 v1.0.1 のダウンロードと検証情報。" data-en="Download and verification details for v1.0.1.">最新版 v1.0.1 のダウンロードと検証情報。</h2>
+        <p data-ja="koji GeoTools v1.0.1 のZIP、SHA256、VirusTotal確認結果、QGISでのインストール手順をダウンロードページにまとめています。" data-en="The download page includes the koji GeoTools v1.0.1 ZIP, SHA256, VirusTotal check, and QGIS installation steps.">
+          koji GeoTools v1.0.1 のZIP、SHA256、VirusTotal確認結果、QGISでのインストール手順をダウンロードページにまとめています。
         </p>
         <div class="download-actions">
           <a class="button" href="koji_geotools-download.html" data-ja="ダウンロードページへ" data-en="Open Download Page">ダウンロードページへ</a>
-          <a class="button secondary" href="https://github.com/Code4Construct/koji_GeoTools" data-ja="GitHubを開く" data-en="Open GitHub">GitHubを開く</a>
+          <a class="button secondary" href="https://github.com/Code4Construct/koji_GeoTools/releases/tag/v1.0.1" target="_blank" rel="noopener" data-ja="GitHub Release" data-en="GitHub Release">GitHub Release</a>
         </div>
       </div>
       <div class="download-meta" aria-label="Download details">
         <div><span data-ja="ファイル" data-en="File">ファイル</span><strong>koji_GeoTools.zip</strong></div>
-        <div><span data-ja="バージョン" data-en="Version">バージョン</span><strong>1.0.0</strong></div>
-        <div><span data-ja="最小QGIS" data-en="Minimum QGIS">最小QGIS</span><strong>3.28</strong></div>
+        <div><span data-ja="バージョン" data-en="Version">バージョン</span><strong>1.0.1</strong></div>
+        <div><span data-ja="最小QGIS" data-en="Minimum QGIS">最小QGIS</span><strong>3.28.0</strong></div>
         <div><span data-ja="形式" data-en="Format">形式</span><strong>QGIS ZIP plugin</strong></div>
       </div>
     </div>
@@ -599,7 +438,7 @@
 <footer>
   <a href="index.html#developer" data-ja="開発者紹介" data-en="Developer introduction">開発者紹介</a>
   <a href="kojigis-homepage.html" data-ja="kojiGISへ戻る" data-en="Back to kojiGIS">kojiGISへ戻る</a>
-  <span data-ja="Koji GeoTools v1.0.0" data-en="Koji GeoTools v1.0.0">Koji GeoTools v1.0.0</span>
+  <span>Koji GeoTools v1.0.1</span>
 </footer>
 
 <script>

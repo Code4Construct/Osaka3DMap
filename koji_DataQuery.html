@@ -58,7 +58,7 @@
   }
   .nav-brand { color: var(--paper); text-decoration: none; display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
   .nav-mark { width: 42px; height: 42px; display: grid; place-items: center; overflow: hidden; flex: 0 0 42px; }
-  .nav-mark img, .feature-icon img, .product-head img { width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+  .nav-mark img, .feature-icon img, .product-head img { width: 100%; height: 100%; object-fit: contain; display: block; }
   .nav-logo { font-family: 'Shippori Mincho', serif; font-size: 22px; font-weight: 800; }
   .nav-logo span { color: var(--teal); }
   .nav-right, .nav-links, .language-toggle { display: flex; align-items: center; }
@@ -94,7 +94,7 @@
     padding: 78px 60px 56px;
     background:
       linear-gradient(120deg, rgba(6,42,70,0.94), rgba(6,42,70,0.82)),
-      radial-gradient(circle at 74% 28%, rgba(15,139,141,0.42), transparent 34%),
+      radial-gradient(circle at 74% 28%, rgba(155,124,240,0.38), transparent 34%),
       radial-gradient(circle at 88% 72%, rgba(167,45,114,0.25), transparent 30%),
       var(--ink);
     border-bottom: 4px solid var(--gold);
@@ -135,6 +135,8 @@
     border: 1px solid rgba(233,191,96,0.65);
     box-shadow: 0 26px 64px rgba(0,0,0,0.26);
     padding: 24px;
+    position: relative;
+    z-index: 1;
   }
   .product-head { display: flex; align-items: center; gap: 16px; padding-bottom: 20px; border-bottom: 1px solid rgba(6,42,70,0.13); }
   .product-head img { width: 76px; height: 76px; }
@@ -162,7 +164,7 @@
   .step::before { content: counter(steps, decimal-leading-zero); width: 52px; height: 52px; display: grid; place-items: center; background: var(--gold); color: var(--ink); font-family: 'DM Mono', monospace; font-weight: 500; }
   .step strong { display: block; margin-bottom: 5px; font-size: 16px; }
   .step span { display: block; color: rgba(255,244,214,0.78); font-size: 14px; line-height: 1.75; }
-  .download-panel { background: linear-gradient(105deg, rgba(15,139,141,0.12), rgba(233,191,96,0.18)), var(--surface); border: 1px solid var(--line); padding: 30px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 390px); gap: 30px; align-items: center; box-shadow: 0 18px 44px rgba(70,55,20,0.08); }
+  .download-panel { background: linear-gradient(105deg, rgba(155,124,240,0.14), rgba(233,191,96,0.18)), var(--surface); border: 1px solid var(--line); padding: 30px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 390px); gap: 30px; align-items: center; box-shadow: 0 18px 44px rgba(70,55,20,0.08); }
   .download-panel h2 { font-family: 'Shippori Mincho', serif; font-size: clamp(30px, 4vw, 46px); line-height: 1.18; margin-bottom: 14px; }
   .download-panel p { color: var(--mid); font-size: 15px; line-height: 1.9; margin-bottom: 22px; }
   .download-panel .button.secondary { color: var(--ink); border-color: rgba(6,42,70,0.28); background: rgba(255,253,247,0.52); }
@@ -218,25 +220,27 @@
     <div>
       <div class="kicker" data-ja="QGIS data preparation workflow" data-en="QGIS data preparation workflow">QGIS data preparation workflow</div>
       <h1>koji <span class="brand-accent">DataQuery</span></h1>
-      <p class="hero-lead" data-ja="CSVやGeoPackageの整理、集計、LEFT JOIN、UNIONをQGIS上で扱うためのデータ前処理プラグインです。QGIS版のPower Queryのように、地図作業の前に必要な表データの整形を、プロジェクト単位の設定保存とあわせて進められます。" data-en="A QGIS data-preparation plugin for CSV and GeoPackage cleanup, aggregation, LEFT JOIN, and UNION workflows. It aims for a Power Query-like experience inside QGIS, with project-based preset storage for repeatable table preparation.">CSVやGeoPackageの整理、集計、LEFT JOIN、UNIONをQGIS上で扱うためのデータ前処理プラグインです。QGIS版のPower Queryのように、地図作業の前に必要な表データの整形を、プロジェクト単位の設定保存とあわせて進められます。</p>
+      <p class="hero-lead" data-ja="CSVとGeoPackageの整形、集計、LEFT JOIN、UNIONをQGIS上で扱うためのデータ前処理プラグインです。GitHub Releaseで配布される最新版は v1.0.2 です。" data-en="A QGIS data-preparation plugin for CSV and GeoPackage cleanup, aggregation, LEFT JOIN, and UNION workflows. The latest GitHub Release is v1.0.2.">
+        CSVとGeoPackageの整形、集計、LEFT JOIN、UNIONをQGIS上で扱うためのデータ前処理プラグインです。GitHub Releaseで配布される最新版は v1.0.2 です。
+      </p>
       <div class="hero-actions">
         <a class="button" href="koji_DataQuery-download.html" data-ja="ダウンロードページへ" data-en="Go to Download">ダウンロードページへ</a>
-        <a class="button secondary" href="#features" data-ja="機能を見る" data-en="View Features">機能を見る</a>
+        <a class="button secondary" href="https://github.com/Code4Construct/koji_DataQuery/releases/tag/v1.0.2" target="_blank" rel="noopener" data-ja="GitHub Release" data-en="GitHub Release">GitHub Release</a>
       </div>
     </div>
     <aside class="hero-product" aria-label="koji DataQuery plugin summary">
       <div class="product-head">
         <img src="images/koji-dataquery-icon.png" alt="koji DataQuery icon">
         <div>
-          <strong>Koji DataQuery</strong>
-          <span data-ja="QGIS 3.0以上 / Pythonプラグイン" data-en="QGIS 3.0+ / Python plugin">QGIS 3.0以上 / Pythonプラグイン</span>
+          <strong>koji DataQuery</strong>
+          <span data-ja="QGIS 3.0 以上 / Pythonプラグイン" data-en="QGIS 3.0+ / Python plugin">QGIS 3.0 以上 / Pythonプラグイン</span>
         </div>
       </div>
       <div class="spec-grid">
-        <div class="spec"><span>Version</span><strong>1.0.0</strong></div>
-        <div class="spec"><span>Category</span><strong>Vector</strong></div>
-        <div class="spec"><span>Status</span><strong>Stable</strong></div>
-        <div class="spec"><span>Author</span><strong>Code4Construct</strong></div>
+        <div class="spec"><span>Version</span><strong>1.0.2</strong></div>
+        <div class="spec"><span>Repository</span><strong>Code4Construct</strong></div>
+        <div class="spec"><span>Format</span><strong>QGIS ZIP plugin</strong></div>
+        <div class="spec"><span>File</span><strong>koji_DataQuery.zip</strong></div>
       </div>
     </aside>
   </header>
@@ -244,24 +248,32 @@
   <section id="features">
     <div class="section-head">
       <div class="kicker" data-ja="Included tools" data-en="Included tools">Included tools</div>
-      <h2 data-ja="地図に載せる前のデータ整理を、QGISの中で完結しやすくします。" data-en="Prepare tabular data before mapping, without leaving QGIS.">地図に載せる前のデータ整理を、QGISの中で完結しやすくします。</h2>
-      <p data-ja="CSVとGeoPackageを対象に、不要列の整理、型や値の確認、集計クエリ、LEFT JOIN、UNIONを扱います。設定は保存済みQGISプロジェクトの近くに作られる `&lt;project name&gt;_KDQconfig` フォルダへ保存され、同じ作業を繰り返しやすくします。" data-en="It handles cleanup, value checks, aggregation queries, LEFT JOIN, and UNION for CSV and GeoPackage data. Presets are stored near the saved QGIS project in a `&lt;project name&gt;_KDQconfig` folder, making repeat work easier.">CSVとGeoPackageを対象に、不要列の整理、型や値の確認、集計クエリ、LEFT JOIN、UNIONを扱います。設定は保存済みQGISプロジェクトの近くに作られる `&lt;project name&gt;_KDQconfig` フォルダへ保存され、同じ作業を繰り返しやすくします。</p>
+      <h2 data-ja="地図に載せる前のデータ整形を、QGISの中で完結しやすくします。" data-en="Prepare tabular data before mapping, without leaving QGIS.">地図に載せる前のデータ整形を、QGISの中で完結しやすくします。</h2>
+      <p data-ja="CSVとGeoPackageを対象に、不要な列の整理、値の確認、集計クエリ、LEFT JOIN、UNIONを扱います。QGISプロジェクトの近くに設定を保存して、同じ作業を繰り返しやすくします。" data-en="It handles cleanup, value checks, aggregation queries, LEFT JOIN, and UNION for CSV and GeoPackage data. Settings can be stored near the QGIS project to make repeat work easier.">
+        CSVとGeoPackageを対象に、不要な列の整理、値の確認、集計クエリ、LEFT JOIN、UNIONを扱います。QGISプロジェクトの近くに設定を保存して、同じ作業を繰り返しやすくします。
+      </p>
     </div>
     <div class="feature-grid">
       <article class="feature-card">
         <div class="feature-icon"><img src="images/koji-dataquery-csv-cleanup.svg" alt=""></div>
-        <h3 data-ja="CSV / GeoPackage前処理" data-en="CSV / GeoPackage Cleanup">CSV / GeoPackage前処理</h3>
-        <p data-ja="CSVやGeoPackageを読み込み、地図化や結合の前に必要なデータ整理を行います。列構成を見直し、以降の集計や結合作業へ渡しやすい形に整えます。" data-en="Load CSV or GeoPackage data and clean it before mapping or joining. Review the column structure and prepare a reliable shape for later query workflows.">CSVやGeoPackageを読み込み、地図化や結合の前に必要なデータ整理を行います。列構成を見直し、以降の集計や結合作業へ渡しやすい形に整えます。</p>
+        <h3 data-ja="CSV / GeoPackage 前処理" data-en="CSV / GeoPackage Cleanup">CSV / GeoPackage 前処理</h3>
+        <p data-ja="CSVやGeoPackageを読み込み、地図化や結合の前に必要なデータ整理を行います。列構成を確認し、後続の集計や結合作業へ渡しやすい形に整えます。" data-en="Load CSV or GeoPackage data and clean it before mapping or joining. Review the column structure and prepare a reliable shape for later query workflows.">
+          CSVやGeoPackageを読み込み、地図化や結合の前に必要なデータ整理を行います。列構成を確認し、後続の集計や結合作業へ渡しやすい形に整えます。
+        </p>
       </article>
       <article class="feature-card">
         <div class="feature-icon"><img src="images/koji-dataquery-csv-query.svg" alt=""></div>
         <h3 data-ja="CSV集計クエリ" data-en="CSV Aggregation Queries">CSV集計クエリ</h3>
-        <p data-ja="CSVデータを集計し、業務で使う単位にまとめます。表の確認から加工までをQGIS側で扱うことで、地図レイヤへつなぐ前処理を短くできます。" data-en="Aggregate CSV data into the units needed for day-to-day work. Keeping table review and processing inside QGIS shortens the path from raw data to map layers.">CSVデータを集計し、業務で使う単位にまとめます。表の確認から加工までをQGIS側で扱うことで、地図レイヤへつなぐ前処理を短くできます。</p>
+        <p data-ja="CSVデータを集計し、業務で使う単位にまとめます。表の確認から加工までをQGIS側で扱うことで、地図レイヤへつなぐ前処理を短くできます。" data-en="Aggregate CSV data into the units needed for day-to-day work. Keeping table review and processing inside QGIS shortens the path from raw data to map layers.">
+          CSVデータを集計し、業務で使う単位にまとめます。表の確認から加工までをQGIS側で扱うことで、地図レイヤへつなぐ前処理を短くできます。
+        </p>
       </article>
       <article class="feature-card">
         <div class="feature-icon"><img src="images/koji-dataquery-join.svg" alt=""></div>
         <h3 data-ja="LEFT JOIN / UNION" data-en="LEFT JOIN / UNION">LEFT JOIN / UNION</h3>
-        <p data-ja="CSV同士、またはGeoPackageを含むデータで、LEFT JOINとUNIONのワークフローを扱います。複数の表を重ね、地図作業で使うひとつのデータへ整えます。" data-en="Run LEFT JOIN and UNION workflows across CSV data and GeoPackage-based sources. Combine multiple tables into one dataset for mapping work.">CSV同士、またはGeoPackageを含むデータで、LEFT JOINとUNIONのワークフローを扱います。複数の表を重ね、地図作業で使うひとつのデータへ整えます。</p>
+        <p data-ja="CSV同士、またはGeoPackageを含むデータで、LEFT JOINとUNIONのワークフローを扱います。複数の表を重ね、地図作業で使うひとつのデータへ整えます。" data-en="Run LEFT JOIN and UNION workflows across CSV data and GeoPackage-based sources. Combine multiple tables into one dataset for mapping work.">
+          CSV同士、またはGeoPackageを含むデータで、LEFT JOINとUNIONのワークフローを扱います。複数の表を重ね、地図作業で使うひとつのデータへ整えます。
+        </p>
       </article>
     </div>
   </section>
@@ -269,14 +281,16 @@
   <div class="workflow-band">
     <div class="workflow-inner">
       <div class="section-head">
-        <div class="kicker" data-ja="Preset workflow" data-en="Preset workflow">Preset workflow</div>
-        <h2 data-ja="プロジェクトごとの設定保存で、同じ加工を再実行しやすくします。" data-en="Project-based presets make repeat processing easier.">プロジェクトごとの設定保存で、同じ加工を再実行しやすくします。</h2>
-        <p data-ja="プリセットや既定設定は、保存済みQGISプロジェクトの近くに作成される設定フォルダへ保存されます。プロジェクトを先に保存しておくことで、作業ごとの設定を安全に呼び出せます。" data-en="Presets and default settings are stored beside the saved QGIS project. Saving the project first lets each tool load and store repeatable settings safely.">プリセットや既定設定は、保存済みQGISプロジェクトの近くに作成される設定フォルダへ保存されます。プロジェクトを先に保存しておくことで、作業ごとの設定を安全に呼び出せます。</p>
+        <div class="kicker" data-ja="Release details" data-en="Release details">Release details</div>
+        <h2 data-ja="GitHub Release v1.0.2 に合わせています。" data-en="Aligned with GitHub Release v1.0.2.">GitHub Release v1.0.2 に合わせています。</h2>
+        <p data-ja="Release v1.0.2 には GitHub Actions で作成された koji_DataQuery.zip が公開されています。SHA256とVirusTotal確認リンクもRelease本文に掲載されています。" data-en="Release v1.0.2 includes koji_DataQuery.zip built by GitHub Actions. The SHA256 and VirusTotal check link are also published in the Release notes.">
+          Release v1.0.2 には GitHub Actions で作成された koji_DataQuery.zip が公開されています。SHA256とVirusTotal確認リンクもRelease本文に掲載されています。
+        </p>
       </div>
       <div class="timeline">
         <div class="step"><div><strong data-ja="入力データを選ぶ" data-en="Choose source data">入力データを選ぶ</strong><span data-ja="CSVまたはGeoPackageを選び、列やキー項目を確認します。" data-en="Select a CSV or GeoPackage source and review columns and key fields.">CSVまたはGeoPackageを選び、列やキー項目を確認します。</span></div></div>
         <div class="step"><div><strong data-ja="加工方法を指定する" data-en="Configure the process">加工方法を指定する</strong><span data-ja="前処理、集計、LEFT JOIN、UNIONなど、目的に合う処理と出力先を設定します。" data-en="Set the cleanup, aggregation, LEFT JOIN, or UNION workflow and choose the output destination.">前処理、集計、LEFT JOIN、UNIONなど、目的に合う処理と出力先を設定します。</span></div></div>
-        <div class="step"><div><strong data-ja="プリセットとして保存" data-en="Save as a preset">プリセットとして保存</strong><span data-ja="`&lt;project name&gt;_KDQconfig` に設定を保存し、次回の同じデータ整形に再利用できます。" data-en="Store settings under `&lt;project name&gt;_KDQconfig` and reuse them for the next similar preparation task.">`&lt;project name&gt;_KDQconfig` に設定を保存し、次回の同じデータ整形に再利用できます。</span></div></div>
+        <div class="step"><div><strong data-ja="ZIPからインストール" data-en="Install from ZIP">ZIPからインストール</strong><span data-ja="ダウンロードページのZIPを展開せず、QGISのプラグイン管理画面から指定します。" data-en="Use the ZIP from the download page directly in QGIS Plugin Manager without unzipping it.">ダウンロードページのZIPを展開せず、QGISのプラグイン管理画面から指定します。</span></div></div>
       </div>
     </div>
   </div>
@@ -285,16 +299,18 @@
     <div class="download-panel">
       <div>
         <div class="kicker" data-ja="Download" data-en="Download">Download</div>
-        <h2 data-ja="配布ファイルとインストール手順は、専用ページで確認できます。" data-en="Download and installation details are on a separate page.">配布ファイルとインストール手順は、専用ページで確認できます。</h2>
-        <p data-ja="koji DataQuery v1.0.0 のQGIS ZIPプラグイン、GitHubリポジトリ、インストール手順をダウンロードページにまとめています。" data-en="The download page includes the koji DataQuery v1.0.0 QGIS ZIP plugin, GitHub repository links, and installation steps.">koji DataQuery v1.0.0 のQGIS ZIPプラグイン、GitHubリポジトリ、インストール手順をダウンロードページにまとめています。</p>
+        <h2 data-ja="最新版 v1.0.2 のダウンロードと検証情報。" data-en="Download and verification details for v1.0.2.">最新版 v1.0.2 のダウンロードと検証情報。</h2>
+        <p data-ja="koji DataQuery v1.0.2 のQGIS ZIPプラグイン、SHA256、VirusTotal確認結果、インストール手順をダウンロードページにまとめています。" data-en="The download page includes the koji DataQuery v1.0.2 QGIS ZIP plugin, SHA256, VirusTotal check, and installation steps.">
+          koji DataQuery v1.0.2 のQGIS ZIPプラグイン、SHA256、VirusTotal確認結果、インストール手順をダウンロードページにまとめています。
+        </p>
         <div class="download-actions">
           <a class="button" href="koji_DataQuery-download.html" data-ja="ダウンロードページへ" data-en="Open Download Page">ダウンロードページへ</a>
-          <a class="button secondary" href="https://github.com/Code4Construct/koji_DataQuery" target="_blank" data-ja="GitHubを開く" data-en="Open GitHub">GitHubを開く</a>
+          <a class="button secondary" href="https://github.com/Code4Construct/koji_DataQuery/releases/tag/v1.0.2" target="_blank" rel="noopener" data-ja="GitHub Release" data-en="GitHub Release">GitHub Release</a>
         </div>
       </div>
       <div class="download-meta" aria-label="Download details">
         <div><span data-ja="ファイル" data-en="File">ファイル</span><strong>koji_DataQuery.zip</strong></div>
-        <div><span data-ja="バージョン" data-en="Version">バージョン</span><strong>1.0.0</strong></div>
+        <div><span data-ja="バージョン" data-en="Version">バージョン</span><strong>1.0.2</strong></div>
         <div><span data-ja="最小QGIS" data-en="Minimum QGIS">最小QGIS</span><strong>3.0</strong></div>
         <div><span data-ja="形式" data-en="Format">形式</span><strong>QGIS ZIP plugin</strong></div>
       </div>
@@ -305,7 +321,7 @@
 <footer>
   <a href="index.html#developer" data-ja="開発者紹介" data-en="Developer introduction">開発者紹介</a>
   <a href="kojigis-homepage.html" data-ja="kojiGISへ戻る" data-en="Back to kojiGIS">kojiGISへ戻る</a>
-  <span data-ja="Koji DataQuery v1.0.0" data-en="Koji DataQuery v1.0.0">Koji DataQuery v1.0.0</span>
+  <span>koji DataQuery v1.0.2</span>
 </footer>
 
 <script>

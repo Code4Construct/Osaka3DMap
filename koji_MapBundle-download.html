@@ -13,7 +13,7 @@
     --paper: #fff4d6;
     --surface: #fffaf0;
     --gold: #e9bf60;
-    --green: #23824E;
+    --green: #23824e;
     --mid: #466172;
     --light-mid: #93a9b6;
     --line: #d7b865;
@@ -23,7 +23,7 @@
   body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; }
   nav { background: var(--ink); border-bottom: 1px solid var(--ink-2); padding: 0 60px; display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 64px; position: sticky; top: 0; z-index: 100; }
   .nav-brand { display: flex; align-items: center; gap: 10px; color: var(--paper); text-decoration: none; flex-shrink: 0; }
-  .nav-icon { width: 46px; height: 46px; max-width: 46px; max-height: 46px; object-fit: contain; display: block; }
+  .nav-icon { width: 46px; height: 46px; object-fit: contain; display: block; }
   .nav-logo { font-family: 'Shippori Mincho', serif; font-size: 22px; font-weight: 800; letter-spacing: -1px; }
   .nav-logo span { color: var(--green); }
   .nav-version { margin-left: 6px; color: var(--paper) !important; font-size: 0.78em; letter-spacing: -0.04em; }
@@ -53,7 +53,7 @@
   .trust { background: linear-gradient(rgba(255,250,240,0.7), rgba(255,250,240,0.88)), var(--surface); border-bottom: 1px solid rgba(6,42,70,0.08); }
   .section-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--mid); margin-bottom: 28px; display: flex; align-items: center; gap: 16px; }
   .section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
-  .trust-layout { display: grid; grid-template-columns: 1fr; gap: 28px; align-items: start; max-width: 860px; }
+  .trust-layout { display: grid; grid-template-columns: 1fr; gap: 28px; align-items: start; max-width: 880px; }
   .trust h2 { font-family: 'Shippori Mincho', serif; font-size: clamp(30px, 4vw, 48px); line-height: 1.25; letter-spacing: -1px; margin-bottom: 18px; }
   .trust-subtitle { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; color: #7a520f; font-size: 13px; font-weight: 700; }
   .trust-subtitle::before, .trust-subtitle::after { content: ''; flex: 1; height: 1px; background: #c49731; }
@@ -104,15 +104,15 @@
 <nav>
   <a href="koji_MapBundle.html" class="nav-brand">
     <img src="images/koji-mapbundle-icon.png" alt="koji MapBundle" class="nav-icon">
-    <span class="nav-logo">koji<span>MapBundle</span><span class="nav-version">v1</span></span>
+    <span class="nav-logo">koji<span>MapBundle</span><span class="nav-version">v1.0.1</span></span>
   </a>
   <div class="nav-right">
     <ul class="nav-links">
-      <li><a href="kojigis-homepage.html" data-ja="kojiGIS" data-en="kojiGIS">kojiGIS</a></li>
+      <li><a href="kojigis-homepage.html">kojiGIS</a></li>
       <li><a href="index.html#developer" data-ja="開発者" data-en="Developer">開発者</a></li>
       <li><a href="koji_MapBundle.html" data-ja="概要" data-en="Overview">概要</a></li>
       <li><a href="koji_MapBundle-download.html" class="active" data-ja="ダウンロード" data-en="Download">ダウンロード</a></li>
-      <li><a href="https://github.com/Code4Construct/koji_MapBundle" target="_blank">GitHub</a></li>
+      <li><a href="https://github.com/Code4Construct/koji_MapBundle" target="_blank" rel="noopener">GitHub</a></li>
     </ul>
     <div class="language-toggle" aria-label="Language selector">
       <button type="button" class="lang-btn ja active" data-lang="ja" aria-label="日本語"><img src="images/flag_jp.svg" alt=""></button>
@@ -124,12 +124,14 @@
 <header class="page-hero">
   <div class="page-hero-inner">
     <div class="eyebrow" data-ja="ダウンロード" data-en="Download">ダウンロード</div>
-    <h1 data-ja="ダウンロード" data-en="Download">ダウンロード</h1>
-    <p data-ja="koji MapBundle v1.0.0 のQGISプラグインZIPと、配布ファイルを確認するための情報を掲載しています。GitHub ActionsでビルドされたReleaseアセットをそのまま利用してください。" data-en="Download the koji MapBundle v1.0.0 QGIS plugin ZIP and review information for verifying the distributed file. Use the Release asset built by GitHub Actions.">koji MapBundle v1.0.0 のQGISプラグインZIPと、配布ファイルを確認するための情報を掲載しています。GitHub ActionsでビルドされたReleaseアセットをそのまま利用してください。</p>
+    <h1 data-ja="最新版 v1.0.1" data-en="Latest v1.0.1">最新版 v1.0.1</h1>
+    <p data-ja="koji MapBundle v1.0.1 のQGISプラグインZIPと、配布ファイルを確認するための情報を掲載しています。QGIS公式プラグインリポジトリからのインストール、またはGitHub ReleaseのZIPを利用できます。" data-en="Download the koji MapBundle v1.0.1 QGIS plugin ZIP and review information for verifying the distributed file. You can install it from the official QGIS plugin repository or use the ZIP from GitHub Releases.">
+      koji MapBundle v1.0.1 のQGISプラグインZIPと、配布ファイルを確認するための情報を掲載しています。QGIS公式プラグインリポジトリからのインストール、またはGitHub ReleaseのZIPを利用できます。
+    </p>
     <div class="hero-actions">
-      <a href="https://github.com/Code4Construct/koji_MapBundle/releases/download/v1.0.0/koji_MapBundle.zip" class="btn btn-primary" target="_blank" data-ja="ZIPをダウンロードする" data-en="Download ZIP">ZIPをダウンロードする</a>
-      <a href="https://github.com/Code4Construct/koji_MapBundle/releases/tag/v1.0.0" class="btn btn-secondary" target="_blank" data-ja="GitHubからダウンロードする" data-en="Download from GitHub">GitHubからダウンロードする</a>
-      <a href="koji_MapBundle.html" class="btn btn-secondary" data-ja="紹介ページを見る" data-en="View overview">紹介ページを見る</a>
+      <a href="https://github.com/Code4Construct/koji_MapBundle/releases/download/v1.0.1/koji_MapBundle.zip" class="btn btn-primary" target="_blank" rel="noopener" data-ja="ZIPをダウンロード" data-en="Download ZIP">ZIPをダウンロード</a>
+      <a href="https://github.com/Code4Construct/koji_MapBundle/releases/tag/v1.0.1" class="btn btn-secondary" target="_blank" rel="noopener" data-ja="GitHub Release" data-en="GitHub Release">GitHub Release</a>
+      <a href="https://plugins.qgis.org/plugins/koji_MapBundle/#plugin-details" class="btn btn-secondary" target="_blank" rel="noopener" data-ja="QGIS公式ページ" data-en="QGIS Plugin Page">QGIS公式ページ</a>
     </div>
   </div>
 </header>
@@ -141,49 +143,63 @@
       <div class="trust-layout">
         <div>
           <h2 data-ja="QGISのZIPプラグインとしてインストールできます。" data-en="Install it as a QGIS ZIP plugin.">QGISのZIPプラグインとしてインストールできます。</h2>
-          <div class="trust-subtitle" data-ja="Release v1.0.0" data-en="Release v1.0.0">Release v1.0.0</div>
-          <p data-ja="koji MapBundleは、選択したレイヤ、スタイル、SVGシンボル、印刷レイアウトをZIP形式の地図バンドルとして書き出し・読み込みするQGISプラグインです。" data-en="koji MapBundle is a QGIS plugin for exporting and importing selected layers, styles, SVG symbols, and print layouts as ZIP-based map bundles.">koji MapBundleは、選択したレイヤ、スタイル、SVGシンボル、印刷レイアウトをZIP形式の地図バンドルとして書き出し・読み込みするQGISプラグインです。</p>
-          <p data-ja="配布ファイルはGitHub Releasesの `koji_MapBundle.zip` です。ZIPは展開せず、QGISのプラグイン管理画面から「ZIPからインストール」を選んで指定してください。" data-en="The distributed file is koji_MapBundle.zip on GitHub Releases. Do not unzip it first; select it from QGIS Plugin Manager using Install from ZIP.">配布ファイルはGitHub Releasesの `koji_MapBundle.zip` です。ZIPは展開せず、QGISのプラグイン管理画面から「ZIPからインストール」を選んで指定してください。</p>
-          <p data-ja="このページでは、Releaseページ、SHA256、VirusTotal確認リンク、GitHub Actionsで作成されたReleaseアセットへのリンクをまとめています。これらは安全性を完全に保証するものではありませんが、配布ファイルの確認材料として利用できます。" data-en="This page links to the Release page, SHA256, VirusTotal check, and the Release asset produced by GitHub Actions. These do not completely guarantee safety, but they provide useful information for checking the distributed file.">このページでは、Releaseページ、SHA256、VirusTotal確認リンク、GitHub Actionsで作成されたReleaseアセットへのリンクをまとめています。これらは安全性を完全に保証するものではありませんが、配布ファイルの確認材料として利用できます。</p>
+          <div class="trust-subtitle">Release v1.0.1</div>
+          <p data-ja="koji MapBundleは、QGISのレイヤ、スタイル、シンボル、レイアウトを再利用可能な地図バンドルとして書き出し・読み込みするプラグインです。QGIS公式プラグインリポジトリでは、最新安定版 1.0.1、対応QGIS 3.28.0 - 3.99.0 として掲載されています。" data-en="koji MapBundle is a QGIS plugin for exporting and importing layers, styles, symbols, and layouts as reusable map bundles. The official QGIS plugin repository lists latest stable version 1.0.1 and compatibility with QGIS 3.28.0 - 3.99.0.">
+            koji MapBundleは、QGISのレイヤ、スタイル、シンボル、レイアウトを再利用可能な地図バンドルとして書き出し・読み込みするプラグインです。QGIS公式プラグインリポジトリでは、最新安定版 1.0.1、対応QGIS 3.28.0 - 3.99.0 として掲載されています。
+          </p>
+          <p data-ja="配布ファイルはGitHub Release v1.0.1 の koji_MapBundle.zip です。ZIPは展開せず、QGISのプラグイン管理画面から「ZIPからインストール」を選んで指定してください。" data-en="The distributed file is koji_MapBundle.zip on GitHub Release v1.0.1. Do not unzip it first; select it from QGIS Plugin Manager using Install from ZIP.">
+            配布ファイルはGitHub Release v1.0.1 の koji_MapBundle.zip です。ZIPは展開せず、QGISのプラグイン管理画面から「ZIPからインストール」を選んで指定してください。
+          </p>
+          <p data-ja="GitHub ReleaseにはZIPのSHA256とVirusTotal確認リンクが掲載されています。これらは安全性を完全に保証するものではありませんが、配布ファイルを確認するための参考情報として利用できます。" data-en="The GitHub Release publishes the ZIP SHA256 and VirusTotal check link. These do not completely guarantee safety, but they provide useful information for checking the distributed file.">
+            GitHub ReleaseにはZIPのSHA256とVirusTotal確認リンクが掲載されています。これらは安全性を完全に保証するものではありませんが、配布ファイルを確認するための参考情報として利用できます。
+          </p>
         </div>
 
         <aside class="trust-verification">
           <h3 data-ja="配布ファイルの検証情報" data-en="Release Verification">配布ファイルの検証情報</h3>
-          <p data-ja="GitHub Release v1.0.0 のアセット情報では、配布ZIPのSHA256とVirusTotal確認リンクが公開されています。VirusTotalは malicious=0 / suspicious=0 です。" data-en="The GitHub Release v1.0.0 asset information publishes the ZIP SHA256 and VirusTotal check link. VirusTotal reports malicious=0 / suspicious=0.">GitHub Release v1.0.0 のアセット情報では、配布ZIPのSHA256とVirusTotal確認リンクが公開されています。VirusTotalは malicious=0 / suspicious=0 です。</p>
-          <div class="trust-release-meta" aria-label="koji MapBundle v1.0.0 verification details">
-            <div><strong>koji MapBundle v1.0.0</strong></div>
+          <p data-ja="Release v1.0.1 のZIPは GitHub Actions によって作成され、VirusTotal確認結果は malicious=0 / suspicious=0 と公開されています。" data-en="The Release v1.0.1 ZIP was built by GitHub Actions, and the published VirusTotal check reports malicious=0 / suspicious=0.">
+            Release v1.0.1 のZIPは GitHub Actions によって作成され、VirusTotal確認結果は malicious=0 / suspicious=0 と公開されています。
+          </p>
+          <div class="trust-release-meta" aria-label="koji MapBundle v1.0.1 verification details">
+            <div><strong>koji MapBundle v1.0.1</strong></div>
             <div>ZIP: <code>koji_MapBundle.zip</code></div>
-            <div>Size: <code>244,901 bytes</code></div>
-            <div>Published: <code>2026-07-05 03:01:05 UTC</code></div>
-            <div>SHA256: <code>c087bb918a566ae04860c2a3bf10c24b2b4b72c0ad6ffd12e0d9ff11e15118c7</code></div>
+            <div>Size: <code>281,688 bytes</code></div>
+            <div>Published: <code>2026-07-08 13:13:54 UTC</code></div>
+            <div>SHA256: <code>4e01ffec5c00732194efe5efd7ec7c537d86cbac569dccf41d0ec16d56eba1ec</code></div>
             <div>VirusTotal: <code>malicious=0 suspicious=0</code></div>
           </div>
-          <p class="trust-note" data-ja="SHA256が一致するかを確認すると、ダウンロードしたZIPがReleaseに掲載されたファイルと同一かどうかを確認できます。" data-en="Checking the SHA256 lets you confirm whether the downloaded ZIP is identical to the file published in the Release.">SHA256が一致するかを確認すると、ダウンロードしたZIPがReleaseに掲載されたファイルと同一かどうかを確認できます。</p>
+          <p class="trust-note" data-ja="SHA256が一致するかを確認すると、ダウンロードしたZIPがReleaseに掲載されたファイルと同一かどうかを確認できます。" data-en="Checking the SHA256 lets you confirm whether the downloaded ZIP is identical to the file published in the Release.">
+            SHA256が一致するかを確認すると、ダウンロードしたZIPがReleaseに掲載されたファイルと同一かどうかを確認できます。
+          </p>
         </aside>
 
         <aside class="install-guide">
           <h3 data-ja="インストール手順" data-en="Installation Steps">インストール手順</h3>
-          <p data-ja="QGISプラグインとして使う場合は、通常のZIPプラグインと同じ手順でインストールします。" data-en="Install it using the usual QGIS ZIP-plugin workflow.">QGISプラグインとして使う場合は、通常のZIPプラグインと同じ手順でインストールします。</p>
+          <p data-ja="QGIS公式リポジトリからインストールする場合は、プラグイン管理画面で koji MapBundle を検索してください。ZIPで入れる場合は以下の手順です。" data-en="To install from the official QGIS repository, search for koji MapBundle in Plugin Manager. To install from ZIP, use the steps below.">
+            QGIS公式リポジトリからインストールする場合は、プラグイン管理画面で koji MapBundle を検索してください。ZIPで入れる場合は以下の手順です。
+          </p>
           <div class="install-steps">
-            <div class="install-step"><div><strong data-ja="ZIPをダウンロード" data-en="Download the ZIP">ZIPをダウンロード</strong><span data-ja="GitHub Release v1.0.0 から `koji_MapBundle.zip` をダウンロードします。ZIPは展開しません。" data-en="Download koji_MapBundle.zip from GitHub Release v1.0.0. Do not unzip it.">GitHub Release v1.0.0 から `koji_MapBundle.zip` をダウンロードします。ZIPは展開しません。</span></div></div>
+            <div class="install-step"><div><strong data-ja="ZIPをダウンロード" data-en="Download the ZIP">ZIPをダウンロード</strong><span data-ja="GitHub Release v1.0.1 から koji_MapBundle.zip をダウンロードします。ZIPは展開しません。" data-en="Download koji_MapBundle.zip from GitHub Release v1.0.1. Do not unzip it.">GitHub Release v1.0.1 から koji_MapBundle.zip をダウンロードします。ZIPは展開しません。</span></div></div>
             <div class="install-step"><div><strong data-ja="QGISのプラグイン管理を開く" data-en="Open QGIS Plugin Manager">QGISのプラグイン管理を開く</strong><span data-ja="QGISで「プラグイン」メニューから「プラグインの管理とインストール」を開きます。" data-en="In QGIS, open Manage and Install Plugins from the Plugins menu.">QGISで「プラグイン」メニューから「プラグインの管理とインストール」を開きます。</span></div></div>
-            <div class="install-step"><div><strong data-ja="ZIPからインストール" data-en="Install from ZIP">ZIPからインストール</strong><span data-ja="「ZIPからインストール」を選び、ダウンロードした `koji_MapBundle.zip` を指定します。" data-en="Choose Install from ZIP and select the downloaded koji_MapBundle.zip.">「ZIPからインストール」を選び、ダウンロードした `koji_MapBundle.zip` を指定します。</span></div></div>
+            <div class="install-step"><div><strong data-ja="ZIPからインストール" data-en="Install from ZIP">ZIPからインストール</strong><span data-ja="「ZIPからインストール」を選び、ダウンロードした koji_MapBundle.zip を指定します。" data-en="Choose Install from ZIP and select the downloaded koji_MapBundle.zip.">「ZIPからインストール」を選び、ダウンロードした koji_MapBundle.zip を指定します。</span></div></div>
           </div>
         </aside>
 
         <aside class="trust-card">
           <h3 data-ja="確認できること" data-en="What you can verify">確認できること</h3>
           <ul class="trust-list">
-            <li><a href="https://github.com/Code4Construct/koji_MapBundle/releases/tag/v1.0.0" target="_blank" data-ja="GitHub Releasesで配布ファイルを確認できます" data-en="Check the distributed file on GitHub Releases">GitHub Releasesで配布ファイルを確認できます</a></li>
-            <li><a href="https://github.com/Code4Construct/koji_MapBundle/releases/tag/v1.0.0" target="_blank" data-ja="SHA256でファイルの同一性を確認できます" data-en="Verify the file identity with SHA256">SHA256でファイルの同一性を確認できます</a></li>
-            <li><a href="https://github.com/Code4Construct/koji_MapBundle/actions" target="_blank" data-ja="GitHub Actionsでビルド履歴を確認できます" data-en="Review the build history in GitHub Actions">GitHub Actionsでビルド履歴を確認できます</a></li>
-            <li><a href="https://github.com/Code4Construct/koji_MapBundle" target="_blank" data-ja="GitHubでソースコードを確認できます" data-en="Read the source code on GitHub">GitHubでソースコードを確認できます</a></li>
-            <li><a href="https://www.virustotal.com/gui/file/c087bb918a566ae04860c2a3bf10c24b2b4b72c0ad6ffd12e0d9ff11e15118c7/detection" target="_blank" data-ja="VirusTotalで検査時点の検知状況を確認できます" data-en="Check detection status at the time of the scan on VirusTotal">VirusTotalで検査時点の検知状況を確認できます</a></li>
+            <li><a href="https://plugins.qgis.org/plugins/koji_MapBundle/#plugin-details" target="_blank" rel="noopener" data-ja="QGIS公式プラグインページで公開情報を確認" data-en="Check the public listing in the QGIS plugin repository">QGIS公式プラグインページで公開情報を確認</a></li>
+            <li><a href="https://github.com/Code4Construct/koji_MapBundle/releases/tag/v1.0.1" target="_blank" rel="noopener" data-ja="GitHub Releasesで配布ファイルを確認" data-en="Check the distributed file on GitHub Releases">GitHub Releasesで配布ファイルを確認</a></li>
+            <li><a href="https://github.com/Code4Construct/koji_MapBundle/actions" target="_blank" rel="noopener" data-ja="GitHub Actionsでビルド履歴を確認" data-en="Review the build history in GitHub Actions">GitHub Actionsでビルド履歴を確認</a></li>
+            <li><a href="https://github.com/Code4Construct/koji_MapBundle" target="_blank" rel="noopener" data-ja="GitHubでソースコードを確認" data-en="Read the source code on GitHub">GitHubでソースコードを確認</a></li>
+            <li><a href="https://www.virustotal.com/gui/file/4e01ffec5c00732194efe5efd7ec7c537d86cbac569dccf41d0ec16d56eba1ec/detection" target="_blank" rel="noopener" data-ja="VirusTotalで確認結果を見る" data-en="Check the scan result on VirusTotal">VirusTotalで確認結果を見る</a></li>
           </ul>
-          <p class="trust-note" data-ja="このページのダウンロードボタンは、Release v1.0.0 のGitHubアセットに直接リンクしています。表示しているSHA256は、その配布ファイルを確認するための値です。" data-en="The download buttons on this page link directly to the GitHub asset for Release v1.0.0. The SHA256 shown here is the value for verifying that distributed file.">このページのダウンロードボタンは、Release v1.0.0 のGitHubアセットに直接リンクしています。表示しているSHA256は、その配布ファイルを確認するための値です。</p>
+          <p class="trust-note" data-ja="このページのダウンロードボタンは、Release v1.0.1 のGitHubアセットに直接リンクしています。表示しているSHA256は、その配布ファイルを確認するための値です。" data-en="The download buttons on this page link directly to the GitHub asset for Release v1.0.1. The SHA256 shown here is the value for verifying that distributed file.">
+            このページのダウンロードボタンは、Release v1.0.1 のGitHubアセットに直接リンクしています。表示しているSHA256は、その配布ファイルを確認するための値です。
+          </p>
           <div class="trust-actions">
-            <a href="https://github.com/Code4Construct/koji_MapBundle/releases/download/v1.0.0/koji_MapBundle.zip" class="btn btn-primary" target="_blank" data-ja="ZIPをダウンロード" data-en="Download ZIP">ZIPをダウンロード</a>
-            <a href="https://github.com/Code4Construct/koji_MapBundle" class="btn btn-secondary" target="_blank" data-ja="GitHubで確認する" data-en="Check on GitHub">GitHubで確認する</a>
+            <a href="https://github.com/Code4Construct/koji_MapBundle/releases/download/v1.0.1/koji_MapBundle.zip" class="btn btn-primary" target="_blank" rel="noopener" data-ja="ZIPをダウンロード" data-en="Download ZIP">ZIPをダウンロード</a>
+            <a href="koji_MapBundle.html" class="btn btn-secondary" data-ja="概要ページへ" data-en="Overview page">概要ページへ</a>
           </div>
         </aside>
       </div>
@@ -194,10 +210,10 @@
 <footer>
   <a href="koji_MapBundle.html" class="footer-logo">koji<span>MapBundle</span></a>
   <div class="footer-nav">
-    <a href="kojigis-homepage.html" data-ja="kojiGIS" data-en="kojiGIS">kojiGIS</a>
+    <a href="kojigis-homepage.html">kojiGIS</a>
     <a href="index.html#developer" data-ja="開発者" data-en="Developer">開発者</a>
-    <a href="https://github.com/Code4Construct/koji_MapBundle/releases/tag/v1.0.0" target="_blank">Release</a>
-    <a href="https://github.com/Code4Construct/koji_MapBundle" target="_blank">GitHub</a>
+    <a href="https://github.com/Code4Construct/koji_MapBundle/releases/tag/v1.0.1" target="_blank" rel="noopener">Release</a>
+    <a href="https://plugins.qgis.org/plugins/koji_MapBundle/#plugin-details" target="_blank" rel="noopener">QGIS</a>
   </div>
 </footer>
 
