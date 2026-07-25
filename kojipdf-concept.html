@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KojiPDF - 一覧性を取り戻すPDF整理ツール</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  * { margin: 0; }
+
+  :root {
+    --ink: #081b3f;
+    --muted: #475569;
+    --line: #d9e4f2;
+    --paper: #f7fbff;
+    --surface: #ffffff;
+    --blue: #1767d1;
+    --green: #23954b;
+    --red: #d62f2f;
+    --orange: #f59f23;
+    --cream: #fff8e8;
+    --shadow: 0 22px 60px rgba(8, 27, 63, 0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    min-width: 320px;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Inter", "Noto Sans JP", system-ui, sans-serif;
+    line-height: 1.7;
+    letter-spacing: 0;
+  }
+
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    min-height: 68px;
+    padding: 0 clamp(18px, 4vw, 56px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 22px;
+    border-bottom: 1px solid rgba(217, 228, 242, 0.82);
+    background: rgba(247, 251, 255, 0.88);
+    backdrop-filter: blur(18px);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-weight: 900;
+    font-size: 22px;
+    letter-spacing: 0;
+  }
+
+  .brand img {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+  }
+
+  .brand span { color: var(--green); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 2vw, 28px);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: clamp(14px, 2.3vw, 28px);
+    list-style: none;
+    padding: 0;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: #40506a;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .nav-links a:hover { color: var(--blue); }
+
+  .language-toggle {
+    display: flex;
+    gap: 7px;
+  }
+
+  .lang-btn {
+    width: 38px;
+    height: 38px;
+    border: 1px solid #c9d8ea;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .lang-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .lang-btn.active {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(35, 149, 75, 0.16);
+  }
+
+  .hero {
+    padding: clamp(42px, 7vw, 82px) clamp(18px, 4vw, 56px) clamp(28px, 5vw, 60px);
+    background:
+      radial-gradient(circle at 18% 8%, rgba(23, 103, 209, 0.12), transparent 32%),
+      linear-gradient(180deg, #ffffff 0%, #f7fbff 72%, #edf6ff 100%);
+  }
+
+  .hero-inner {
+    width: min(1260px, 100%);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 0.82fr) minmax(380px, 1.18fr);
+    gap: clamp(30px, 5vw, 72px);
+    align-items: center;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    color: var(--green);
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 3px;
+    border-radius: 99px;
+    background: var(--green);
+  }
+
+  h1 {
+    max-width: 650px;
+    font-size: clamp(42px, 6vw, 82px);
+    line-height: 1.05;
+    font-weight: 900;
+    letter-spacing: 0;
+  }
+
+  .hero-lead {
+    max-width: 600px;
+    margin-top: 22px;
+    color: #334155;
+    font-size: clamp(17px, 1.5vw, 21px);
+    font-weight: 500;
+  }
+
+  .hero-actions {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .btn {
+    min-height: 46px;
+    padding: 0 20px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 14px;
+  }
+
+  .btn-primary {
+    background: var(--green);
+    color: #fff;
+    box-shadow: 0 14px 28px rgba(35, 149, 75, 0.22);
+  }
+
+  .btn-secondary {
+    background: #fff;
+    border-color: #c9d8ea;
+    color: var(--ink);
+  }
+
+  .hero-visual {
+    overflow: hidden;
+    border: 1px solid rgba(8, 27, 63, 0.12);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: var(--shadow);
+  }
+
+  .hero-visual img {
+    width: 100%;
+    aspect-ratio: 1536 / 1024;
+    object-fit: cover;
+  }
+
+  .section {
+    padding: clamp(58px, 8vw, 106px) clamp(18px, 4vw, 56px);
+  }
+
+  .section-inner {
+    width: min(1120px, 100%);
+    margin: 0 auto;
+  }
+
+  .section-head {
+    max-width: 790px;
+    margin-bottom: clamp(28px, 4vw, 44px);
+  }
+
+  .section-label {
+    margin-bottom: 10px;
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 900;
+  }
+
+  h2 {
+    font-size: clamp(30px, 4.8vw, 56px);
+    line-height: 1.15;
+    font-weight: 900;
+    letter-spacing: 0;
+  }
+
+  .section-head p {
+    margin-top: 16px;
+    color: var(--muted);
+    font-size: clamp(16px, 1.5vw, 19px);
+    font-weight: 500;
+  }
+
+  .split-proof {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .proof-panel {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface);
+    box-shadow: 0 12px 32px rgba(8, 27, 63, 0.08);
+    overflow: hidden;
+  }
+
+  .proof-panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .message-band {
+    background: #081b3f;
+    color: #fff;
+  }
+
+  .message-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+    gap: clamp(28px, 5vw, 70px);
+    align-items: center;
+  }
+
+  .message-band .section-label { color: #87d49c; }
+  .message-band h2 { color: #fff; }
+  .message-band p { color: #d8e5f5; }
+
+  .flow-list {
+    display: grid;
+    gap: 14px;
+    list-style: none;
+    padding: 0;
+  }
+
+  .flow-list li {
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    gap: 14px;
+    align-items: center;
+    min-height: 58px;
+    padding: 14px;
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.07);
+  }
+
+  .flow-list strong {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--ink);
+    font-size: 18px;
+  }
+
+  .concept {
+    background: #fff;
+  }
+
+  .concept-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
+    gap: clamp(26px, 4vw, 50px);
+    align-items: center;
+  }
+
+  .concept-copy {
+    display: grid;
+    gap: 18px;
+  }
+
+  .concept-line {
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .concept-line:last-child { border-bottom: 1px solid var(--line); }
+
+  .concept-line h3 {
+    font-size: clamp(19px, 2.2vw, 26px);
+    line-height: 1.35;
+  }
+
+  .concept-line p {
+    margin-top: 6px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .image-frame {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: var(--shadow);
+  }
+
+  .use-cases {
+    background: linear-gradient(180deg, #f7fbff, #ffffff);
+  }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .case-card {
+    min-height: 180px;
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 12px 28px rgba(8, 27, 63, 0.07);
+  }
+
+  .case-icon {
+    width: 46px;
+    height: 46px;
+    margin-bottom: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    color: #fff;
+    background: var(--blue);
+    font-weight: 900;
+    font-size: 22px;
+  }
+
+  .case-card:nth-child(2) .case-icon { background: var(--green); }
+  .case-card:nth-child(3) .case-icon { background: var(--orange); }
+  .case-card:nth-child(4) .case-icon { background: #6d5bd0; }
+
+  .case-card h3 {
+    font-size: 18px;
+    line-height: 1.35;
+  }
+
+  .case-card p {
+    margin-top: 9px;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .formats {
+    background: #fff;
+  }
+
+  .formats-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: clamp(22px, 4vw, 46px);
+    align-items: start;
+  }
+
+  .feature-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+  }
+
+  .feature-list li {
+    min-height: 48px;
+    padding: 11px 13px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: #f8fbff;
+    color: #263a55;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  .download {
+    padding-bottom: clamp(62px, 8vw, 110px);
+    background: var(--cream);
+  }
+
+  .download-panel {
+    padding: clamp(28px, 5vw, 54px);
+    border: 1px solid #f0d39a;
+    border-radius: 8px;
+    background: #fffdf7;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 24px;
+    align-items: center;
+    box-shadow: 0 18px 44px rgba(128, 86, 19, 0.1);
+  }
+
+  .download-panel h2 {
+    font-size: clamp(28px, 4vw, 46px);
+  }
+
+  .download-panel p {
+    margin-top: 12px;
+    max-width: 690px;
+    color: #5d4b26;
+    font-weight: 500;
+  }
+
+  footer {
+    padding: 28px clamp(18px, 4vw, 56px);
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    background: #081b3f;
+    color: #dbeafe;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+
+  footer a {
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  @media (max-width: 940px) {
+    .nav-links { display: none; }
+    .hero-inner,
+    .message-layout,
+    .concept-grid,
+    .formats-layout,
+    .download-panel {
+      grid-template-columns: 1fr;
+    }
+    .case-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 640px) {
+    .site-nav { min-height: 62px; }
+    .brand { font-size: 19px; }
+    .hero { padding-top: 34px; }
+    .split-proof,
+    .case-grid,
+    .feature-list {
+      grid-template-columns: 1fr;
+    }
+    .btn { width: 100%; }
+    footer { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<nav class="site-nav" aria-label="Primary">
+  <a href="kojipdf-homepage.html" class="brand">
+    <img src="images/iconsmall_v2.png" alt="">
+    Koji<span>PDF</span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="kojipdf-homepage.html" data-ja="ホーム" data-en="Home">ホーム</a></li>
+      <li><a href="#overview" data-ja="一覧性" data-en="Overview">一覧性</a></li>
+      <li><a href="#concept" data-ja="考え方" data-en="Concept">考え方</a></li>
+      <li><a href="#features" data-ja="対応形式" data-en="Formats">対応形式</a></li>
+      <li><a href="kojipdf-download.html" data-ja="ダウンロード" data-en="Download">ダウンロード</a></li>
+      <li><a href="https://github.com/Code4Construct/kojiPDFv210" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+    <div class="language-toggle" aria-label="Language">
+      <button class="lang-btn active" type="button" data-lang="ja" aria-label="日本語"><img src="images/flag_jp.svg" alt=""></button>
+      <button class="lang-btn" type="button" data-lang="en" aria-label="English"><img src="images/flag_gb.svg" alt=""></button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow" data-ja="PDF変換ソフトではなく、一覧性を取り戻す道具" data-en="Not just a PDF converter, a tool for restoring overview">PDF変換ソフトではなく、一覧性を取り戻す道具</div>
+      <h1 data-ja="検索は「探す」。一覧は「理解する」。" data-en="Search finds. Overview helps you understand.">検索は「探す」。一覧は「理解する」。</h1>
+      <p class="hero-lead" data-ja="電子化で仕事は便利になりました。でも、全体を見渡す力は失われがちです。KojiPDFはフォルダ構造をしおり付きPDFに変え、資料全体を一冊で見渡せるようにします。" data-en="Digitization made work convenient, but it often took away the ability to see the whole picture. KojiPDF turns folder structures into bookmarked PDFs so large sets of documents can be understood at a glance.">電子化で仕事は便利になりました。でも、全体を見渡す力は失われがちです。KojiPDFはフォルダ構造をしおり付きPDFに変え、資料全体を一冊で見渡せるようにします。</p>
+      <div class="hero-actions">
+        <a href="kojipdf-download.html" class="btn btn-primary" data-ja="無料でダウンロード" data-en="Free Download">無料でダウンロード</a>
+        <a href="#overview" class="btn btn-secondary" data-ja="一覧性を知る" data-en="Learn the Idea">一覧性を知る</a>
+      </div>
+    </div>
+    <figure class="hero-visual">
+      <img src="images/kojipdf-overview-hero.png" alt="検索と一覧の違いを示すKojiPDFの図解">
+    </figure>
+  </div>
+</header>
+
+<main>
+  <section class="section" id="overview">
+    <div class="section-inner">
+      <div class="section-head">
+        <div class="section-label" data-ja="Overview" data-en="Overview">Overview</div>
+        <h2 data-ja="検索だけでは、全体は見えません。" data-en="Search alone cannot show the whole.">検索だけでは、全体は見えません。</h2>
+        <p data-ja="検索は、知っているものをすばやく見つける行為です。一覧は、知らなかった抜け、重複、関係性に気付くための見方です。" data-en="Search is for finding what you already know. Overview is for noticing omissions, duplication, and relationships you had not yet seen.">検索は、知っているものをすばやく見つける行為です。一覧は、知らなかった抜け、重複、関係性に気付くための見方です。</p>
+      </div>
+      <div class="split-proof">
+        <figure class="proof-panel"><img src="images/kojipdf-panel-digital-loss.png" alt="電子化で便利になった一方、一覧性が失われたことを示す図"></figure>
+        <figure class="proof-panel"><img src="images/kojipdf-panel-search-overview.png" alt="検索と一覧の役割の違いを比較した図"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section message-band">
+    <div class="section-inner message-layout">
+      <div class="section-head">
+        <div class="section-label" data-ja="Why It Matters" data-en="Why It Matters">Why It Matters</div>
+        <h2 data-ja="一覧性は、見やすさではなく判断のための道具です。" data-en="Overview is not decoration. It is a tool for judgment.">一覧性は、見やすさではなく判断のための道具です。</h2>
+        <p data-ja="資料を一冊で見渡せると、抜けに気付き、関係を整理し、正しく判断できます。情報の質は、見方によって上がります。" data-en="When documents can be seen as one whole, people notice gaps, organize relationships, and judge more accurately. The way information is viewed changes its quality.">資料を一冊で見渡せると、抜けに気付き、関係を整理し、正しく判断できます。情報の質は、見方によって上がります。</p>
+      </div>
+      <ul class="flow-list">
+        <li><strong>1</strong><span data-ja="全体を見渡して、抜けや重複に気付く" data-en="See the whole and notice omissions or duplicates">全体を見渡して、抜けや重複に気付く</span></li>
+        <li><strong>2</strong><span data-ja="資料同士の関係を整理して、考える" data-en="Organize relationships between documents and think">資料同士の関係を整理して、考える</span></li>
+        <li><strong>3</strong><span data-ja="比較し、推敲し、判断する" data-en="Compare, refine, and judge">比較し、推敲し、判断する</span></li>
+        <li><strong>4</strong><span data-ja="情報の質と仕事の質を高める" data-en="Improve the quality of information and work">情報の質と仕事の質を高める</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section concept" id="concept">
+    <div class="section-inner concept-grid">
+      <div class="concept-copy">
+        <div class="section-head">
+          <div class="section-label" data-ja="KojiPDF Concept" data-en="KojiPDF Concept">KojiPDF Concept</div>
+          <h2 data-ja="フォルダは編集するもの。KojiPDFは見渡すもの。" data-en="Folders are for editing. KojiPDF is for seeing.">フォルダは編集するもの。KojiPDFは見渡すもの。</h2>
+        </div>
+        <div class="concept-line">
+          <h3 data-ja="フォルダを置き換えません。" data-en="It does not replace your folders.">フォルダを置き換えません。</h3>
+          <p data-ja="元のWord、Excel、PDF、写真、メール、ZIPはそのまま保管できます。" data-en="Your original Word, Excel, PDF, image, email, and ZIP files can stay where they are.">元のWord、Excel、PDF、写真、メール、ZIPはそのまま保管できます。</p>
+        </div>
+        <div class="concept-line">
+          <h3 data-ja="フォルダ構造を、目次にします。" data-en="It turns structure into bookmarks.">フォルダ構造を、目次にします。</h3>
+          <p data-ja="ファイル名と階層をしおりにして、一冊のPDFとして見渡せます。" data-en="Folder names and file names become bookmarks inside one PDF.">ファイル名と階層をしおりにして、一冊のPDFとして見渡せます。</p>
+        </div>
+        <div class="concept-line">
+          <h3 data-ja="編集、検索、一覧を両立します。" data-en="It keeps editing, search, and overview together.">編集、検索、一覧を両立します。</h3>
+          <p data-ja="フォルダだけでは弱かった一覧性を、KojiPDFが補います。" data-en="KojiPDF adds the overview that ordinary folders cannot provide on their own.">フォルダだけでは弱かった一覧性を、KojiPDFが補います。</p>
+        </div>
+      </div>
+      <figure class="image-frame">
+        <img src="images/kojipdf-panel-folder-plus.png" alt="フォルダにKojiPDFを加えて一覧性を足す図">
+      </figure>
+    </div>
+  </section>
+
+  <section class="section use-cases">
+    <div class="section-inner">
+      <div class="section-head">
+        <div class="section-label" data-ja="Use Cases" data-en="Use Cases">Use Cases</div>
+        <h2 data-ja="いろいろな場面で、探す時間を減らし、考える時間を増やします。" data-en="In many situations, it reduces searching and increases thinking.">いろいろな場面で、探す時間を減らし、考える時間を増やします。</h2>
+      </div>
+      <div class="case-grid">
+        <article class="case-card"><div class="case-icon">工</div><h3 data-ja="工事案件の管理" data-en="Construction Projects">工事案件の管理</h3><p data-ja="契約、図面、写真、協議資料を一冊で把握。" data-en="Review contracts, drawings, photos, and notes as one set.">契約、図面、写真、協議資料を一冊で把握。</p></article>
+        <article class="case-card"><div class="case-icon">会</div><h3 data-ja="会議・プレゼン資料" data-en="Meetings">会議・プレゼン資料</h3><p data-ja="配布も説明も、ひとつの流れでスムーズに。" data-en="Distribute and explain materials in one smooth flow.">配布も説明も、ひとつの流れでスムーズに。</p></article>
+        <article class="case-card"><div class="case-icon">引</div><h3 data-ja="引継ぎ・保管" data-en="Handover">引継ぎ・保管</h3><p data-ja="フォルダごと渡すだけで、後任者が全体を理解。" data-en="Give the folder and a readable overview to the next person.">フォルダごと渡すだけで、後任者が全体を理解。</p></article>
+        <article class="case-card"><div class="case-icon">@</div><h3 data-ja="メール・添付の整理" data-en="Email Attachments">メール・添付の整理</h3><p data-ja="メール、添付、ZIPの中身まで一冊で確認。" data-en="Review email, attachments, and ZIP contents in one PDF.">メール、添付、ZIPの中身まで一冊で確認。</p></article>
+      </div>
+      <figure class="image-frame" style="margin-top: 26px;">
+        <img src="images/kojipdf-panel-usecases.png" alt="KojiPDFの利用場面を示す図">
+      </figure>
+    </div>
+  </section>
+
+  <section class="section formats" id="features">
+    <div class="section-inner formats-layout">
+      <div>
+        <div class="section-head">
+          <div class="section-label" data-ja="Supported Formats" data-en="Supported Formats">Supported Formats</div>
+          <h2 data-ja="さまざまな形式を、しおり付きPDFへ。" data-en="Many formats, one bookmarked PDF.">さまざまな形式を、しおり付きPDFへ。</h2>
+          <p data-ja="機能は主役ではありません。ですが、一覧性を取り戻すために必要な形式をまとめて扱えます。" data-en="Features are not the main story, but KojiPDF handles the formats needed to restore overview.">機能は主役ではありません。ですが、一覧性を取り戻すために必要な形式をまとめて扱えます。</p>
+        </div>
+        <ul class="feature-list">
+          <li>PDF</li><li>Word</li><li>Excel</li><li>PowerPoint</li>
+          <li>Images</li><li>Text</li><li>Outlook MSG</li><li>EML</li>
+          <li>ZIP</li><li>Child Bookmarks</li><li>OCR</li><li>Batch Conversion</li>
+        </ul>
+      </div>
+      <div class="image-frame">
+        <img src="images/kojipdf-panel-formats.png" alt="KojiPDFが対応するファイル形式の図">
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner split-proof">
+      <figure class="image-frame"><img src="images/kojipdf-panel-quality-flow.png" alt="一覧性が情報の質を高める流れ"></figure>
+      <figure class="image-frame"><img src="images/kojipdf-panel-outlook.png" alt="Outlookメールと添付とZIPを一冊にまとめる流れ"></figure>
+    </div>
+  </section>
+
+  <section class="section download">
+    <div class="section-inner download-panel">
+      <div>
+        <div class="section-label" data-ja="Download" data-en="Download">Download</div>
+        <h2 data-ja="KojiPDFは無料で使えます。" data-en="KojiPDF is free to use.">KojiPDFは無料で使えます。</h2>
+        <p data-ja="Code4Constructは、「あったらいいな」を形にするオープンな活動です。まずは一つの案件フォルダで、一覧できる感覚を試してください。" data-en="Code4Construct is an open effort to build tools that would be useful in real work. Try KojiPDF with one project folder and feel what overview changes.">Code4Constructは、「あったらいいな」を形にするオープンな活動です。まずは一つの案件フォルダで、一覧できる感覚を試してください。</p>
+      </div>
+      <a href="kojipdf-download.html" class="btn btn-primary" data-ja="ダウンロードページへ" data-en="Go to Download">ダウンロードページへ</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <a href="kojipdf-homepage.html" class="brand">Koji<span>PDF</span></a>
+  <div class="footer-links">
+    <a href="index.html#developer" data-ja="開発者" data-en="Developer">開発者</a>
+    <a href="kojiPDF-tutorial.html" data-ja="チュートリアル" data-en="Tutorial">チュートリアル</a>
+    <a href="kojigis-homepage.html">kojiGIS</a>
+    <a href="https://github.com/Code4Construct/kojiPDFv210" target="_blank" rel="noopener">GitHub</a>
+    <a href="kojipdf-download.html" data-ja="ダウンロード" data-en="Download">ダウンロード</a>
+  </div>
+</footer>
+
+<script>
+  const titles = {
+    ja: "KojiPDF - 一覧性を取り戻すPDF整理ツール",
+    en: "KojiPDF - Restore Overview to Digital Documents"
+  };
+
+  const localizedPages = new Set([
+    "index.html",
+    "developer_introduction.html",
+    "kojipdf-homepage.html",
+    "kojipdf-concept.html",
+    "kojipdf-download.html",
+    "kojiPDF-tutorial.html",
+    "kojigis-homepage.html",
+    "koji_GeoTools.html",
+    "koji_geotools-download.html",
+    "koji_MapBundle.html",
+    "koji_MapBundle-download.html",
+    "koji_DataQuery.html",
+    "koji_DataQuery-download.html"
+  ]);
+
+  const updateLocalizedLinks = (lang) => {
+    document.querySelectorAll("a[href]").forEach((link) => {
+      const rawHref = link.getAttribute("href");
+      if (!rawHref || rawHref.startsWith("#") || /^[a-z][a-z0-9+.-]*:/i.test(rawHref)) return;
+      const [pathAndQuery, hash] = rawHref.split("#");
+      const [path, query = ""] = pathAndQuery.split("?");
+      const pageName = path.split("/").pop();
+      if (!localizedPages.has(pageName)) return;
+      const params = new URLSearchParams(query);
+      params.set("lang", lang);
+      link.setAttribute("href", `${path}?${params.toString()}${hash ? `#${hash}` : ""}`);
+    });
+  };
+
+  const setLanguage = (lang) => {
+    document.documentElement.lang = lang;
+    document.title = titles[lang];
+    document.querySelectorAll("[data-ja][data-en]").forEach((element) => {
+      element.textContent = element.dataset[lang];
+    });
+    document.querySelectorAll(".lang-btn").forEach((button) => {
+      const isActive = button.dataset.lang === lang;
+      button.classList.toggle("active", isActive);
+      button.setAttribute("aria-pressed", isActive ? "true" : "false");
+    });
+    localStorage.setItem("kojipdf-language", lang);
+    localStorage.setItem("code4construct-language", lang);
+    updateLocalizedLinks(lang);
+  };
+
+  document.querySelectorAll(".lang-btn").forEach((button) => {
+    button.addEventListener("click", () => setLanguage(button.dataset.lang));
+  });
+
+  const params = new URLSearchParams(window.location.search);
+  const requestedLang = params.get("lang");
+  const savedLang = localStorage.getItem("kojipdf-language");
+  const browserLang = navigator.language || "";
+  const initialLang = requestedLang === "en" || requestedLang === "ja"
+    ? requestedLang
+    : savedLang === "en" || savedLang === "ja"
+      ? savedLang
+      : browserLang.toLowerCase().startsWith("en")
+        ? "en"
+        : "ja";
+  setLanguage(initialLang);
+</script>
+</body>
+</html>

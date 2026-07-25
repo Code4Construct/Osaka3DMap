@@ -285,6 +285,10 @@
     margin-top: 12px;
   }
 
+  .hero-action-stack {
+    margin-top: 18px;
+  }
+
   .hero-topic {
     margin: 0 0 18px;
     padding: 15px 16px 16px;
@@ -493,19 +497,50 @@
     .hero-showcase {
       display: grid;
       grid-template-columns: minmax(600px, 0.56fr) minmax(460px, 0.44fr);
-      gap: clamp(36px, 4vw, 68px);
-      align-items: center;
+      column-gap: clamp(36px, 4vw, 68px);
+      row-gap: 18px;
+      align-items: start;
     }
 
     .hero-flow-visual {
+      grid-column: 1;
+      grid-row: 1;
       width: 100%;
       max-width: none;
       margin: 10px 0 0;
     }
 
     .hero-side-content {
+      grid-column: 2;
+      grid-row: 1;
       max-width: 540px;
       padding-top: 42px;
+    }
+
+    .hero-action-stack {
+      display: contents;
+    }
+
+    .hero-topic {
+      grid-column: 1;
+      grid-row: 2;
+      margin-top: 0;
+      width: 100%;
+      align-self: start;
+    }
+
+    .download-options {
+      grid-column: 1;
+      grid-row: 3;
+      max-width: none;
+    }
+
+    .hero-support {
+      grid-column: 2;
+      grid-row: 2 / span 2;
+      max-width: none;
+      margin-top: 0;
+      align-self: start;
     }
 
     .hero-statement {
@@ -513,8 +548,8 @@
     }
 
     .hero-statement h2 {
-      font-size: clamp(32px, 2.5vw, 42px);
-      line-height: 1.18;
+      font-size: clamp(27px, 2.05vw, 36px);
+      line-height: 1.28;
       margin-bottom: 18px;
     }
 
@@ -523,18 +558,10 @@
       line-height: 1.9;
     }
 
-    .download-options {
-      max-width: none;
-    }
-
     .hero-actions .btn {
       flex: 1 1 calc(50% - 6px);
       min-width: 0;
       padding: 0 14px;
-    }
-
-    .hero-support {
-      max-width: none;
     }
 
     .hero-support .hero-actions .btn {
@@ -1337,36 +1364,30 @@
 
 <header class="hero">
   <div class="hero-content">
-    <div class="eyebrow" data-ja="ペーパーレス会議用PDF結合ツール" data-en="PDF Merger for Paperless Meetings">ペーパーレス会議用PDF結合ツール</div>
+    <div class="eyebrow" data-ja="目次付きPDF結合ツール" data-en="PDF Merger with Table of Contents">目次付きPDF結合ツール</div>
     <h1>koji<span class="pdf-mark">PDF</span><span class="hero-version">v2</span></h1>
     <div class="hero-showcase">
       <figure class="hero-flow-visual">
-        <img src="images/folder-files-to-bookmarked-pdf.png" alt="フォルダ内のPDF、Word、Excel、PowerPointを一冊のしおり付きPDFにまとめる流れ">
-        <div class="hero-feature-grid">
-          <div class="hero-feature">
-            <h3 data-ja="フォルダ単位で結合" data-en="Merge by Folder">フォルダ単位で結合</h3>
-            <p data-ja="サブフォルダまで読み取り、資料一式をまとめて処理できます。" data-en="Scan subfolders and process a complete document set at once.">サブフォルダまで読み取り、資料一式をまとめて処理できます。</p>
-          </div>
-          <div class="hero-feature">
-            <h3 data-ja="しおりを自動作成" data-en="Automatic Bookmarks">しおりを自動作成</h3>
-            <p data-ja="フォルダ名を親しおり、ファイル名を子しおりとして追加します。" data-en="Use folder names as parent bookmarks and file names as child bookmarks.">フォルダ名を親しおり、ファイル名を子しおりとして追加します。</p>
-          </div>
-          <div class="hero-feature">
-            <h3 data-ja="Office変換に対応" data-en="Office Conversion">Office変換に対応</h3>
-            <p data-ja="Word・Excel・PowerPointをPDFに変換してから結合できます。" data-en="Convert Word, Excel, and PowerPoint files to PDF before merging.">Word・Excel・PowerPointをPDFに変換してから結合できます。</p>
-          </div>
-        </div>
+        <img
+          src="images/kojipdf-home-overview-complete-ja.png"
+          data-ja-src="images/kojipdf-home-overview-complete-ja.png"
+          data-en-src="images/kojipdf-home-overview-complete-en.png"
+          data-ja-alt="フォルダは編集するもの、KojiPDFは見渡すものという考え方と活用場面を示す図"
+          data-en-alt="Diagram showing folders for editing, KojiPDF for the big picture, and practical use cases"
+          alt="フォルダは編集するもの、KojiPDFは見渡すものという考え方と活用場面を示す図">
       </figure>
       <div class="hero-side-content">
         <div class="hero-statement">
-          <h2 data-ja-html="ペーパレス会議の資料を一冊の<ruby>栞<rt>しおり</rt></ruby>付きPDFに。" data-en="Turn paperless meeting materials into one bookmarked PDF.">ペーパレス会議の資料を一冊の<ruby>栞<rt>しおり</rt></ruby>付きPDFに。</h2>
-          <p data-ja="kojiPDFは、ペーパーレス会議資料の作成に使えるPDFツールです。選択したフォルダ内のPDFを結合し、ファイル名とフォルダ名を使って、しおり付きPDFとして保存できます。Word・Excel・PowerPointのPDF変換にも対応しています。" data-en="kojiPDF is a PDF tool for creating paperless meeting materials. It can merge PDFs inside the selected folder and save them as one bookmarked PDF using file and folder names. It also supports Word, Excel, and PowerPoint conversion.">
-            kojiPDFは、ペーパーレス会議資料の作成に使えるPDFツールです。選択したフォルダ内のPDFを結合し、ファイル名とフォルダ名を使って、しおり付きPDFとして保存できます。Word・Excel・PowerPointのPDF変換にも対応しています。
+          <h2 data-ja-html="資料フォルダをkojiPDFで一括変換して、全体を一冊で見渡すための一覧ブック（目次付きPDF）を作る。" data-en-html="Batch-convert a document folder with kojiPDF, and create an overview book, a table-of-contents PDF for seeing the whole set at once.">資料フォルダをkojiPDFで一括変換して、全体を一冊で見渡すための一覧ブック（目次付きPDF）を作る。</h2>
+          <p data-ja="資料フォルダは、編集・更新・管理のための作業領域です。KojiPDF（しおり付きPDF）は、そのフォルダ全体を一冊で見渡すための一覧ブックです。二つが揃って、最強の情報源になります。" data-en="Folders are the working space for editing, updating, and managing documents. KojiPDF, a bookmarked PDF, is the overview book for seeing the whole folder at once. Together, they become a stronger source of information.">
+            資料フォルダは、編集・更新・管理のための作業領域です。KojiPDF（しおり付きPDF）は、そのフォルダ全体を一冊で見渡すための一覧ブックです。二つが揃って、最強の情報源になります。
           </p>
-          <p data-ja="数万枚に及ぶ工事関係書類の電子検査という、究極のペーパーレス会議を実現するために、工事関係者が個人で開発した、誰でも使えるオープンソースのPDFツールです。ソースコードも公開しています。" data-en="It is an open-source PDF tool developed personally by someone in the construction field to support electronic inspections of tens of thousands of construction project documents, a demanding form of paperless meeting. The source code is also publicly available.">
-            数万枚に及ぶ工事関係書類の電子検査という、究極のペーパーレス会議を実現するために、工事関係者が個人で開発した、誰でも使えるオープンソースのPDFツールです。ソースコードも公開しています。
+          <p data-ja="使い方はシンプルです。多数のフォルダとファイルをまとめ、PDF・Word・Excel・PowerPointなどを変換・統合し、しおりを自動生成して見やすく整理。最後に、一冊のPDFとして共有できます。" data-en="The workflow is simple: organize many folders and files, convert and unify PDFs, Word, Excel, PowerPoint, and more, then automatically create bookmarks so the result is easy to browse. Finally, share it as one PDF.">
+            使い方はシンプルです。多数のフォルダとファイルをまとめ、PDF・Word・Excel・PowerPointなどを変換・統合し、しおりを自動生成して見やすく整理。最後に、一冊のPDFとして共有できます。
           </p>
         </div>
+      </div>
+      <div class="hero-action-stack">
         <div class="hero-topic" aria-label="kojiPDF topic">
           <div class="topic-label" data-ja="TOPIC" data-en="TOPIC">TOPIC</div>
           <p data-ja="窓の杜のダイジェストニュースに取り上げられました。" data-en="kojiPDF was featured in Impress Watch's Madonomori Digest News.">
@@ -1574,6 +1595,7 @@
     'index.html',
     'developer_introduction.html',
     'kojipdf-homepage.html',
+    'kojipdf-concept.html',
     'kojipdf-download.html',
     'kojiPDF-tutorial.html',
     'kojigis-homepage.html',
