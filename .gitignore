@@ -15,3 +15,18 @@ japanese.png
 koji-helmet-side-source.png
 koji-helmet-source.png
 v200GUI_eng.png
+
+# ローカルツール・エージェント設定
+.agents/
+.qodo/
+
+# OS・エディタ生成物
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+*.temp
+
+# 実行時キャッシュ
+__pycache__/
+*.py[cod]
