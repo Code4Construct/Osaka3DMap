@@ -281,6 +281,33 @@
     line-height: 1.95;
   }
 
+  .hero-statement-accent {
+    margin: 8px 0 20px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    color: #ff2d55;
+    font-size: clamp(16px, 1.6vw, 22px);
+    line-height: 1.45;
+    font-weight: 900;
+    text-align: center;
+    white-space: nowrap;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.42);
+  }
+
+  .hero-statement-accent::before,
+  .hero-statement-accent::after {
+    content: '';
+    width: 1em;
+    height: 2px;
+    border-radius: 99px;
+    background: currentColor;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    flex: 0 0 auto;
+  }
+
   .hero-statement p + p {
     margin-top: 12px;
   }
@@ -289,9 +316,17 @@
     margin-top: 18px;
   }
 
+  .hero-compact-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.75fr);
+    gap: 12px;
+    align-items: stretch;
+    margin-bottom: 18px;
+  }
+
   .hero-topic {
-    margin: 0 0 18px;
-    padding: 15px 16px 16px;
+    margin: 0;
+    padding: 13px 16px;
     border-left: 3px solid var(--gold);
     border-radius: 2px 8px 8px 2px;
     color: var(--hero-readable);
@@ -326,8 +361,8 @@
 
   .hero-topic p {
     color: var(--hero-readable);
-    font-size: 14px;
-    line-height: 1.75;
+    font-size: 13px;
+    line-height: 1.65;
   }
 
   .hero-topic-actions {
@@ -402,8 +437,17 @@
   }
 
   .download-options {
-    margin-top: 18px;
-    max-width: 760px;
+    margin-top: 0;
+    max-width: none;
+    padding: 13px 16px;
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.055);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 14px 32px rgba(0,0,0,0.14);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .download-options-label {
@@ -416,7 +460,8 @@
   }
 
   .download-page-btn {
-    width: min(100%, 420px);
+    width: 100%;
+    min-height: 42px;
   }
 
   .hero-support {
@@ -514,14 +559,14 @@
       grid-column: 2;
       grid-row: 1;
       max-width: 540px;
-      padding-top: 42px;
+      padding-top: 8px;
     }
 
     .hero-action-stack {
       display: contents;
     }
 
-    .hero-topic {
+    .hero-compact-actions {
       grid-column: 1;
       grid-row: 2;
       margin-top: 0;
@@ -529,15 +574,9 @@
       align-self: start;
     }
 
-    .download-options {
-      grid-column: 1;
-      grid-row: 3;
-      max-width: none;
-    }
-
     .hero-support {
       grid-column: 2;
-      grid-row: 2 / span 2;
+      grid-row: 2;
       max-width: none;
       margin-top: 0;
       align-self: start;
@@ -605,6 +644,33 @@
     background: var(--surface);
     border-bottom: 1px solid rgba(6,42,70,0.08);
     padding-top: 54px;
+  }
+
+  .wish-episode {
+    background: var(--surface);
+    border-bottom: 1px solid rgba(6,42,70,0.08);
+  }
+
+  .wish-episode.problem {
+    padding-bottom: 58px;
+  }
+
+  .episode-media-stack {
+    display: grid;
+    gap: 24px;
+  }
+
+  .episode-media {
+    overflow: hidden;
+    border: 1px solid rgba(6,42,70,0.16);
+    border-radius: 6px;
+    background: #f8fbff;
+    box-shadow: 0 18px 50px rgba(6,42,70,0.14);
+  }
+
+  .episode-media img {
+    width: 100%;
+    display: block;
   }
 
   .meeting-fatigue-head {
@@ -1075,16 +1141,6 @@
   .guide-aside img { width: 100%; display: block; margin-bottom: 16px; border: 1px solid rgba(255,255,255,0.16); }
   .guide-aside h3 { font-family: 'Shippori Mincho', serif; font-size: 22px; margin-bottom: 10px; }
 
-  .legacy-note {
-    background: var(--paper);
-    border-top: 1px solid rgba(6,42,70,0.08);
-  }
-  .legacy-note-card { max-width: 760px; margin: 0 auto; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 22px; align-items: center; }
-  .legacy-note img { width: 100%; display: block; border: 1px solid rgba(6,42,70,0.14); }
-  .legacy-note h3 { font-family: 'Shippori Mincho', serif; font-size: 24px; margin-bottom: 10px; }
-  .legacy-note p { color: #24465c; line-height: 1.9; font-size: 14px; }
-  .legacy-note .btn { margin-top: 14px; }
-
   .workflow { background: var(--paper); }
 
   .workflow-head {
@@ -1265,6 +1321,7 @@
         var(--ink);
     }
     .hero-content { width: 100%; }
+    .hero-compact-actions { grid-template-columns: 1fr; }
     .hero-feature-grid { grid-template-columns: 1fr; }
     .section { padding: 58px 24px; }
     .story-layout { grid-template-columns: 1fr; }
@@ -1278,8 +1335,7 @@
     .trust-list { grid-template-columns: 1fr; }
     .trust-vt-window { max-height: 360px; }
     .intro-grid { grid-template-columns: 1fr; }
-    .guide-layout,
-    .legacy-note-card { grid-template-columns: 1fr; }
+    .guide-layout { grid-template-columns: 1fr; }
     .related-panel { grid-template-columns: 1fr; }
     .related-actions { justify-content: flex-start; }
     .feature-grid { grid-template-columns: 1fr; }
@@ -1379,29 +1435,32 @@
       <div class="hero-side-content">
         <div class="hero-statement">
           <h2 data-ja-html="資料フォルダをkojiPDFで一括変換して、全体を一冊で見渡すための一覧ブック（目次付きPDF）を作る。" data-en-html="Batch-convert a document folder with kojiPDF, and create an overview book, a table-of-contents PDF for seeing the whole set at once.">資料フォルダをkojiPDFで一括変換して、全体を一冊で見渡すための一覧ブック（目次付きPDF）を作る。</h2>
+          <div class="hero-statement-accent" data-ja="ペーパーレスで失った一覧性を取り戻す。" data-en="Restore the overview lost in paperless work.">ペーパーレスで失った一覧性を取り戻す。</div>
           <p data-ja="資料フォルダは、編集・更新・管理のための作業領域です。KojiPDF（しおり付きPDF）は、そのフォルダ全体を一冊で見渡すための一覧ブックです。二つが揃って、最強の情報源になります。" data-en="Folders are the working space for editing, updating, and managing documents. KojiPDF, a bookmarked PDF, is the overview book for seeing the whole folder at once. Together, they become a stronger source of information.">
             資料フォルダは、編集・更新・管理のための作業領域です。KojiPDF（しおり付きPDF）は、そのフォルダ全体を一冊で見渡すための一覧ブックです。二つが揃って、最強の情報源になります。
           </p>
-          <p data-ja="使い方はシンプルです。多数のフォルダとファイルをまとめ、PDF・Word・Excel・PowerPointなどを変換・統合し、しおりを自動生成して見やすく整理。最後に、一冊のPDFとして共有できます。" data-en="The workflow is simple: organize many folders and files, convert and unify PDFs, Word, Excel, PowerPoint, and more, then automatically create bookmarks so the result is easy to browse. Finally, share it as one PDF.">
-            使い方はシンプルです。多数のフォルダとファイルをまとめ、PDF・Word・Excel・PowerPointなどを変換・統合し、しおりを自動生成して見やすく整理。最後に、一冊のPDFとして共有できます。
+          <p data-ja="使い方はシンプルです。PDF・Word・Excel・PowerPointだけでなく、メール本文と添付ファイル、画像、テキストファイルまでまとめて変換・統合できます。フォルダ構成等に沿ってしおりを自動生成し、一冊の見やすいPDFとして共有できます。" data-en="The workflow is simple: in addition to PDF, Word, Excel, and PowerPoint, kojiPDF can convert and merge email bodies and attachments, images, and text files together. It automatically creates bookmarks based on the folder structure and related organization, then shares everything as one easy-to-browse PDF.">
+            使い方はシンプルです。PDF・Word・Excel・PowerPointだけでなく、メール本文と添付ファイル、画像、テキストファイルまでまとめて変換・統合できます。フォルダ構成等に沿ってしおりを自動生成し、一冊の見やすいPDFとして共有できます。
           </p>
         </div>
       </div>
       <div class="hero-action-stack">
-        <div class="hero-topic" aria-label="kojiPDF topic">
-          <div class="topic-label" data-ja="TOPIC" data-en="TOPIC">TOPIC</div>
-          <p data-ja="窓の杜のダイジェストニュースに取り上げられました。" data-en="kojiPDF was featured in Impress Watch's Madonomori Digest News.">
-            窓の杜のダイジェストニュースに取り上げられました。
-          </p>
-          <div class="hero-topic-actions">
-            <a href="https://forest.watch.impress.co.jp/docs/digest/2115745.html" class="hero-topic-link" target="_blank" rel="noopener" data-ja="掲載記事を見る" data-en="Read the article">掲載記事を見る</a>
-            <a href="https://www.vector.co.jp/soft/winnt/writing/se527459.html" class="hero-topic-link" target="_blank" rel="noopener" data-ja="Vectorで見る" data-en="View on Vector">Vectorで見る</a>
+        <div class="hero-compact-actions">
+          <div class="hero-topic" aria-label="kojiPDF topic">
+            <div class="topic-label" data-ja="TOPIC" data-en="TOPIC">TOPIC</div>
+            <p data-ja="窓の杜のダイジェストニュースに取り上げられました。" data-en="kojiPDF was featured in Impress Watch's Madonomori Digest News.">
+              窓の杜のダイジェストニュースに取り上げられました。
+            </p>
+            <div class="hero-topic-actions">
+              <a href="https://forest.watch.impress.co.jp/docs/digest/2115745.html" class="hero-topic-link" target="_blank" rel="noopener" data-ja="掲載記事を見る" data-en="Read the article">掲載記事を見る</a>
+              <a href="https://www.vector.co.jp/soft/winnt/writing/se527459.html" class="hero-topic-link" target="_blank" rel="noopener" data-ja="Vectorで見る" data-en="View on Vector">Vectorで見る</a>
+            </div>
           </div>
-        </div>
-        <div class="download-options">
-          <div class="download-options-label" data-ja="ダウンロード方法" data-en="Download Options">ダウンロード方法</div>
-          <div class="hero-actions">
-            <a href="kojipdf-download.html" class="btn btn-primary download-page-btn" data-ja="ダウンロードページへ" data-en="Go to Download Page">ダウンロードページへ</a>
+          <div class="download-options">
+            <div class="download-options-label" data-ja="ダウンロード方法" data-en="Download Options">ダウンロード方法</div>
+            <div class="hero-actions">
+              <a href="kojipdf-download.html" class="btn btn-primary download-page-btn" data-ja="ダウンロードページへ" data-en="Go to Download Page">ダウンロードページへ</a>
+            </div>
           </div>
         </div>
         <div class="hero-support">
@@ -1422,9 +1481,35 @@
 </header>
 
 <main>
+  <section class="section wish-episode problem">
+    <div class="section-inner">
+      <div class="meeting-fatigue-head">
+        <div class="section-label" data-ja="あったらいいな エピソード1" data-en="Wouldn't It Be Nice? Episode 1">あったらいいな エピソード1</div>
+        <h2 data-ja="メールを開き、添付を開き、ZIPを開く。それでも、全体は見えない。" data-en="Open the email, open the attachment, open the ZIP. Still, you cannot see the whole picture.">メールを開き、添付を開き、ZIPを開く。それでも、全体は見えない。</h2>
+        <p data-ja="プロジェクトの資料はフォルダにまとまっていても、実際にはメールの添付、ZIPファイルの中、Excelのシートの奥に分かれて保存されています。必要な資料にたどり着くまでに、いくつものファイルを開き続けなければなりません。" data-en="Even when project documents are collected in folders, they are often split across email attachments, ZIP files, and deep inside Excel sheets. To reach the material you need, you have to keep opening file after file.">
+          プロジェクトの資料はフォルダにまとまっていても、実際にはメールの添付、ZIPファイルの中、Excelのシートの奥に分かれて保存されています。必要な資料にたどり着くまでに、いくつものファイルを開き続けなければなりません。
+        </p>
+      </div>
+      <div class="episode-media-stack">
+        <figure class="episode-media">
+          <img src="images/kojipdf-episode1-searching.png" alt="プロジェクトフォルダー内の資料、ZIP、Excelシートを探している様子">
+        </figure>
+        <div class="meeting-fatigue-head">
+          <p data-ja="kojiPDFなら、添付ファイルやZIP内の資料、エクセルのシートまで、目次付きの一覧ブックとして一冊に整理できます。必要な情報にすぐたどり着けるため、会議前の確認や引き継ぎの手間を減らします。PDFのしおりは一ページから5000ページ先へも一瞬で移動でき、文字検索もすぐに行えます。" data-en="With kojiPDF, attachments, documents inside ZIP files, and even Excel sheets can be organized into one table-of-contents overview book. You can reach the information you need quickly, reducing the effort required before meetings or during handover. PDF bookmarks can jump instantly from page 1 to page 5000, and text search is available right away.">
+            kojiPDFなら、添付ファイルやZIP内の資料、エクセルのシートまで、目次付きの一覧ブックとして一冊に整理できます。必要な情報にすぐたどり着けるため、会議前の確認や引き継ぎの手間を減らします。PDFのしおりは一ページから5000ページ先へも一瞬で移動でき、文字検索もすぐに行えます。
+          </p>
+        </div>
+        <figure class="episode-media">
+          <img src="images/kojipdf-episode1-overview-book.png" alt="ばらばらな資料を目次付きの一覧ブックにまとめるKojiPDFの図解">
+        </figure>
+      </div>
+    </div>
+  </section>
+
   <section class="section meeting-fatigue">
     <div class="section-inner">
       <div class="meeting-fatigue-head">
+        <div class="section-label" data-ja="あったらいいな エピソード2" data-en="Wouldn't It Be Nice? Episode 2">あったらいいな エピソード2</div>
         <h2 data-ja-html="ペーパーレス会議で、紙の良さが<br class=&quot;desktop-break&quot;>恋しくなっていませんか。" data-en="Do you miss what paper gets right during paperless meetings?">ペーパーレス会議で、紙の良さが<br class="desktop-break">恋しくなっていませんか。</h2>
         <p data-ja="紙の資料は、全体の分量や、いま説明されている位置がすぐにわかります。しかし、多種類のファイルが大量に入った会議資料では、全体像や現在位置が見えにくくなり、確認のために印刷したくなってしまいます。" data-en="Paper documents make it easy to see the overall volume and where the current explanation sits. But when meeting materials contain many different files, the whole picture and current position become harder to see, making you want to print them for checking.">
           紙の資料は、全体の分量や、いま説明されている位置がすぐにわかります。しかし、多種類のファイルが大量に入った会議資料では、全体像や現在位置が見えにくくなり、確認のために印刷したくなってしまいます。
@@ -1480,10 +1565,10 @@
 
   <section class="section story">
     <div class="section-inner">
-      <div class="section-label" data-ja="誕生秘話" data-en="Origin Story">誕生秘話</div>
+      <div class="section-label" data-ja="あったらいいな エピソード3" data-en="Wouldn't It Be Nice? Episode 3">あったらいいな エピソード3</div>
       <div class="story-layout">
         <div class="story-panel">
-          <h2 data-ja="電子化しても、検査だけは紙に戻らざるを得なかった。" data-en="Even after digitization, inspections still had to return to paper.">電子化しても、検査だけは紙に戻らざるを得なかった。</h2>
+          <h2 data-ja="電子化した書類を、紙に戻さず検査に使えたら。" data-en="What if digitized documents could be used for inspections without returning to paper?">電子化した書類を、紙に戻さず検査に使えたら。</h2>
           <p data-ja="工事関係書類の電子化には、苦労しながら取り組んできました。しかし、書類検査では電子データのままでは実用にならず、結局すべて紙で出力せざるを得ませんでした。紙で出すなら、電子化する意味はあるのでしょうか。そんなジレンマに陥っていました。" data-en="I worked hard to digitize construction-related documents. But in document inspections, the files were not practical enough to use as digital data, and in the end everything still had to be printed on paper. If they had to be printed anyway, what was the point of digitizing them? I found myself trapped in that dilemma.">
             工事関係書類の電子化には、苦労しながら取り組んできました。しかし、書類検査では電子データのままでは実用にならず、結局すべて紙で出力せざるを得ませんでした。紙で出すなら、電子化する意味はあるのでしょうか。そんなジレンマに陥っていました。
           </p>
@@ -1523,35 +1608,21 @@
     <div class="section-inner">
       <div class="section-label" data-ja="詳しい手順" data-en="Step by Step">詳しい手順</div>
       <h2 data-ja="はじめてでも迷わない、4つの操作。" data-en="Four guided steps for first-time users.">はじめてでも迷わない、4つの操作。</h2>
-      <p class="guide-copy" data-ja="実際の操作順をそのまま確認できます。画面を見ながら、上から順に進めればPDFを作成できます。" data-en="This section explains the actual workflow in order. Follow the steps from top to bottom while looking at the app screen to create your PDF.">
-        実際の操作順をそのまま確認できます。画面を見ながら、上から順に進めればPDFを作成できます。
+      <p class="guide-copy" data-ja="まず設定プリセットを選び、用途に合った状態から始められます。画面を見ながら、上から順に進めればPDFを作成できます。" data-en="Start by choosing a settings preset for your use case. Follow the steps from top to bottom while looking at the app screen to create your PDF.">
+        まず設定プリセットを選び、用途に合った状態から始められます。画面を見ながら、上から順に進めればPDFを作成できます。
       </p>
       <div class="guide-layout">
         <div class="guide-list">
-          <article class="guide-item"><div class="guide-index">1</div><div><h3 data-ja="結合したい資料フォルダを選ぶ" data-en="Choose the source folder">結合したい資料フォルダを選ぶ</h3><p data-ja="「フォルダ選択」から、PDFやOfficeファイルが入っている親フォルダを指定します。" data-en="Use Select Folder to choose the parent folder containing your PDFs or Office files.">「フォルダ選択」から、PDFやOfficeファイルが入っている親フォルダを指定します。</p></div></article>
-          <article class="guide-item"><div class="guide-index">2</div><div><h3 data-ja="保存先とファイル名を決める" data-en="Choose where to save">保存先とファイル名を決める</h3><p data-ja="「出力PDF」で、完成したPDFを保存する場所と名前を設定します。" data-en="Set the destination and file name for the finished PDF in Output PDF.">「出力PDF」で、完成したPDFを保存する場所と名前を設定します。</p></div></article>
-          <article class="guide-item"><div class="guide-index">3</div><div><h3 data-ja="必要なオプションを調整する" data-en="Adjust the options">必要なオプションを調整する</h3><p data-ja="しおり、ページ番号、用紙サイズ、Office変換など、必要な項目を選びます。" data-en="Choose only the options you need, such as bookmarks, page numbers, paper size, and Office conversion.">しおり、ページ番号、用紙サイズ、Office変換など、必要な項目を選びます。</p></div></article>
+          <article class="guide-item"><div class="guide-index">1</div><div><h3 data-ja="設定プリセットを選ぶ" data-en="Choose a settings preset">設定プリセットを選ぶ</h3><p data-ja="「ペーパーレス会議設定」「メールデータ整理設定」「工事書類検査設定」など、用途に近いプリセットを選びます。" data-en="Choose the preset closest to your use case, such as Paperless meeting, Mail data cleanup, or Construction ASP.">「ペーパーレス会議設定」「メールデータ整理設定」「工事書類検査設定」など、用途に近いプリセットを選びます。</p></div></article>
+          <article class="guide-item"><div class="guide-index">2</div><div><h3 data-ja="資料フォルダと保存先を決める" data-en="Choose the source and output">資料フォルダと保存先を決める</h3><p data-ja="「フォルダ選択」で資料フォルダを指定し、「出力PDF」で完成PDFの保存先とファイル名を設定します。" data-en="Use Select Folder to choose the source folder, then set the destination and file name in Output PDF.">「フォルダ選択」で資料フォルダを指定し、「出力PDF」で完成PDFの保存先とファイル名を設定します。</p></div></article>
+          <article class="guide-item"><div class="guide-index">3</div><div><h3 data-ja="必要な項目だけ微調整する" data-en="Fine-tune only what you need">必要な項目だけ微調整する</h3><p data-ja="しおり、ページ番号、用紙サイズ、Office変換など、プリセットから変更したい項目だけ調整します。" data-en="Adjust only the items you want to change from the preset, such as bookmarks, page numbers, paper size, and Office conversion.">しおり、ページ番号、用紙サイズ、Office変換など、プリセットから変更したい項目だけ調整します。</p></div></article>
           <article class="guide-item"><div class="guide-index">4</div><div><h3 data-ja="作成ボタンでPDFを出力する" data-en="Create the PDF">作成ボタンでPDFを出力する</h3><p data-ja="最後に赤い「作成」ボタンを押すと、しおり付きPDFとして保存されます。" data-en="Press the red Create button to save one bookmarked PDF.">最後に赤い「作成」ボタンを押すと、しおり付きPDFとして保存されます。</p></div></article>
         </div>
         <aside class="guide-aside">
-          <img src="images/v200GUI_process.png" alt="kojiPDF v2.1.0 processing screen">
-          <h3 data-ja="処理中の画面例" data-en="Processing Example">処理中の画面例</h3>
-          <p data-ja="結合処理中は、進行状況や処理ログを画面上で確認できます。" data-en="During processing, you can review progress and logs on screen.">結合処理中は、進行状況や処理ログを画面上で確認できます。</p>
+          <img src="images/kojipdf-processing-screen-20260725.png" alt="kojiPDF v2.4.0 settings preset screen">
+          <h3 data-ja="設定プリセットの画面例" data-en="Settings Preset Example">設定プリセットの画面例</h3>
+          <p data-ja="最初に用途に近いプリセットを選ぶと、必要な設定を反映した状態からPDF作成を始められます。" data-en="Choose the preset closest to your use case first, then start PDF creation with the relevant settings already applied.">最初に用途に近いプリセットを選ぶと、必要な設定を反映した状態からPDF作成を始められます。</p>
         </aside>
-      </div>
-    </div>
-  </section>
-
-  <section class="section legacy-note">
-    <div class="section-inner">
-      <div class="section-label" data-ja="旧バージョン" data-en="Previous Version">旧バージョン</div>
-      <div class="legacy-note-card">
-        <img src="images/v150GUI.jpg" alt="kojiPDF v1.50 application screen">
-        <div>
-          <h3>v1.50</h3>
-          <p data-ja="旧バージョン v1.50 はGitHub Releasesで公開しています。現在のv2.1.0とは画面構成が異なります。" data-en="The earlier v1.50 release is available on GitHub Releases. Its interface differs from the current v2.1.0 version.">旧バージョン v1.50 はGitHub Releasesで公開しています。現在のv2.1.0とは画面構成が異なります。</p>
-          <a href="https://github.com/Code4Construct/kojiPDFv150/releases/tag/v1.5.0" class="btn btn-secondary" target="_blank" data-ja="GitHub Releasesで見る" data-en="View on GitHub Releases">GitHub Releasesで見る</a>
-        </div>
       </div>
     </div>
   </section>
